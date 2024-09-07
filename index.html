@@ -18,13 +18,16 @@
             border-bottom-left-radius: 7px;
         }
 
-       
+      
     </style>
 </head>
 <body>
     <div class="topographic-texture">
         <div class="en">
-            <i class="fa-solid fa-chevron-left"></i>
+            <i class="fa-solid fa-chevron-left">
+                <div class="black"></div>
+            </i>
+
             <div class="lr">
                 <h1>Mobo bot</h1>
                 <div class="frt">
@@ -192,21 +195,59 @@ function displayBotMessage(title, message, imageUrl = null) {
     chatBox.appendChild(uyContainer);
 } window.scrollTo(0, document.body.scrollHeight);
 
-window.addEventListener('beforeunload', function (e) {
-    // Cancel the event
-    e.preventDefault();  // Some browsers may require this
-    // Set returnValue to show the default warning dialog
-    e.returnValue = '⚠ Your chat history will disappear if you leave or refresh this page!';  // An empty string or a custom string (which is ignored by most browsers)
-});
-window.addEventListener('beforeunload', function (e) {
-    // Cancel the event
-    e.preventDefault();  // Some browsers may require this
-    // Set returnValue to show the default warning dialog
-    e.returnValue = '⚠ Your chat history will disappear if you leave or refresh this page!';  // An empty string or a custom string (which is ignored by most browsers)
-});
+function displayBotMessage(title, message, imageUrl = null) {
+    var chatBox = document.getElementById("chat-box");
+    removeLoadingMessage(); // Remove loading message when bot responds
+
+    // Create container for bot response and logo (uy)
+    var uyContainer = document.createElement("div");
+    uyContainer.className = "uy";
+
+    // Create logo div and append robot image
+    var logoDiv = document.createElement("div");
+    logoDiv.className = "logo";
+    var botImage = document.createElement("img");
+    botImage.src = "";  // path to your robot image
+    botImage.className = "bot-logo";
+    logoDiv.appendChild(botImage);
+
+    // Create bot message div
+    var botMessageDiv = document.createElement("div");
+    botMessageDiv.className = "bot-message";
+
+    // Add heading for the Wikipedia title or answer
+    var topicHeading = document.createElement("h2");
+    topicHeading.textContent = title;
+    botMessageDiv.appendChild(topicHeading);
+
+    // Add bot message text
+    var botText = document.createElement("p");
+    botText.textContent = message;
+    botMessageDiv.appendChild(botText);
+
+    // If image URL is provided, append it to the bot message div
+    if (imageUrl) {
+        var botImg = document.createElement("img");
+        botImg.src = imageUrl;
+        botImg.className = "wiki-image";  // Use the new CSS class for styling
+        botMessageDiv.appendChild(botImg);
+    }
+
+    // Append logo and bot message into the container
+    uyContainer.appendChild(logoDiv);
+    uyContainer.appendChild(botMessageDiv);
+
+    // Append container to chatbox
+    chatBox.appendChild(uyContainer);
+
+    // Scroll to the bottom
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+
 </script>
 
-    
+
     <script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
 </body>
 </html>
