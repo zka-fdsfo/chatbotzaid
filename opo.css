@@ -42,7 +42,7 @@ body {
     /* backdrop-filter: blur(6px); */
     
     width: 100vw;
-  height: 100vh;
+    height: 74vh;
   overflow: auto; /* Allow scrolling inside the element */
 }
 .uy {
@@ -304,7 +304,25 @@ width: 100%;
     
   overflow: auto; /* Allow scrolling inside the element */
   }
-  
+.black {
+    height: 103%;
+    width: 132px;
+    background-color: #333333;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    display: none;
+}
+.en i:hover .black{
+    display: block;
+    animation: move 10s linear infinite,
+}
+@keyframes move {
+    0% { right: -20px;}
+    100% {right: 0px; }
+  }
+
+
   #user-input {
     flex: 1;
     border: none;
