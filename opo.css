@@ -296,12 +296,12 @@ width: 100%;
     align-items: center;
     background-color: #000;
     padding: 10px;
-    
+    padding-bottom: 20px;
     width: fit-content; 
     bottom:0;
     position: absolute;
     width: 95vw;
-  
+    
   overflow: auto; /* Allow scrolling inside the element */
   }
   
