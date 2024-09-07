@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Bot</title>
+    <link rel="stylesheet" href="opo.css">
+    <style>
+        /* Add some styling for the Wikipedia image */
+        .wiki-image {
+            max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
+            max-height: 150px; /* Restrict the image height to maintain layout */
+            width: auto;       /* Maintain aspect ratio */
+            height: auto;      /* Maintain aspect ratio */
+            display: block;    /* Display as block element to ensure it's on a new line */
+            margin: 10px 0;    /* Add some margin for better spacing */
+            border-bottom-right-radius: 7px;
+            border-bottom-left-radius: 7px;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="topographic-texture">
+        <div class="en">
+            <i class="fa-solid fa-chevron-left"></i>
+            <div class="lr">
+                <h1>Mobo bot</h1>
+                <div class="frt">
+                    <div class="green"></div>
+                    Online
+                </div>
+            </div>
+            <video src="juy.mp4" autoplay muted loop></video>
+        </div>
+    
+
+    <div class="container">
+        <div class="chat-box" id="chat-box">
+            <div class="top-message">
+                <img src="YHKLTK.png" alt="">
+                <p>Hello! This Bot provides you with information from the internet. Write (only one word) of the topic to get information.</p>
+            
+        </div><br>
+        <div class="uy">
+            <div class="logo" d>
+                
+            </div>
+            <div class="bot-message" style="padding: 1px;
+            margin-bottom: 0px;
+            margin-top: -54px;
+            font-size: 11px;
+            margin-left: 71px;">
+                <p style="margin-left: 10px;">Please type a topic you'd like to know more about!</p>
+            </div>
+        </div>
+        
+       </div>
+       </div>
+        
+        <div class="chat-container">
+            <input type="text" id="user-input" placeholder="Start a new chat..." />
+            <button onclick="sendMessage()" id="send-btn">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="currentColor"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    async function sendMessage() {
+    var userInput = document.getElementById("user-input").value;
+    displayUserMessage(userInput);
+    displayLoadingMessage(); // Show loading message
+    await getBotResponse(userInput); // Wait for bot response
+}
+
+function displayUserMessage(message) {
+    var chatBox = document.getElementById("chat-box");
+    var userMessageDiv = document.createElement("div");
+    userMessageDiv.className = "user-message";
+    userMessageDiv.textContent = message;
+    chatBox.appendChild(userMessageDiv);
+    document.getElementById("user-input").value = "";
+}
+
+function displayLoadingMessage() {
+    var chatBox = document.getElementById("chat-box");
+    var loadingMessageDiv = document.createElement("div");
+    loadingMessageDiv.className = "loading-message";
+    loadingMessageDiv.textContent = "    Loading...";
+    loadingMessageDiv.id = "loading-message";
+    chatBox.appendChild(loadingMessageDiv);
+}
+
+function removeLoadingMessage() {
+    var loadingMessage = document.getElementById("loading-message");
+    if (loadingMessage) {
+        loadingMessage.remove();
+    }
+}
+
+// Object to manage predefined responses
+const predefinedResponses = {
+    "What is the capital of France?": "The capital of France is Paris."
+};
+
+async function getBotResponse(query) {
+    // Check if the query matches a predefined response
+    if (predefinedResponses[query]) {
+        displayBotMessage("Answer", predefinedResponses[query]);
+        removeLoadingMessage(); // Remove loading message when bot responds
+        return;
+    }
+
+    // First attempt to get information from Wikipedia
+    try {
+        let response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${query}`);
+        let data = await response.json();
+
+        if (data.extract) {
+            let imageUrl = data.thumbnail ? data.thumbnail.source : null;  // Check if image is available
+            displayBotMessage(data.title, data.extract, imageUrl);  // Pass Wikipedia title and extract
+        } else {
+            // If Wikipedia doesn't provide information, display custom fallback messages
+            displayFallbackMessage();
+        }
+    } catch (error) {
+        console.error('Error fetching from Wikipedia:', error);
+        displayBotMessage("Error", "Oops! Something went wrong while fetching from Wikipedia.");
+    }
+}
+
+function displayFallbackMessage() {
+    const fallbackMessages = [
+        "It looks like there's no information available on this topic. Why not try another word?",
+        "I'm sorry, I couldn't find anything. How about searching for something else?",
+        "Hmmm, it seems this topic is tricky. Maybe try exploring a different topic?",
+        "No info found on that. Did you know the Eiffel Tower can be 15 cm taller in the summer due to heat expansion?"
+    ];
+
+    // Select a random fallback message from the array
+    let randomIndex = Math.floor(Math.random() * fallbackMessages.length);
+    displayBotMessage("Fallback", fallbackMessages[randomIndex]);
+}
+
+function displayBotMessage(title, message, imageUrl = null) {
+    var chatBox = document.getElementById("chat-box");
+    removeLoadingMessage(); // Remove loading message when bot responds
+
+    // Create container for bot response and logo (uy)
+    var uyContainer = document.createElement("div");
+    uyContainer.className = "uy";
+
+    // Create logo div and append robot image
+    var logoDiv = document.createElement("div");
+    logoDiv.className = "logo";
+    var botImage = document.createElement("img");
+    botImage.src = "";  // path to your robot image
+    botImage.className = "bot-logo";
+    logoDiv.appendChild(botImage);
+
+    // Create bot message div
+    var botMessageDiv = document.createElement("div");
+    botMessageDiv.className = "bot-message";
+
+    // Add heading for the Wikipedia title or answer
+    var topicHeading = document.createElement("h2");
+    topicHeading.textContent = title;
+    botMessageDiv.appendChild(topicHeading);
+
+    // Add bot message text
+    var botText = document.createElement("p");
+    botText.textContent = message;
+    botMessageDiv.appendChild(botText);
+
+    // If image URL is provided, append it to the bot message div
+    if (imageUrl) {
+        var botImg = document.createElement("img");
+        botImg.src = imageUrl;
+        botImg.className = "wiki-image";  // Use the new CSS class for styling
+        botMessageDiv.appendChild(botImg);
+    }
+
+    // Append logo and bot message into the container
+    uyContainer.appendChild(logoDiv);
+    uyContainer.appendChild(botMessageDiv);
+
+    // Append container to chatbox
+    chatBox.appendChild(uyContainer);
+}
+
+
+</script>
+
+    
+    <script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
+</body>
+</html>
