@@ -28,16 +28,22 @@ body {
     box-shadow: 5px 5px 60px black;
     backdrop-filter: blur(3px);
     box-shadow: 5px 5px 5px black;
+    width: 100vw;
+  height: 85vh;
+  overflow: auto; /* Allow scrolling inside the element */
 }
 .chat-box {
-    height: 490px;
+    
     overflow-y: scroll;
-    padding: 0px;
+    padding: 13px;
     /* border: 3px solid #09585c; */
     border-radius: 5px;
     /* background: rgb(255 255 255 / 0%); */
     /* backdrop-filter: blur(6px); */
-    width: 100%;
+    
+    width: 100vw;
+  height: 100vh;
+  overflow: auto; /* Allow scrolling inside the element */
 }
 .uy {
     display: flex;
@@ -290,8 +296,13 @@ width: 100%;
     align-items: center;
     background-color: #000;
     padding: 10px;
-    border-radius: 50px;
-    width: fit-content;
+    
+    width: fit-content; 
+    bottom:0;
+    position: absolute;
+    width: 95vw;
+  
+  overflow: auto; /* Allow scrolling inside the element */
   }
   
   #user-input {
