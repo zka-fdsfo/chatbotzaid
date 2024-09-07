@@ -198,7 +198,12 @@ window.addEventListener('beforeunload', function (e) {
     // Set returnValue to show the default warning dialog
     e.returnValue = '⚠ Your chat history will disappear if you leave or refresh this page!';  // An empty string or a custom string (which is ignored by most browsers)
 });
-
+window.addEventListener('beforeunload', function (e) {
+    // Cancel the event
+    e.preventDefault();  // Some browsers may require this
+    // Set returnValue to show the default warning dialog
+    e.returnValue = '⚠ Your chat history will disappear if you leave or refresh this page!';  // An empty string or a custom string (which is ignored by most browsers)
+});
 </script>
 
     
