@@ -6,6 +6,54 @@ body {
     background-image:url(oiop.png) ;
     background-size: cover;
 }
+
+
+
+.calculator {
+    width: 200px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(#009688, rgb(26 74 85)), linear-gradient(27deg, rgb(0 0 0) 0%, rgb(3 53 48) 100%);
+}
+
+.calc-display {
+    width: 95%;
+    height: 40px;
+    text-align: right;
+    font-size: 20px;
+    margin-bottom: 10px;
+    /* padding: 5px; */
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    /* background-color: #f9f9f9; */
+    color: #ffffff;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+}
+
+.calc-buttons button {
+    width: 100%;
+    /* padding: 15px; */
+    font-size: 16px;
+    border: 1px solid #ddd;
+    background-color: #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-align: center;
+    height: 32px;
+}
+
+.calc-buttons button:hover {
+    background-color: #6cb76f;
+}
 .lr{
     color: white;
     font-size: 8px;
