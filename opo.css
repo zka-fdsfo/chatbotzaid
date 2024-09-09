@@ -161,10 +161,7 @@ body {
     display: none;  /* Initially hidden */
 }
 
-.logo {
-      /* Initially hidden */
-}
-/* .uy is the container for both logo and message/loading dots */
+ .uy is the container for both logo and message/loading dots */
 
     .uy {
         display: flex;
