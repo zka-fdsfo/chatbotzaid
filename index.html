@@ -59,10 +59,31 @@
                 <p style="margin-left: 10px;">Please type a topic you'd like to know more about!</p>
             </div>
         </div>
+        <div id="calculator" class="calculator" style="display:none;">
+            <input type="text" id="calc-display" class="calc-display" disabled>
+            <div class="calc-buttons">
+                <button onclick="insert(7)">7</button>
+                <button onclick="insert(8)">8</button>
+                <button onclick="insert(9)">9</button>
+                <button onclick="clearDisplay()">C</button>
+                <button onclick="insert(4)">4</button>
+                <button onclick="insert(5)">5</button>
+                <button onclick="insert(6)">6</button>
+                <button onclick="operate('/')">/</button>
+                <button onclick="insert(1)">1</button>
+                <button onclick="insert(2)">2</button>
+                <button onclick="insert(3)">3</button>
+                <button onclick="operate('*')">*</button>
+                <button onclick="insert(0)">0</button>
+                <button onclick="operate('-')">-</button>
+                <button onclick="operate('+')">+</button>
+                <button onclick="calculate()">=</button>
+            </div>
+        </div>
         
        </div>
        </div>
-        
+      
         <div class="chat-container">
             <input type="text" id="user-input" placeholder="Start a new chat..." />
             <button onclick="sendMessage()" id="send-btn">
@@ -557,6 +578,68 @@ function performMathOperation(query) {
     } else {
         return null;
     }
+}
+// Rename predefined responses to responseDictionary
+const responseDictionary = {
+    "hi": "Hello! How can I help you today?",
+    "i want a calculator": "Sure! Here's a calculator for you.",
+    "calculator disappear": "The calculator has been hidden.",
+    "disappear calculator": "The calculator has been hidden."
+};
+
+function toggleCalculator(shouldShow) {
+    const calculator = document.getElementById('calculator');
+    calculator.style.display = shouldShow ? 'block' : 'none';
+}
+
+async function getBotResponse(query) {
+    let normalizedQuery = normalizeInput(query);
+
+    // Check for specific commands related to the calculator
+    if (normalizedQuery === "i want a calculator") {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        toggleCalculator(true);  // Show calculator
+        removeLoadingMessage();
+        return;
+    } else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        toggleCalculator(false);  // Hide calculator
+        removeLoadingMessage();
+        return;
+    }
+
+    // Check for predefined responses
+    if (responseDictionary[normalizedQuery]) {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        removeLoadingMessage();
+        return;
+    }
+
+    // Fallback if no predefined response is found
+    displayFallbackMessage();
+}
+
+document.getElementById("user-input").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+function insert(num) {
+    document.getElementById('calc-display').value += num;
+}
+
+function clearDisplay() {
+    document.getElementById('calc-display').value = '';
+}
+
+function operate(op) {
+    document.getElementById('calc-display').value += ' ' + op + ' ';
+}
+
+function calculate() {
+    let expression = document.getElementById('calc-display').value;
+    document.getElementById('calc-display').value = eval(expression);
 }
 
 </script>
