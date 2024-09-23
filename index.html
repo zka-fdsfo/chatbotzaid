@@ -30,7 +30,7 @@
             </i>
 
             <div class="lr">
-                <h1>Mobo bot</h1>
+                <h1>Quest Bot</h1>
                 <div class="frt">
                     <div class="green"></div>
                     Online
@@ -69,14 +69,14 @@
                 <button onclick="insert(4)">4</button>
                 <button onclick="insert(5)">5</button>
                 <button onclick="insert(6)">6</button>
-                <button onclick="insert('/')">/</button>
+                <button onclick="operate('/')">/</button>
                 <button onclick="insert(1)">1</button>
                 <button onclick="insert(2)">2</button>
                 <button onclick="insert(3)">3</button>
-                <button onclick="insert('*')">*</button>
+                <button onclick="operate('*')">*</button>
                 <button onclick="insert(0)">0</button>
-                <button onclick="insert('-')">-</button>
-                <button onclick="insert('+')">+</button>
+                <button onclick="operate('-')">-</button>
+                <button onclick="operate('+')">+</button>
                 <button onclick="calculate()">=</button>
             </div>
         </div>
@@ -95,10 +95,10 @@
         </div>
     </div>
 </div>
-<script>
+<!-- <script>
     
 
-function displayUserMessage(message) {
+    function displayUserMessage(message) {
     var chatBox = document.getElementById("chat-box");
     var userMessageDiv = document.createElement("div");
     userMessageDiv.className = "user-message";
@@ -111,7 +111,7 @@ function displayLoadingMessage() {
     var chatBox = document.getElementById("chat-box");
     var loadingMessageDiv = document.createElement("div");
     loadingMessageDiv.className = "loading-message";
-    loadingMessageDiv.textContent = "    Loading...";
+    loadingMessageDiv.textContent = "Loading...";
     loadingMessageDiv.id = "loading-message";
     chatBox.appendChild(loadingMessageDiv);
 }
@@ -123,27 +123,31 @@ function removeLoadingMessage() {
     }
 }
 
-// Object to manage predefined responses
-
+function normalizeInput(input) {
+    let normalized = input.trim().toLowerCase();
+    // Remove common question phrases
+    normalized = normalized.replace(/^(what is|tell me something about|about|explain|give me information on|what's)\s+/i, '');
+    return normalized.replace(/[?!.]*$/, '');
+}
 
 async function getBotResponse(query) {
-    // Check if the query matches a predefined response
-    if (predefinedResponses[query]) {
-        displayBotMessage("Answer", predefinedResponses[query]);
-        removeLoadingMessage(); // Remove loading message when bot responds
-        return;
-    }
+    let normalizedQuery = normalizeInput(query);
 
-    // First attempt to get information from Wikipedia
     try {
-        let response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${query}`);
-        let data = await response.json();
+        // Search for the query on Wikipedia
+        let searchResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(normalizedQuery)}&format=json&origin=*`);
+        let searchData = await searchResponse.json();
 
-        if (data.extract) {
-            let imageUrl = data.thumbnail ? data.thumbnail.source : null;  // Check if image is available
-            displayBotMessage(data.title, data.extract, imageUrl);  // Pass Wikipedia title and extract
+        if (searchData.query.search.length > 0) {
+            let title = searchData.query.search[0].title;
+
+            // Get summary of the article
+            let summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+            let summaryData = await summaryResponse.json();
+
+            let imageUrl = summaryData.thumbnail ? summaryData.thumbnail.source : null;
+            displayBotMessage(title, summaryData.extract, imageUrl);
         } else {
-            // If Wikipedia doesn't provide information, display custom fallback messages
             displayFallbackMessage();
         }
     } catch (error) {
@@ -160,175 +164,64 @@ function displayFallbackMessage() {
         "No info found on that. Did you know the Eiffel Tower can be 15 cm taller in the summer due to heat expansion?"
     ];
 
-    // Select a random fallback message from the array
     let randomIndex = Math.floor(Math.random() * fallbackMessages.length);
     displayBotMessage("Fallback", fallbackMessages[randomIndex]);
 }
 
 function displayBotMessage(title, message, imageUrl = null) {
     var chatBox = document.getElementById("chat-box");
-    removeLoadingMessage(); // Remove loading message when bot responds
+    removeLoadingMessage();
 
-    // Create container for bot response and logo (uy)
     var uyContainer = document.createElement("div");
     uyContainer.className = "uy";
 
-    // Create logo div and append robot image
     var logoDiv = document.createElement("div");
     logoDiv.className = "logo";
     var botImage = document.createElement("img");
-    botImage.src = "";  // path to your robot image
+    botImage.src = "";  // Add path to your robot image if needed
     botImage.className = "bot-logo";
     logoDiv.appendChild(botImage);
 
-    // Create bot message div
     var botMessageDiv = document.createElement("div");
     botMessageDiv.className = "bot-message";
 
-    // Add heading for the Wikipedia title or answer
     var topicHeading = document.createElement("h2");
     topicHeading.textContent = title;
     botMessageDiv.appendChild(topicHeading);
 
-    // Add bot message text
     var botText = document.createElement("p");
     botText.textContent = message;
     botMessageDiv.appendChild(botText);
 
-    // If image URL is provided, append it to the bot message div
     if (imageUrl) {
         var botImg = document.createElement("img");
         botImg.src = imageUrl;
-        botImg.className = "wiki-image";  // Use the new CSS class for styling
+        botImg.className = "wiki-image";
         botMessageDiv.appendChild(botImg);
     }
 
-    // Append logo and bot message into the container
     uyContainer.appendChild(logoDiv);
     uyContainer.appendChild(botMessageDiv);
-
-    // Append container to chatbox
     chatBox.appendChild(uyContainer);
-} window.scrollTo(0, document.body.scrollHeight);
-
-function displayBotMessage(title, message, imageUrl = null) {
-    var chatBox = document.getElementById("chat-box");
-    removeLoadingMessage(); // Remove loading message when bot responds
-
-    // Create container for bot response and logo (uy)
-    var uyContainer = document.createElement("div");
-    uyContainer.className = "uy";
-
-    // Create logo div and append robot image
-    var logoDiv = document.createElement("div");
-    logoDiv.className = "logo";
-    var botImage = document.createElement("img");
-    botImage.src = "";  // path to your robot image
-    botImage.className = "bot-logo";
-    logoDiv.appendChild(botImage);
-
-    // Create bot message div
-    var botMessageDiv = document.createElement("div");
-    botMessageDiv.className = "bot-message";
-
-    // Add heading for the Wikipedia title or answer
-    var topicHeading = document.createElement("h2");
-    topicHeading.textContent = title;
-    botMessageDiv.appendChild(topicHeading);
-
-    // Add bot message text
-    var botText = document.createElement("p");
-    botText.textContent = message;
-    botMessageDiv.appendChild(botText);
-
-    // If image URL is provided, append it to the bot message div
-    if (imageUrl) {
-        var botImg = document.createElement("img");
-        botImg.src = imageUrl;
-        botImg.className = "wiki-image";  // Use the new CSS class for styling
-        botMessageDiv.appendChild(botImg);
-    }
-
-    // Append logo and bot message into the container
-    uyContainer.appendChild(logoDiv);
-    uyContainer.appendChild(botMessageDiv);
-
-    // Append container to chatbox
-    chatBox.appendChild(uyContainer);
-
-    // Scroll to the bottom
     chatBox.scrollTop = chatBox.scrollHeight;
 }
+
 document.getElementById("user-input").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
-        event.preventDefault(); // Prevent form submission if inside a form
-        sendMessage(); // Call the sendMessage function
+        event.preventDefault();
+        sendMessage();
     }
 });
 
 async function sendMessage() {
     var userInput = document.getElementById("user-input").value;
-    if (userInput.trim() === "") return; // Prevent empty submissions
+    if (userInput.trim() === "") return;
     displayUserMessage(userInput);
-    displayLoadingMessage(); // Show loading message
-    await getBotResponse(userInput); // Wait for bot response
-}
-
-function displayUserMessage(message) {
-    var chatBox = document.getElementById("chat-box");
-    var userMessageDiv = document.createElement("div");
-    userMessageDiv.className = "user-message";
-    userMessageDiv.textContent = message;
-    chatBox.appendChild(userMessageDiv);
-    document.getElementById("user-input").value = ""; // Clear input field after submitting
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+    displayLoadingMessage();
+    await getBotResponse(userInput);
 }
 
 
-</script>
-<script>
-   // Function to normalize user input (remove trailing punctuation, extra spaces, and make lowercase)
-function normalizeInput(input) {
-    // Convert input to lowercase, trim whitespace, and remove trailing punctuation like '?', '.', or '!'
-    return input.trim().toLowerCase().replace(/[?!.]*$/, '');
-}
-
-async function sendMessage() {
-    var userInput = document.getElementById("user-input").value;
-    if (userInput.trim() === "") return; // Prevent empty submissions
-
-    displayUserMessage(userInput);
-    displayLoadingMessage(); // Show loading message
-
-    await getBotResponse(userInput); // Wait for bot response
-}
-
-function displayUserMessage(message) {
-    var chatBox = document.getElementById("chat-box");
-    var userMessageDiv = document.createElement("div");
-    userMessageDiv.className = "user-message";
-    userMessageDiv.textContent = message;
-    chatBox.appendChild(userMessageDiv);
-    document.getElementById("user-input").value = ""; // Clear input field after submitting
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-function displayLoadingMessage() {
-    var chatBox = document.getElementById("chat-box");
-    var loadingMessageDiv = document.createElement("div");
-    loadingMessageDiv.className = "loading-message";
-    loadingMessageDiv.textContent = "Loading...";
-    loadingMessageDiv.id = "loading-message";
-    chatBox.appendChild(loadingMessageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-function removeLoadingMessage() {
-    var loadingMessage = document.getElementById("loading-message");
-    if (loadingMessage) {
-        loadingMessage.remove();
-    }
-}
 
 // Predefined responses
 const predefinedResponses = {
@@ -621,7 +514,400 @@ document.getElementById("user-input").addEventListener("keypress", function (eve
 
 
 
+</script> -->
+<script>
+    
+    function displayUserMessage(message) {
+    var chatBox = document.getElementById("chat-box");
+    var userMessageDiv = document.createElement("div");
+    userMessageDiv.className = "user-message";
+    userMessageDiv.textContent = message;
+    chatBox.appendChild(userMessageDiv);
+    document.getElementById("user-input").value = ""; // Clear input field after submitting
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
+
+function displayLoadingMessage() {
+    var chatBox = document.getElementById("chat-box");
+    var loadingMessageDiv = document.createElement("div");
+    loadingMessageDiv.className = "loading-message";
+    loadingMessageDiv.textContent = "Loading...";
+    loadingMessageDiv.id = "loading-message";
+    chatBox.appendChild(loadingMessageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
+
+function removeLoadingMessage() {
+    var loadingMessage = document.getElementById("loading-message");
+    if (loadingMessage) {
+        loadingMessage.remove();
+    }
+}
+
+function normalizeInput(input) {
+    return input.trim().toLowerCase().replace(/[?!.]*$/, '');
+}
+
+// Function to toggle calculator visibility
+function toggleCalculator(shouldShow) {
+    const calculator = document.getElementById('calculator');
+    calculator.style.display = shouldShow ? 'block' : 'none';
+}
+
+// Predefined responses
+const responseDictionary = {
+    "hi": "Hello! How can I help you today?",
+    "i want a calculator": "Sure! Here's a calculator for you.",
+    "calculator disappear": "The calculator has been hidden.",
+    "disappear calculator": "The calculator has been hidden.",
+    "hi": "Hello! How can I help you today?",
+        "hello": "Hi there! How can I assist you?",
+        "hey": "Hey! What can I do for you?",
+        "hi there": "Hi! How's your day going?",
+        "good morning": "Good morning! How can I assist you today?",
+        "good afternoon": "Good afternoon! What can I help you with?",
+        "good evening": "Good evening! Feel free to ask me anything.",
+        "good night": "Good night! Let me know if you need anything before heading to bed.",
+        "how are you": "I'm just a bot, but I'm here to help you!",
+        "how are you doing": "I'm doing great! How about you?",
+        "how’s it going": "I’m here to assist you. How about you?",
+        "what’s up": "Not much! Just ready to help. What can I do for you?",
+        "tell me something": "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible.",
+        "ok": "Got it! Let me know if you need anything else.",
+        "yes": "Great! If you need anything, I'm here.",
+        "no": "That's fine! Feel free to ask me anything.",
+        "i’ll do that now": "Awesome! Let me know if you need help.",
+        "thank you": "You're welcome! I'm happy to help.",
+        "thanks": "Anytime! I'm here to assist.",
+        "goodbye": "Goodbye! Have a wonderful day.",
+        "bye": "Bye! Take care!",
+        "see you later": "See you later! I'm always here when you need help.",
+        "how can you help me": "I can answer questions, provide information, and assist you with tasks. How can I help?",
+        "what can you do": "I can assist with a wide range of tasks and answer questions. Just ask!",
+        "can you help me": "Of course! What do you need help with?",
+        "i have a question": "Feel free to ask your question, and I’ll do my best to help!",
+        "do you know a joke": "Sure! Why don't scientists trust atoms? Because they make up everything!",
+        "tell me a joke": "Why did the computer go to therapy? Because it had too many bytes of issues!",
+        "you’re funny": "Thanks! I'm always here for a laugh.",
+        "do you love me": "I’m here to assist and support you, but love is beyond my programming!",
+        "i love you": "That’s sweet! While I can’t feel love, I’m always here to help you.",
+        "will you marry me": "I’m flattered, but I’m just a bot built to assist!",
+        
+
+    // ... other responses
+    "tell me today's date": () => {
+        const now = new Date();
+        return `Today's date is ${now.toLocaleDateString()} and the current time is ${now.toLocaleTimeString()}.`;
+    },
+    "what's today's date": () => {
+        const now = new Date();
+        return `Today's date is ${now.toLocaleDateString()} and the current time is ${now.toLocaleTimeString()}.`;
+    },
+    "what is the time": () => {
+        const now = new Date();
+        return `The current time is ${now.toLocaleTimeString()}.`;
+    },
+    "tell me the time": () => {
+        const now = new Date();
+        return `The current time is ${now.toLocaleTimeString()}.`;
+    },
+    // ... other predefined responses
+};
+    
+
+
+async function getBotResponse(query) {
+    function normalizeInput(input) {
+    let normalized = input.trim().toLowerCase();
+    // Remove common question phrases
+    normalized = normalized.replace(/^(can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
+    return normalized.replace(/[?!.]*$/, '');
+}
+
+    let normalizedQuery = normalizeInput(query);
+
+    // Check for specific commands related to the calculator
+    if (normalizedQuery === "i want a calculator") {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        toggleCalculator(true);  // Show calculator
+        removeLoadingMessage();
+        return;
+    } else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        toggleCalculator(false);  // Hide calculator
+        removeLoadingMessage();
+        return;
+    }
+
+    // Check for predefined responses
+    if (responseDictionary[normalizedQuery]) {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        removeLoadingMessage();
+        return;
+    }
+
+    // Attempt to get information from Wikipedia
+    try {
+        // First, search for the article
+        let searchResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(normalizedQuery)}&format=json&origin=*`);
+        let searchData = await searchResponse.json();
+
+        if (searchData.query.search.length > 0) {
+            let title = searchData.query.search[0].title;
+
+            // Get summary of the article
+            let summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+            let summaryData = await summaryResponse.json();
+
+            if (summaryData.extract) {
+                let imageUrl = summaryData.thumbnail ? summaryData.thumbnail.source : null;
+                displayBotMessage(title, summaryData.extract, imageUrl);
+            } else {
+                displayFallbackMessage();
+            }
+        } else {
+            displayFallbackMessage();
+        }
+    } catch (error) {
+        console.error('Error fetching from Wikipedia:', error);
+        displayBotMessage("Error", "Oops! Something went wrong while fetching from Wikipedia.");
+    }
+}
+
+function displayBotMessage(title, message, imageUrl = null) {
+    var chatBox = document.getElementById("chat-box");
+    removeLoadingMessage();
+
+    var uyContainer = document.createElement("div");
+    uyContainer.className = "uy";
+
+    var botMessageDiv = document.createElement("div");
+    botMessageDiv.className = "bot-message";
+    botMessageDiv.innerHTML = `<strong>${title}</strong><p>${message}</p>`;
+    
+    if (imageUrl) {
+        var image = document.createElement("img");
+        image.src = imageUrl;
+        image.alt = title;
+        image.className = "wiki-image";
+        botMessageDiv.prepend(image);
+    }
+    
+    uyContainer.appendChild(botMessageDiv);
+    chatBox.appendChild(uyContainer);
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
+
+function displayFallbackMessage() {
+    displayBotMessage("Sorry", "I couldn't find any information on that topic.");
+}
+
+function sendMessage() {
+    var userInput = document.getElementById("user-input").value;
+    if (userInput.trim() !== "") {
+        displayUserMessage(userInput);
+        displayLoadingMessage();
+        getBotResponse(userInput);
+    }
+}
+
+document.getElementById("user-input").addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+}); let display = document.getElementById("calc-display");
+    let currentInput = "";
+    let operator = null;
+    let previousInput = "";
+
+    function insert(num) {
+        // If there is an operator and the current input is empty, replace the last number
+        if (operator && currentInput === "") {
+            currentInput = num;  // Start new input after an operator
+        } else {
+            currentInput += num;  // Append the clicked number to the current input
+        }
+        updateDisplay();  // Update the display
+    }
+
+    function clearDisplay() {
+        currentInput = "";
+        previousInput = "";
+        operator = null;
+        display.value = "";  // Clear the display
+    }
+
+    function operate(op) {
+        if (currentInput === "") return;  // Prevent operation if no input
+
+        if (previousInput !== "") {
+            calculate();  // Calculate if there's a previous input before assigning the operator
+        }
+
+        operator = op;  // Set the operator (e.g., +, -, *, /)
+        previousInput = currentInput;  // Save the current input as the previous one
+        currentInput = "";  // Clear current input for the next number
+
+        updateDisplay();  // Update display to show the operation
+    }
+
+    function calculate() {
+        if (operator === null || currentInput === "") return;  // Prevent calculation if inputs are missing
+
+        let result;
+
+        // Convert strings to numbers and perform the operation
+        switch (operator) {
+            case "+":
+                result = parseFloat(previousInput) + parseFloat(currentInput);
+                break;
+            case "-":
+                result = parseFloat(previousInput) - parseFloat(currentInput);
+                break;
+            case "*":
+                result = parseFloat(previousInput) * parseFloat(currentInput);
+                break;
+            case "/":
+                result = parseFloat(previousInput) / parseFloat(currentInput);
+                break;
+            default:
+                return;  // Exit if the operator is not recognized
+        }
+
+        display.value = result;  // Show the result on the display
+        previousInput = result.toString();  // Save the result for further calculations
+        currentInput = "";  // Reset current input
+        operator = null;  // Clear the operator for the next calculation
+    }
+
+    function updateDisplay() {
+        // Show the current operation in the display
+        if (previousInput && operator) {
+            display.value = previousInput + " " + operator + " " + currentInput;
+        } else {
+            display.value = currentInput;  // If no previous input or operator, just show current input
+        }
+    }
+  
+// Predefined responses
+
+async function getBotResponse(query) {
+    let normalizedQuery = normalizeInput(query);
+
+    // Check for calculator commands
+    if (normalizedQuery === "i want a calculator") {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        toggleCalculator(true);
+        removeLoadingMessage();
+        return;
+    } else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        toggleCalculator(false);
+        removeLoadingMessage();
+        return;
+    }
+
+    // Check for predefined responses
+    if (typeof responseDictionary[normalizedQuery] === "function") {
+        displayBotMessage("Answer", responseDictionary[normalizedQuery]());
+        removeLoadingMessage();
+        return;
+    }
+
+    // Attempt to get information from Wikipedia
+    // ... (rest of your existing fetch logic)
+}
+
+// Other functions remain unchanged...
+
+function displayBotMessage(title, message, imageUrl = null) {
+    var chatBox = document.getElementById("chat-box");
+    removeLoadingMessage();
+
+    var uyContainer = document.createElement("div");
+    uyContainer.className = "uy";
+
+    var botMessageDiv = document.createElement("div");
+    botMessageDiv.className = "bot-message";
+    botMessageDiv.innerHTML = `<strong>${title}</strong><p>${message}</p>`;
+    
+    if (imageUrl) {
+        var image = document.createElement("img");
+        image.src = imageUrl;
+        image.alt = title;
+        image.className = "wiki-image";
+        botMessageDiv.prepend(image);
+    }
+    
+    uyContainer.appendChild(botMessageDiv);
+    chatBox.appendChild(uyContainer);
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
+
 </script>
-    <script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
+<!-- <script>
+    // Predefined responses
+    const predefinedResponses = {
+        "hi": "Hello! How can I help you today?",
+        "hello": "Hi there! How can I assist you?",
+        "hey": "Hey! What can I do for you?",
+        "hi there": "Hi! How's your day going?",
+        "good morning": "Good morning! How can I assist you today?",
+        "good afternoon": "Good afternoon! What can I help you with?",
+        "good evening": "Good evening! Feel free to ask me anything.",
+        "good night": "Good night! Let me know if you need anything before heading to bed.",
+        "how are you": "I'm just a bot, but I'm here to help you!",
+        "how are you doing": "I'm doing great! How about you?",
+        "how’s it going": "I’m here to assist you. How about you?",
+        "what’s up": "Not much! Just ready to help. What can I do for you?",
+        "tell me something": "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible.",
+        "ok": "Got it! Let me know if you need anything else.",
+        "yes": "Great! If you need anything, I'm here.",
+        "no": "That's fine! Feel free to ask me anything.",
+        "i’ll do that now": "Awesome! Let me know if you need help.",
+        "thank you": "You're welcome! I'm happy to help.",
+        "thanks": "Anytime! I'm here to assist.",
+        "goodbye": "Goodbye! Have a wonderful day.",
+        "bye": "Bye! Take care!",
+        "see you later": "See you later! I'm always here when you need help.",
+        "how can you help me": "I can answer questions, provide information, and assist you with tasks. How can I help?",
+        "what can you do": "I can assist with a wide range of tasks and answer questions. Just ask!",
+        "can you help me": "Of course! What do you need help with?",
+        "i have a question": "Feel free to ask your question, and I’ll do my best to help!",
+        "do you know a joke": "Sure! Why don't scientists trust atoms? Because they make up everything!",
+        "tell me a joke": "Why did the computer go to therapy? Because it had too many bytes of issues!",
+        "you’re funny": "Thanks! I'm always here for a laugh.",
+        "do you love me": "I’m here to assist and support you, but love is beyond my programming!",
+        "i love you": "That’s sweet! While I can’t feel love, I’m always here to help you.",
+        "will you marry me": "I’m flattered, but I’m just a bot built to assist!"
+    };
+
+    function normalizeInput(input) {
+        return input.trim().toLowerCase().replace(/[?!.]*$/, '');
+    }
+
+    async function getBotResponse(query) {
+        let normalizedQuery = normalizeInput(query);
+
+        // Check for predefined responses
+        if (predefinedResponses[normalizedQuery]) {
+            displayBotMessage("Answer", predefinedResponses[normalizedQuery]);
+            removeLoadingMessage();
+            return;
+        }
+
+        // Your existing logic for fetching from Wikipedia or other sources...
+        try {
+            // Fetch from Wikipedia as before...
+        } catch (error) {
+            console.error('Error fetching from Wikipedia:', error);
+            displayBotMessage("Error", "Oops! Something went wrong while fetching from Wikipedia.");
+        }
+    }
+
+    // Other functions remain the same...
+</script> -->
+
+<script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
 </body>
 </html>
