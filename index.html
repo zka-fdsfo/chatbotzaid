@@ -591,29 +591,9 @@ const responseDictionary = {
         "you’re funny": "Thanks! I'm always here for a laugh.",
         "do you love me": "I’m here to assist and support you, but love is beyond my programming!",
         "i love you": "That’s sweet! While I can’t feel love, I’m always here to help you.",
-        "will you marry me": "I’m flattered, but I’m just a bot built to assist!",
+        "will you marry me": "I’m flattered, but I’m just a bot built to assist!"
         
-
-    // ... other responses
-    "tell me today's date": () => {
-        const now = new Date();
-        return `Today's date is ${now.toLocaleDateString()} and the current time is ${now.toLocaleTimeString()}.`;
-    },
-    "what's today's date": () => {
-        const now = new Date();
-        return `Today's date is ${now.toLocaleDateString()} and the current time is ${now.toLocaleTimeString()}.`;
-    },
-    "what is the time": () => {
-        const now = new Date();
-        return `The current time is ${now.toLocaleTimeString()}.`;
-    },
-    "tell me the time": () => {
-        const now = new Date();
-        return `The current time is ${now.toLocaleTimeString()}.`;
-    },
-    // ... other predefined responses
-};
-    
+    };
 
 
 async function getBotResponse(query) {
@@ -789,60 +769,6 @@ document.getElementById("user-input").addEventListener("keypress", function (eve
         }
     }
   
-// Predefined responses
-
-async function getBotResponse(query) {
-    let normalizedQuery = normalizeInput(query);
-
-    // Check for calculator commands
-    if (normalizedQuery === "i want a calculator") {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
-        toggleCalculator(true);
-        removeLoadingMessage();
-        return;
-    } else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
-        toggleCalculator(false);
-        removeLoadingMessage();
-        return;
-    }
-
-    // Check for predefined responses
-    if (typeof responseDictionary[normalizedQuery] === "function") {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]());
-        removeLoadingMessage();
-        return;
-    }
-
-    // Attempt to get information from Wikipedia
-    // ... (rest of your existing fetch logic)
-}
-
-// Other functions remain unchanged...
-
-function displayBotMessage(title, message, imageUrl = null) {
-    var chatBox = document.getElementById("chat-box");
-    removeLoadingMessage();
-
-    var uyContainer = document.createElement("div");
-    uyContainer.className = "uy";
-
-    var botMessageDiv = document.createElement("div");
-    botMessageDiv.className = "bot-message";
-    botMessageDiv.innerHTML = `<strong>${title}</strong><p>${message}</p>`;
-    
-    if (imageUrl) {
-        var image = document.createElement("img");
-        image.src = imageUrl;
-        image.alt = title;
-        image.className = "wiki-image";
-        botMessageDiv.prepend(image);
-    }
-    
-    uyContainer.appendChild(botMessageDiv);
-    chatBox.appendChild(uyContainer);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
 
 </script>
 <!-- <script>
