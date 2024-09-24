@@ -48,7 +48,7 @@
             
         </div><br>
         <div class="uy">
-            <div class="logo" d>
+            <div class="logo" >
                 
             </div>
             <div class="bot-message" style="padding: 1px;
@@ -556,51 +556,121 @@ function toggleCalculator(shouldShow) {
 
 // Predefined responses
 const responseDictionary = {
-    "hi": "Hello! How can I help you today?",
-    "i want a calculator": "Sure! Here's a calculator for you.",
-    "calculator disappear": "The calculator has been hidden.",
-    "disappear calculator": "The calculator has been hidden.",
-    "hi": "Hello! How can I help you today?",
-        "hello": "Hi there! How can I assist you?",
-        "hey": "Hey! What can I do for you?",
-        "hi there": "Hi! How's your day going?",
-        "good morning": "Good morning! How can I assist you today?",
-        "good afternoon": "Good afternoon! What can I help you with?",
-        "good evening": "Good evening! Feel free to ask me anything.",
-        "good night": "Good night! Let me know if you need anything before heading to bed.",
-        "how are you": "I'm just a bot, but I'm here to help you!",
-        "how are you doing": "I'm doing great! How about you?",
-        "how’s it going": "I’m here to assist you. How about you?",
-        "what’s up": "Not much! Just ready to help. What can I do for you?",
-        "tell me something": "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible.",
-        "ok": "Got it! Let me know if you need anything else.",
-        "yes": "Great! If you need anything, I'm here.",
-        "no": "That's fine! Feel free to ask me anything.",
-        "i’ll do that now": "Awesome! Let me know if you need help.",
-        "thank you": "You're welcome! I'm happy to help.",
-        "thanks": "Anytime! I'm here to assist.",
-        "goodbye": "Goodbye! Have a wonderful day.",
-        "bye": "Bye! Take care!",
-        "see you later": "See you later! I'm always here when you need help.",
-        "how can you help me": "I can answer questions, provide information, and assist you with tasks. How can I help?",
-        "what can you do": "I can assist with a wide range of tasks and answer questions. Just ask!",
-        "can you help me": "Of course! What do you need help with?",
-        "i have a question": "Feel free to ask your question, and I’ll do my best to help!",
-        "do you know a joke": "Sure! Why don't scientists trust atoms? Because they make up everything!",
-        "tell me a joke": "Why did the computer go to therapy? Because it had too many bytes of issues!",
-        "you’re funny": "Thanks! I'm always here for a laugh.",
-        "do you love me": "I’m here to assist and support you, but love is beyond my programming!",
-        "i love you": "That’s sweet! While I can’t feel love, I’m always here to help you.",
-        "will you marry me": "I’m flattered, but I’m just a bot built to assist!"
-        
-    };
+    // Greetings
+    "hi": "👋 Hello! How can I help you today?",
+    "hello": "👋 Hi there! How can I assist you?",
+    "hey": "👋 Hey! What can I do for you?",
+    "hi there": "👋 Hi! How's your day going?",
+    "good morning": "🌞 Good morning! How can I assist you today?",
+    "good afternoon": "☀️ Good afternoon! What can I help you with?",
+    "good evening": "🌆 Good evening! Feel free to ask me anything.",
+    "good night": "🌙 Good night! Let me know if you need anything before heading to bed.",
+
+    // Small talk questions
+    "how are you": "🤖 I'm just a bot, but I'm here to help you!",
+    "how are you doing": "😊 I'm doing great! How about you?",
+    "how’s it going": "🤗 I’m here to assist you. How about you?",
+    "what’s up": "😄 Not much! Just ready to help. What can I do for you?",
+    "what up": "😄 Not much! Just ready to help. What can I do for you?",
+
+    // Human/bot identity questions
+    "are you human": "❌ No, I’m a chatbot here to assist you with any questions!",
+    "are you a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
+    "do you have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do you have emotions": "😐 I don’t experience emotions, but I can provide useful information!",
+
+    // Personal life questions (humorous answers)
+    "do you have a girlfriend": "💔 Nope, I’m too busy answering questions to date!",
+    "are you married": "💍 I’m married to helping you get answers!",
+    "will you marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
+    "do you love me": "❤️ I’m here to support you, but love isn’t in my programming!",
+
+    // Common requests
+    "can you help me": "🤗 Of course! What do you need help with?",
+    "what can you do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "tell me something interesting": "🧐 Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
+    "tell me something fun": "🐙 Did you know octopuses have three hearts and blue blood?",
+
+    // Time-related questions
+    "what's the time": () => {
+        const now = new Date();
+        return `🕒 The current time is ${now.toLocaleTimeString()}.`;
+    },
+    "can you tell me the time": () => {
+        const now = new Date();
+        return `🕒 Right now, it is ${now.toLocaleTimeString()}.`;
+    },
+
+    // Date-related questions
+    "what's today's date": () => {
+        const now = new Date();
+        return `📅 Today's date is ${now.toLocaleDateString()}.`;
+    },
+    "tell me today's date": () => {
+        const now = new Date();
+        return `📅 The current date is ${now.toLocaleDateString()}.`;
+    },
+
+    // Responses to criticism
+    "you are not good": [
+        "😔 Sorry, I'm working on improving! Thank you for your feedback.",
+        "😢 I appreciate your honesty! I'll do my best to get better.",
+        "🤖 Oh no! I'm here to learn and improve. Please give me another chance! 😊",
+        "😞 I'm sorry to hear that! How can I assist you better?",
+        "🙁 I understand! Let me know what I can do to improve.",
+        "😟 Your feedback is valuable! I'll strive to do better.",
+        "😔 I know I can improve! Thank you for letting me know.",
+    ],
+    "you are bad": [
+        "😟 I am sorry! Your feedback helps me get better. Thank you!",
+        "😩 I didn't mean to disappoint you! How can I make it right?",
+        "😕 I’m sorry to hear that! I’ll strive to do better next time.",
+        "😔 I understand your concern! Please tell me how I can improve.",
+        "😳 I apologize! I'm constantly learning and would love your guidance.",
+        "😢 I didn't mean to upset you! What can I do to assist you better?",
+        "🙁 Thank you for your feedback! I’ll work on improving.",
+    ],
+
+    // Fun responses
+    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "thank you": "😊 You're welcome! I'm happy to help.",
+    "thanks": "😊 Anytime! I'm here to assist.",
+    "ok": "👌 Got it! Let me know if you need anything else.",
+    "yes": "👍 Great! If you need anything, I'm here.",
+    "no": "❌ That's fine! Feel free to ask me anything.",
+    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+};
+
+// Function to get a random response
+function getResponse(key) {
+    const responsesList = responseDictionary[key];
+    if (Array.isArray(responsesList)) {
+        const randomIndex = Math.floor(Math.random() * responsesList.length);
+        return responsesList[randomIndex];
+    } else if (typeof responsesList === "function") {
+        return responsesList();
+    }
+    return "🤔 I'm not sure how to respond to that.";
+}
 
 
+    function normalizeInput(input) {
+    let normalized = input.trim().toLowerCase();
+    // Correct common grammatical mistakes
+    normalized = normalized.replace('do have', 'do you have');
+    normalized = normalized.replace('have you girlfriend', 'do you have a girlfriend');
+    // Remove trailing punctuation
+    return normalized.replace(/[?!.]*$/, '');
+}
 async function getBotResponse(query) {
     function normalizeInput(input) {
     let normalized = input.trim().toLowerCase();
     // Remove common question phrases
-    normalized = normalized.replace(/^(can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
+    normalized = normalized.replace(/^(Tell me about|tell me about|Who is|who is|can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
     return normalized.replace(/[?!.]*$/, '');
 }
 
@@ -608,12 +678,12 @@ async function getBotResponse(query) {
 
     // Check for specific commands related to the calculator
     if (normalizedQuery === "i want a calculator") {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        displayBotMessage("", responseDictionary[normalizedQuery]);
         toggleCalculator(true);  // Show calculator
         removeLoadingMessage();
         return;
     } else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        displayBotMessage("", responseDictionary[normalizedQuery]);
         toggleCalculator(false);  // Hide calculator
         removeLoadingMessage();
         return;
@@ -621,7 +691,7 @@ async function getBotResponse(query) {
 
     // Check for predefined responses
     if (responseDictionary[normalizedQuery]) {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
+        displayBotMessage("", responseDictionary[normalizedQuery]);
         removeLoadingMessage();
         return;
     }
@@ -657,11 +727,13 @@ async function getBotResponse(query) {
 function displayBotMessage(title, message, imageUrl = null) {
     var chatBox = document.getElementById("chat-box");
     removeLoadingMessage();
-
+    
     var uyContainer = document.createElement("div");
     uyContainer.className = "uy";
-
+    
+   
     var botMessageDiv = document.createElement("div");
+    
     botMessageDiv.className = "bot-message";
     botMessageDiv.innerHTML = `<strong>${title}</strong><p>${message}</p>`;
     
@@ -679,7 +751,8 @@ function displayBotMessage(title, message, imageUrl = null) {
 }
 
 function displayFallbackMessage() {
-    displayBotMessage("Sorry", "I couldn't find any information on that topic.");
+    displayBotMessage("Sorry", "I couldn't find any information on that topic. Please check the spelling or try rephrasing your question."
+);
 }
 
 function sendMessage() {
@@ -837,3 +910,4 @@ document.getElementById("user-input").addEventListener("keypress", function (eve
 <script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
 </body>
 </html>
+
