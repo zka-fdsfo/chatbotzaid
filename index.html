@@ -723,24 +723,22 @@ async function getBotResponse(query) {
     return normalized.replace(/[?!.]*$/, '');
 }
 
-    let normalizedQuery = normalizeInput(query);
+let normalizedQuery = normalizeInput(query);
 
-    // Check for specific commands related to the calculator
-    if (normalizedQuery === "i want a calculator") {
-        displayBotMessage("", responseDictionary[normalizedQuery]);
-        toggleCalculator(true);  // Show calculator
-        removeLoadingMessage();
-        scrollToTop(); // Scroll to the top when calculator appears
-        
-        return;
-    } else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
-        displayBotMessage("", responseDictionary[normalizedQuery]);
-        toggleCalculator(false);  // Hide calculator
-        removeLoadingMessage();
-        scrollToTop(); // Scroll to the top when calculator appears
-      
-        return;
-    }
+// Check for specific commands related to the calculator
+if (normalizedQuery === "i want a calculator") {
+    displayBotMessage("", "Here is your calculator:"); // Show the initial bot response
+    toggleCalculator(true);  // Show calculator
+    removeLoadingMessage();
+    scrollToTop(); // Scroll to the top when calculator appears
+    return;
+} else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
+    displayBotMessage("", "The calculator has been removed."); // Show the message for hiding the calculator
+    toggleCalculator(false);  // Hide calculator
+    removeLoadingMessage();
+    scrollToTop(); // Scroll to the top when calculator disappears
+    return;
+}
 
     // Check for predefined responses
     if (responseDictionary[normalizedQuery]) {
