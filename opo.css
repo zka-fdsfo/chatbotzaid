@@ -8,6 +8,22 @@ body {
 }
 
 
+#game-container {
+    margin-top: 20px;
+}
+
+canvas {
+    background-color: lightblue;
+    border: 2px solid #333;
+    margin: 0 auto;
+    display: block;
+}
+
+h3 {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #333;
+}
 
 .calculator {
     width: 200px;
@@ -95,8 +111,8 @@ body {
 }
 .uy {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    flex-direction: row;
+    align-items: baseline;
 }
 
 .logo {
@@ -120,6 +136,9 @@ body {
     max-width: 70%; /* Control width of the message bubble */
     word-wrap: break-word; /* Wrap long text */
     position: relative;
+    border-top-left-radius: 24px;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
 }
 
 .bot-message:before {
@@ -138,9 +157,9 @@ body {
     margin: 25px;
     margin-left: 150px;
     margin-right: 5px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-left-radius: 15px;
+    border-top-left-radius: 41px;
+    border-top-right-radius: 43px;
+    border-bottom-left-radius: 32px;
     margin-bottom: 10px;
     color: white;
     margin-right: 20px;
@@ -168,8 +187,8 @@ body {
 
     .uy {
         display: flex;
-        align-items: flex-start;
-        /* margin-top: 10px; */
+        flex-direction: row;
+        align-items: baseline;
     }
 
 
@@ -308,7 +327,9 @@ margin-left: 10px;
     /* box-shadow: inset 0 0 0px 5px rgba(0, 0, 0, 0.8), inset 0 0 15px 5px rgba(255, 255, 255, 0.2); */
     padding-bottom: 10px;
     border-bottom: 0.2px #ffffff29 solid;
-}
+    border-bottom-left-radius: 29px;
+    border-bottom-right-radius: 29px;
+    }
 
 .green {
     height: 7px;
