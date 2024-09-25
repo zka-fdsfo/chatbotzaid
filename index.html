@@ -107,7 +107,10 @@
 
        </div>
        </div>
-        
+       <div class="robot-container">
+        <img src="file:///C:/Users/JKV%20KOLKATA%20NEWS/Downloads/output-onlinegiftools.gif" alt="Robot" class="robot-gif">
+    </div>
+    
         <div class="chat-container">
             <input type="text" id="user-input" placeholder="Start a new chat..." />
             <button onclick="sendMessage()" id="send-btn">
@@ -896,7 +899,20 @@ document.getElementById("user-input").addEventListener("keypress", function (eve
             display.value = currentInput;  // If no previous input or operator, just show current input
         }
     }
-  
+   // Function to show the robot
+// Function to show the robot
+function showRobot() {
+    const robotContainer = document.querySelector('.robot-container');
+    robotContainer.classList.add('pop-out');
+    
+    // Hide after 5 seconds
+    setTimeout(() => {
+        robotContainer.classList.remove('pop-out');
+    }, 5000);
+}
+
+// Call the function every 5 seconds in a loop
+setInterval(showRobot, 10000); // 10s loop: 5s visible, 5s hidden
 
 </script>
 <!-- <script>
