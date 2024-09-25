@@ -17,6 +17,27 @@
             border-bottom-right-radius: 7px;
             border-bottom-left-radius: 7px;
         }
+        .loading-message {
+    display: flex;          /* Align items in a row */
+    justify-content: flex-start;  /* Align content to the left */
+    align-items: center;    /* Vertically center the GIFs */
+    
+}
+
+.loading-gif {
+    margin-right: 5px;      /* Reduce the gap between the two GIFs */
+    width: 50px;            /* Set size for the first GIF */
+    height: auto;
+}
+
+.loading-gif-small {
+    margin-right: 0;        /* No gap after the second GIF */
+    width: 20px;            /* Smaller size for the second GIF */
+    height: auto;
+    margin-top: 5px;
+    margin-left: -22px;
+}
+
 
       
 
@@ -47,15 +68,17 @@
                 <p>Hello! This Bot provides you with information from the internet. Write (only one word) of the topic to get information. If you want a calculator, just type 'I want a calculator.</p>
             
         </div><br>
-        <div class="uy">
+        <div class="uy" style="display: flex;
+        flex-direction: row;
+        align-items: flex-end;">
             <div class="logo" >
                 
             </div>
-            <div class="bot-message" style="padding: 1px;
+            <div class="bot-message" style="    padding: 1px;
             margin-bottom: 0px;
-            margin-top: -54px;
+            /* margin-top: -54px; */
             font-size: 11px;
-            margin-left: 71px;">
+            /* margin-left: 71px;">
                 <p style="margin-left: 10px;">Please type a topic you'd like to know more about!</p>
             </div>
         </div>
@@ -531,11 +554,34 @@ function displayLoadingMessage() {
     var chatBox = document.getElementById("chat-box");
     var loadingMessageDiv = document.createElement("div");
     loadingMessageDiv.className = "loading-message";
-    loadingMessageDiv.textContent = "Loading...";
     loadingMessageDiv.id = "loading-message";
+
+    // Create img elements for the GIFs
+    var loadingGif1 = document.createElement("img");
+    loadingGif1.src = "tjhg.gif";  // Set the path to your first GIF
+    loadingGif1.alt = "Loading..."; // Alternative text for the first image
+    loadingGif1.className = "loading-gif"; // Add a class for CSS styling if needed
+
+    var loadingGif2 = document.createElement("img");
+    loadingGif2.src = "gokf.gif";  // Set the path to your second GIF
+    loadingGif2.alt = "Loading..."; // Alternative text for the second image
+    loadingGif2.className = "loading-gif-small"; // Separate class for custom styling
+
+    // Append both GIFs to the loadingMessageDiv
+    loadingMessageDiv.appendChild(loadingGif1);
+    loadingMessageDiv.appendChild(loadingGif2);
+
     chatBox.appendChild(loadingMessageDiv);
     chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
 }
+
+function removeLoadingMessage() {
+    var loadingMessage = document.getElementById("loading-message");
+    if (loadingMessage) {
+        loadingMessage.remove();
+    }
+}
+
 
 function removeLoadingMessage() {
     var loadingMessage = document.getElementById("loading-message");
@@ -744,7 +790,16 @@ function displayBotMessage(title, message, imageUrl = null) {
         image.className = "wiki-image";
         botMessageDiv.prepend(image);
     }
-    
+    var logoDiv = document.createElement("div");
+    logoDiv.className = "logo";
+    // logoDiv.innerHTML = `<img src="path/to/your/logo.png" alt="Logo" style="width: 50px; height: auto;">`; // Adjust the logo source
+
+    // Append both logo and bot message into uyContainer
+    uyContainer.appendChild(logoDiv);
+    uyContainer.appendChild(botMessageDiv);
+
+    // Append the uyContainer to the chat box
+    chatBox.appendChild(uyContainer);
     uyContainer.appendChild(botMessageDiv);
     chatBox.appendChild(uyContainer);
     chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
@@ -910,4 +965,3 @@ document.getElementById("user-input").addEventListener("keypress", function (eve
 <script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
 </body>
 </html>
-
