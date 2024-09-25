@@ -730,11 +730,15 @@ async function getBotResponse(query) {
         displayBotMessage("", responseDictionary[normalizedQuery]);
         toggleCalculator(true);  // Show calculator
         removeLoadingMessage();
+        scrollToTop(); // Scroll to the top when calculator appears
+        
         return;
     } else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
         displayBotMessage("", responseDictionary[normalizedQuery]);
         toggleCalculator(false);  // Hide calculator
         removeLoadingMessage();
+        scrollToTop(); // Scroll to the top when calculator appears
+      
         return;
     }
 
