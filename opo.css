@@ -124,7 +124,7 @@ h3 {
     /* backdrop-filter: blur(6px); */
     
     width: 100vw;
-    height: 74vh;
+    height: 100vh;
   overflow: auto; /* Allow scrolling inside the element */
 }
 .uy {
@@ -157,6 +157,7 @@ h3 {
     border-top-left-radius: 24px;
     border-bottom-right-radius: 25px;
     border-top-right-radius: 25px;
+    margin-bottom: 20px;
 }
 
 .bot-message:before {
