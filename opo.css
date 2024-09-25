@@ -43,6 +43,7 @@ h3 {
 }
 
 .calculator {
+    margin-top: 20px;
     width: 200px;
     border: 1px solid #ddd;
     padding: 10px;
