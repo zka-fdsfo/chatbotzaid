@@ -389,7 +389,7 @@ width: 100%;
     position: absolute;
     width: 95vw;
     
- overflow: hidden; /* Allow scrolling inside the element */
+  overflow: hidden; /* Allow scrolling inside the element */
   }
 .black {
     height: 103%;
