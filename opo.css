@@ -6,27 +6,29 @@ body {
     background-image:url(oiop.png) ;
     background-size: cover;
 }
+
 #feedback-form {
     width: 300px;
-    margin: 50px ;
+    margin: 50px;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
     display: none;
-
-  }
+    background: linear-gradient(rgb(39 39 39), rgb(0 76 193 / 20%)), linear-gradient(144deg, rgb(171 171 171 / 78%) 0%, rgb(0 0 0 / 20%) 100%);
+    color: white;
+}
   
   #feedback-form h2 {
     text-align: center;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 20px;
   }
   
   #feedback-form p {
     text-align: center;
-    color: #666;
+    color: #ffffff;
   }
   
   input[type="radio"] {
