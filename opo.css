@@ -363,7 +363,7 @@ h3 {
     box-shadow: 5px 5px 5px black;
     width: 100vw;
   height: 85vh;
-  overflow: auto; /* Allow scrolling inside the element */
+  overflow: hidden; /* Allow scrolling inside the element */
 }
 .chat-box {
     
