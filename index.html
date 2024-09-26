@@ -129,7 +129,7 @@
         <div class="chat-box" id="chat-box">
             <div class="top-message">
                 <img src="lfpl.gif" alt="">
-                <p>Hello! This bot provides information from the internet. Simply write a topic to get information. For example, 'Tell me about...', or 'Give me information on...'. If you want a working calculator , just type 'I want a calculator..</p>
+                <p>Hello! This bot provides information from the internet. Simply write a topic to get information. For example, 'Tell me about...', or 'Give me information on...'. If you want a working calculator, just type 'I want a calculator.' If you want information related to a specific topic, you can write something like 'Topic (related things).'</p>
             
         </div><br>
         <div class="uy" style="display: flex;
@@ -783,7 +783,7 @@ async function getBotResponse(query) {
     function normalizeInput(input) {
     let normalized = input.trim().toLowerCase();
     // Remove common question phrases
-    normalized = normalized.replace(/^(!|What do you mean by|What do you mean by |Are you|Will|Can|are|is|Do|Does||Where is the|Tell me about|tell me about|Who is|who is|can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
+    normalized = normalized.replace(/^(give me information on|Give me information on|!|What do you mean by|What do you mean by |Are you|Will|Can|are|is|Do|Does||Where is the|Tell me about|tell me about|Who is|who is|can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
     return normalized.replace(/[?!.]*$/, '');
 }
 
@@ -791,7 +791,7 @@ let normalizedQuery = normalizeInput(query);
 
 // Check for specific commands related to the calculator
 if (normalizedQuery === "i want a calculator") {
-    displayBotMessage("", "Here is your calculator:"); // Show the initial bot response
+    displayBotMessage("", "Here is your calculator the calculator is at the top of the page"); // Show the initial bot response
     toggleCalculator(true);  // Show calculator
     removeLoadingMessage();
     scrollToTop(); // Scroll to the top when calculator appears
