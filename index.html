@@ -46,8 +46,72 @@
 <body>
     <div class="topographic-texture">
         <div class="en">
-            <i class="fa-solid fa-chevron-left">
-                <div class="black"></div>
+            <i>
+                <div class="menu-icon" id="menuIcon">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+                <div class="black">
+                    
+        <div class="log-content">
+            <div class="log"style="    margin: 6px;
+            text-align: right;
+            height: 47px;
+            width: 45px;">
+                <i class="bx bxl-c-plus-plus"></i>
+                <div class="log-name">Quest.Bot</div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+            <li>
+                <a href="#">
+                    <i class="bx bx-grid-alt"></i>
+                    <span class="links-name" id="hrt">New chat</span>
+                </a>
+            </li>
+           
+            <li>
+                <a href="javascript:void(0);" onclick="toggleFeedbackForm()">
+                    <i class="bx bx-cog"></i>
+                    <span class="links-name">Send feedback</span>
+                </a>
+                <!-- Feedback form hidden by default -->
+                <div id="feedback-form" style="display: none; margin-top: 10px;">
+                    <h2>Help us improve!</h2>
+                    <p>How easy was it for you to configure the project?</p>
+                    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                        <input type="radio" name="rating" value="1"> 😞 
+                        <input type="radio" name="rating" value="2"> ☹️ 
+                        <input type="radio" name="rating" value="3"> 😐 
+                        <input type="radio" name="rating" value="4"> 😊 
+                        <input type="radio" name="rating" value="5"> 😍 
+                        <br><br>
+                        <label for="feedback">How can we improve the global snippet?</label>
+                        <textarea id="feedback" name="feedback" placeholder="It is perfect"></textarea>
+                        <br><br>
+                        <button type="submit">Submit feedback</button>
+                    </form>
+                </div>
+            </li>
+            
+        </ul>
+
+        <div class="profile-content">
+            <div class="profile">
+                <div class="profile-details">
+                    <img src="file:///C:/Users/JKV%20KOLKATA%20NEWS/Downloads/sounddesign_icon.gif" alt="profile">
+                    <div class="name-job">
+                        <div class="name">Mullick Zaid Khan</div>
+                        <div class="job">Web Designer</div>
+                    </div>
+                </div>
+                <i class="bx bx-log-out"></i>
+            </div>
+        </div>
+    
+                </div>
             </i>
 
             <div class="lr">
@@ -79,7 +143,7 @@
             /* margin-top: -54px; */
             font-size: 11px;
             /* margin-left: 71px;">
-                <p style="margin-left: 10px;">Please type a topic you'd like to know more about!</p>
+                <p style="margin-left: 10px; padding: 9px;">Please type a topic you'd like to know more about!</p>
             </div>
         </div>
         <div id="calculator" class="calculator" style="display:none;">
@@ -915,6 +979,76 @@ function showRobot() {
 
 // Call the function every 5 seconds in a loop
 setInterval(showRobot, 10000); // 10s loop: 5s visible, 5s hidden
+document.getElementById("menuIcon").addEventListener("click", function() {
+    this.classList.toggle("change");
+});
+document.getElementById("menuIcon").addEventListener("click", function() {
+    const blackDiv = document.querySelector(".black");
+    
+    // Toggle the "active" class to show or hide the black div
+    blackDiv.classList.toggle("active");
+});
+document.getElementById("hrt").addEventListener("click", function(event) {
+    event.preventDefault();  // Prevent the default action of the link
+    location.reload();       // Reload the page
+});
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const feedback = document.getElementById('feedback').value;
+  const rating = document.querySelector('input[name="rating"]:checked').value;
+
+  const data = {
+    rating: rating,
+    feedback: feedback
+  };
+
+  fetch('/sendFeedback', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert('Feedback sent successfully!');
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+});
+function toggleFeedbackForm() {
+    const feedbackForm = document.getElementById('feedback-form');
+    
+    // Toggle the visibility
+    if (feedbackForm.style.display === 'none' || feedbackForm.style.display === '') {
+        feedbackForm.style.display = 'block'; // Show the form
+    } else {
+        feedbackForm.style.display = 'none'; // Hide the form
+    }
+}
+
+function submitFeedback(event) {
+    event.preventDefault(); // Prevent the form from reloading the page
+    
+    const rating = document.querySelector('input[name="rating"]:checked');
+    const feedback = document.getElementById('feedback').value;
+
+    if (rating) {
+        // Here, you can handle the form data (e.g., sending it to the server)
+        console.log(`Rating: ${rating.value}`);
+        console.log(`Feedback: ${feedback}`);
+        
+        // Hide the feedback form after submission
+        document.getElementById('feedback-form').style.display = 'none';
+
+        // Reset the form
+        document.getElementById('feedbackForm').reset();
+    } else {
+        alert("Please select a rating before submitting.");
+    }
+}
 
 </script>
 <!-- <script>
