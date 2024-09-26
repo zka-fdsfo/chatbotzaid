@@ -6,7 +6,247 @@ body {
     background-image:url(oiop.png) ;
     background-size: cover;
 }
+#feedback-form {
+    width: 300px;
+    margin: 50px ;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    display: none;
 
+  }
+  
+  #feedback-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  #feedback-form p {
+    text-align: center;
+    color: #666;
+  }
+  
+  input[type="radio"] {
+    margin: 0 5px;
+    vertical-align: middle;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    font-family: Arial, sans-serif;
+  }
+  
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #4cae4c;
+  }
+  
+  input[type="radio"]:checked + label {
+    font-weight: bold;
+  }
+  
+  #feedback-form input[type="radio"] {
+    transform: scale(1.5);
+  }
+  
+  #feedback-form input[type="radio"]:checked {
+    outline: 2px solid #4cae4c;
+  }
+  
+  textarea:focus, input:focus {
+    outline: none;
+    border-color: #5cb85c;
+  }
+  
+@import url('https://cdn.jsdelivr.net/npm/boxicons@2.1.1/css/boxicons.min.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.log{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    background-color: #C6FF00;
+    margin-top: 50px;
+    background-image: url(ghjlkm.png);
+    background-size: cover;
+}
+.sidebar {
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    background: #0f0f2a;
+    padding: 10px 0;
+}
+
+.logo-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60px;
+    background: #11101d;
+}
+
+
+.log i {
+    font-size: 36px;
+    color: white;
+}
+
+.log-name {
+    font-size: 21px;
+    font-weight: 600;
+    color: white;
+    margin-left: 60px;
+    margin-top: 7px;
+    text-align: center;
+    font-family: system-ui;
+}
+
+.nav-list {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.nav-list li {
+    position: relative;
+    margin: 0 10px;
+    list-style: none;
+}
+
+.nav-list li a {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding-left: 10px;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+}
+
+.nav-list li a:hover {
+    background: #1d1b31;
+}
+
+.nav-list li a i {
+    font-size: 24px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.profile-content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background: #1d1b31;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-details {
+    display: flex;
+    align-items: center;
+}
+
+.profile-details img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.name-job {
+    margin-left: 11px;
+    color: white;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.job {
+    font-size: 14px;
+}
+
+.bx-log-out {
+    font-size: 24px;
+    color: white;
+}
+
+.menu-icon {
+    width: 26px;
+    height: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    color: white;
+}
+
+.menu-icon div {
+    width: 100%;
+    height: 4px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.bar1, .bar2, .bar3 {
+    position: relative;
+}
+
+/* Rotate the first and third bars to form a full X */
+.menu-icon.change .bar1 {
+    transform: rotate(45deg);
+    transform-origin: 35% 50%;
+}
+
+.menu-icon.change .bar2 {
+    opacity: 0;
+}
+
+.menu-icon.change .bar3 {
+    transform: rotate(-45deg);
+    transform-origin: 50% 50%;
+}
 .robot-container {
     position: fixed;
     bottom: 0;
@@ -327,7 +567,7 @@ background: rgb(67 80 255 / 20%);
 }
 #user-input{
 border-radius: 5px;
-height: 23px;
+height: 45px;
 width: 235px;
 margin-left: 10px;
 
@@ -391,19 +631,25 @@ width: 100%;
     
   overflow: hidden; /* Allow scrolling inside the element */
   }
-.black {
-    height: 103%;
-    width: 132px;
-    background-color: #333333;
+  .black {
+    height: 91%;
+    width: 195px;
+    background-color: #161616f5;
     position: absolute;
     z-index: 2;
     left: 0;
     display: none;
+    margin-top: 26px;
 }
-.en i:hover .black{
-    display: block;
-    animation: move 10s linear infinite,
+.black {
+    display: none; /* Hidden by default */
+    transition: all 0.3s ease;
 }
+
+.black.active {
+    display: block; /* Shown when active class is added */
+}
+
 @keyframes move {
     0% { right: -20px;}
     100% {right: 0px; }
