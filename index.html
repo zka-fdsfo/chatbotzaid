@@ -783,7 +783,7 @@ async function getBotResponse(query) {
     function normalizeInput(input) {
     let normalized = input.trim().toLowerCase();
     // Remove common question phrases
-    normalized = normalized.replace(/^(Tell me about|tell me about|Who is|who is|can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
+    normalized = normalized.replace(/^(!|What do you mean by|What do you mean by |Are you|Will|Can|are|is|Do|Does||Where is the|Tell me about|tell me about|Who is|who is|can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
     return normalized.replace(/[?!.]*$/, '');
 }
 
