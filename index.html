@@ -8,17 +8,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
     <style>
         /* Add some styling for the Wikipedia image */
         .wiki-image {
-            max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
-            max-height: 150px; /* Restrict the image height to maintain layout */
-            width: auto;       /* Maintain aspect ratio */
-            height: auto;      /* Maintain aspect ratio */
+    max-width: 181px;
+    width: 100%; /* Optional: This makes the image responsive within the max-width */
+    height: auto; /* Maintains aspect ratio */
+max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
+                  /* Maintain aspect ratio */
             display: block;    /* Display as block element to ensure it's on a new line */
             margin: 10px 0;    /* Add some margin for better spacing */
             border-bottom-right-radius: 7px;
             border-bottom-left-radius: 7px;
+            float: none;
         }
         .loading-message {
     display: flex;          /* Align items in a row */
@@ -42,7 +46,30 @@
 }
 
 
-      
+.bot-message {
+    transition: all 0.5s ease-in-out;
+}
+
+.bot-message p {
+    margin: 0;
+    font-size: 16px;
+}
+
+
+
+.message-icons i {
+    cursor: pointer;
+    font-size: 20px;
+    color: #5f5f5f;
+    transition: color 0.3s, transform 0.3s;
+    gap: 10px;}
+.message-icons i:hover {
+    color: #ffffff;
+    transform: scale(1.2); /* Slightly enlarges the icon on hover */
+}
+
+
+
 
     </style>
 </head>
@@ -842,6 +869,7 @@ if (normalizedQuery === "i want a calculator") {
     }
 }
 
+
 function displayBotMessage(title, message, imageUrl = null) {
     var chatBox = document.getElementById("chat-box");
     removeLoadingMessage();
@@ -849,33 +877,117 @@ function displayBotMessage(title, message, imageUrl = null) {
     var uyContainer = document.createElement("div");
     uyContainer.className = "uy";
     
-   
     var botMessageDiv = document.createElement("div");
-    
     botMessageDiv.className = "bot-message";
-    botMessageDiv.innerHTML = `<strong>${title}</strong><p>${message}</p>`;
-    
+
+    // Rearranging the HTML structure
+    var messageContent = `<strong>${title}</strong>`; // Topic name
     if (imageUrl) {
-        var image = document.createElement("img");
-        image.src = imageUrl;
-        image.alt = title;
-        image.className = "wiki-image";
-        botMessageDiv.prepend(image);
+        messageContent += `<br/><img src="${imageUrl}" alt="${title}" class="wiki-image"/><br/>`; // Image followed by a line break
     }
+    messageContent += `<p class="message-content">${message}</p>`; // Paragraph content
+
+    botMessageDiv.innerHTML = messageContent;
+
     var logoDiv = document.createElement("div");
     logoDiv.className = "logo";
-    // logoDiv.innerHTML = `<img src="path/to/your/logo.png" alt="Logo" style="width: 50px; height: auto;">`; // Adjust the logo source
 
-    // Append both logo and bot message into uyContainer
+    // Create the icons container
+    var iconsDiv = document.createElement("div");
+    iconsDiv.className = "message-icons";
+    
+    // Add icons (using Font Awesome here)
+    iconsDiv.innerHTML = `
+        <i class="fas fa-copy copy-icon" title="Copy"></i>
+        <i class="fas fa-thumbs-up like-icon" title="Like"></i>
+        <i class="fas fa-thumbs-down dislike-icon" title="Dislike"></i>
+        <i class="fas fa-sync-alt refresh-icon" title="Refresh"></i>
+        <i class="fas fa-volume-up sound-icon" title="Sound"></i>
+    `;
+
+    // Append both logo, message, and icons
     uyContainer.appendChild(logoDiv);
     uyContainer.appendChild(botMessageDiv);
+    uyContainer.appendChild(iconsDiv);
 
     // Append the uyContainer to the chat box
     chatBox.appendChild(uyContainer);
-    uyContainer.appendChild(botMessageDiv);
-    chatBox.appendChild(uyContainer);
     chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+
+    // Add copy functionality
+    var copyIcon = iconsDiv.querySelector('.copy-icon');
+    copyIcon.addEventListener('click', function() {
+        var tempInput = document.createElement("input");
+        tempInput.style.position = "absolute";
+        tempInput.style.left = "-9999px";
+        tempInput.value = message;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        alert("Message copied!");
+    });
+
+    // Add speech functionality for the audio icon with play/pause toggle
+    var soundIcon = iconsDiv.querySelector('.sound-icon');
+    var isSpeaking = false;
+    var speechInstance = null;
+
+    soundIcon.addEventListener('click', function() {
+        if (isSpeaking) {
+            window.speechSynthesis.cancel();
+            soundIcon.classList.remove('fa-pause');
+            soundIcon.classList.add('fa-volume-up');
+            isSpeaking = false;
+        } else {
+            speechInstance = new SpeechSynthesisUtterance(message);
+            speechInstance.lang = 'en-US';
+            window.speechSynthesis.speak(speechInstance);
+            
+            soundIcon.classList.remove('fa-volume-up');
+            soundIcon.classList.add('fa-pause');
+            isSpeaking = true;
+
+            speechInstance.onend = function() {
+                soundIcon.classList.remove('fa-pause');
+                soundIcon.classList.add('fa-volume-up');
+                isSpeaking = false;
+            };
+        }
+    });
+
+    // Add refresh functionality for the refresh icon
+    var refreshIcon = iconsDiv.querySelector('.refresh-icon');
+    refreshIcon.addEventListener('click', async function() {
+        // Fetch new data related to the same topic
+        try {
+            let searchResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(title)}&format=json&origin=*`);
+            let searchData = await searchResponse.json();
+
+            if (searchData.query.search.length > 1) {
+                let newTitle = searchData.query.search[1].title; // Get another article related to the topic
+                let summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(newTitle)}`);
+                let summaryData = await summaryResponse.json();
+
+                if (summaryData.extract) {
+                    // Update bot message with new content
+                    botMessageDiv.innerHTML = `<strong>${newTitle}</strong><br/><img src="${summaryData.thumbnail.source}" alt="${newTitle}" class="wiki-image"/><br/><p>${summaryData.extract}</p>`;
+                } else {
+                    alert("No additional information found!");
+                }
+            } else {
+                alert("No additional results for this topic.");
+            }
+        } catch (error) {
+            console.error("Error fetching refreshed content:", error);
+            alert("Error refreshing content!");
+        }
+    });
+
+    // Add other event listeners (like, dislike) if needed
 }
+
+
 
 function displayFallbackMessage() {
     displayBotMessage("Sorry", "I couldn't find any information on that topic. Please check the spelling or try rephrasing your question."
@@ -1120,4 +1232,3 @@ function submitFeedback(event) {
 <script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
 </body>
 </html>
-
