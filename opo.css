@@ -12,15 +12,18 @@ body {
     width: 300px;
     margin: 50px;
     padding: 20px;
-    background-color: #f9f9f9;
+    /* background-color: #272626; */
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     font-family: "Roboto", sans-serif;
     font-weight: 500;
     font-style: normal;
     display: none;
-    background: linear-gradient(rgb(39 39 39), rgb(0 76 193 / 20%)), linear-gradient(144deg, rgb(171 171 171 / 78%) 0%, rgb(0 0 0 / 20%) 100%);
+    background: linear-gradient(#414141, rgb(20 20 20)), linear-gradient(217deg, rgb(171 171 171 / 78%) 0%, rgb(0 0 0 / 20%) 100%);
     color: white;
+    z-index: 5;
+    position: absolute;
+    /* margin-bottom: 47%; */
 }
   
   #feedback-form h2 {
@@ -363,7 +366,7 @@ h3 {
     box-shadow: 5px 5px 5px black;
     width: 100vw;
   height: 85vh;
-  overflow: hidden; /* Allow scrolling inside the element */
+  overflow: auto; /* Allow scrolling inside the element */
 }
 .chat-box {
     
