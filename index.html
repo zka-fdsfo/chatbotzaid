@@ -71,12 +71,42 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
 }
 
 
-
+.cir1 {
+    height: 100px;
+    width: 100px;
+    background-color: #2196f340;
+    border-radius: 50%;
+    position: fixed;
+    right: -69px;
+    top: 322px;
+    box-shadow: 0px 0px 105px 45px #2196f361;
+}
+.cir2 {
+    height: 200px;
+    width: 200px;
+    background-color: #ffffff52;
+    border-radius: 50%;
+    position: absolute;
+    left: -69px;
+    bottom: 409px;
+    -webkit-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
+    -moz-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
+    box-shadow: 0px 0px 105px 45px rgb(248 255 253 / 45%);
+    height: 100px;
+    width: 100px;
+    background-color: #2196f340;
+    border-radius: 50%;
+    position: fixed;
+    /* right: -69px; */
+    /* top: 322px; */
+    box-shadow: 0px 0px 105px 45px #2196f361;
+}
 
     </style>
 </head>
 <body>
     <div class="topographic-texture">
+       
         <div class="en">
             <i>
                 <div class="menu-icon" id="menuIcon">
@@ -85,7 +115,7 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
                     <div class="bar3"></div>
                 </div>
                 <div class="black">
-                    
+                   
         <div class="log-content">
             <div class="log"style="    margin: 6px;
             text-align: right;
@@ -156,7 +186,8 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
             <video src="juy.mp4" autoplay muted loop></video>
         </div>
     
-
+        <div class="cir2"></div>
+        <div class="cir1"></div>
     <div class="container">
         <div class="chat-box" id="chat-box">
             <div class="top-message">
@@ -1031,10 +1062,16 @@ async function analyzeImage(input) {
             // Display the uploaded image in the chat
             displayImageInChat(imageUrl);
 
-            // Analyze the image
-            const info = await getImageInformation(input.files[0]);
-            if (info) {
-                displayBotMessage("Image Analysis", info);
+            // Analyze the image using DeepAI API
+            const tags = await getImageTags(input.files[0]);
+            if (tags) {
+                // Use the first tag to search Wikipedia
+                const info = await searchWikipedia(tags[0]);
+                if (info) {
+                    displayBotMessage("Image Analysis", info);
+                } else {
+                    displayBotMessage("Image Analysis", "Sorry, I couldn't find any information about this image.");
+                }
             } else {
                 displayBotMessage("Image Analysis", "Sorry, I couldn't find any information about this image.");
             }
@@ -1043,26 +1080,30 @@ async function analyzeImage(input) {
     }
 }
 
-async function getImageInformation(file) {
-    // Replace with your actual API URL
-    const apiUrl = "https://api.example.com/analyze"; // Example API endpoint
+async function getImageTags(file) {
+    const apiKey = 'YOUR_DEEPAI_API_KEY'; // Replace with your DeepAI API key
+    const apiUrl = 'https://api.deepai.org/api/image-recognition';
 
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append('image', file);
 
     try {
         const response = await fetch(apiUrl, {
-            method: "POST",
+            method: 'POST',
+            headers: {
+                'api-key': apiKey
+            },
             body: formData
         });
-        
+
         if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
 
         // Check if the response contains relevant information
-        if (data && data.description) {
-            return data.description; // Change this according to your API response structure
+        if (data && data.output && data.output.captions) {
+            // Return the tags as an array
+            return data.output.captions.map(caption => caption.text);
         } else {
             console.warn("No valid information returned:", data);
             return null;
@@ -1073,18 +1114,38 @@ async function getImageInformation(file) {
     }
 }
 
+async function searchWikipedia(tag) {
+    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(tag)}&format=json&origin=*`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.query.search.length > 0) {
+            const title = data.query.search[0].title; // Get the first search result
+            const summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+            const summaryData = await summaryResponse.json();
+
+            if (summaryData.extract) {
+                return `<strong>${summaryData.title}</strong><br/><img src="${summaryData.thumbnail?.source}" alt="${summaryData.title}" class="wiki-image"/><br/><p>${summaryData.extract}</p>`;
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error("Error searching Wikipedia:", error);
+        return null;
+    }
+}
+
 function displayImageInChat(imageUrl) {
     var chatBox = document.getElementById("chat-box");
     var imageDiv = document.createElement("div");
     imageDiv.className = "image-message";
-    imageDiv.innerHTML = `<img src="${imageUrl}" style="max-width: 181px; max-width: 181px;
-    margin-top: 46px;
-    /* margin: 28px; */
-    margin-left: 20px;
-    border-radius: 20px;" alt="Uploaded Image">`;
+    imageDiv.innerHTML = `<img src="${imageUrl}" style="max-width: 181px; margin-top: 46px; margin-left: 20px; border-radius: 20px;" alt="Uploaded Image">`;
     chatBox.appendChild(imageDiv);
     chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
 }
+
 
 function displayBotMessage(title, message, imageUrl = null) {
     var chatBox = document.getElementById("chat-box");
@@ -1206,7 +1267,7 @@ function displayBotMessage(title, message, imageUrl = null) {
 
 
 function displayFallbackMessage() {
-    displayBotMessage("Sorry", "I couldn't find any information on that topic.This feature will be added soon. Sorry!"
+    displayBotMessage("Sorry", "I couldn't find any information on that topic.. This feature will be added soon. Sorry!"
 
 );
 }
