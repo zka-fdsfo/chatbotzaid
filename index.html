@@ -207,14 +207,20 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
         <img src="output-onlinegiftools.gif" alt="Robot" class="robot-gif">
     </div>
     
-        <div class="chat-container">
-            <input type="text" id="user-input" placeholder="Start a new chat..." />
-            <button onclick="sendMessage()" id="send-btn">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="currentColor"/>
-                </svg>
-            </button>
-        </div>
+    <div class="chat-container">
+        
+        <input type="text" id="user-input" placeholder="Start a new chat..." />
+        <input type="file" id="image-upload" accept="image/*" style="display:none;" onchange="analyzeImage(this)" />
+        <label for="image-upload" id="gallery-icon" title="Upload Image">
+            <i class="fas fa-image"></i> <!-- Font Awesome icon for gallery -->
+        </label>
+        <button onclick="sendMessage()" id="send-btn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="currentColor"/>
+            </svg>
+        </button>
+    </div>
+    
     </div>
 </div>
 <!-- <script>
@@ -698,7 +704,6 @@ function toggleCalculator(shouldShow) {
     const calculator = document.getElementById('calculator');
     calculator.style.display = shouldShow ? 'block' : 'none';
 }
-
 // Predefined responses
 const responseDictionary = {
     // Greetings
@@ -736,26 +741,6 @@ const responseDictionary = {
     "tell me something interesting": "🧐 Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
     "tell me something fun": "🐙 Did you know octopuses have three hearts and blue blood?",
 
-    // Time-related questions
-    "what's the time": () => {
-        const now = new Date();
-        return `🕒 The current time is ${now.toLocaleTimeString()}.`;
-    },
-    "can you tell me the time": () => {
-        const now = new Date();
-        return `🕒 Right now, it is ${now.toLocaleTimeString()}.`;
-    },
-
-    // Date-related questions
-    "what's today's date": () => {
-        const now = new Date();
-        return `📅 Today's date is ${now.toLocaleDateString()}.`;
-    },
-    "tell me today's date": () => {
-        const now = new Date();
-        return `📅 The current date is ${now.toLocaleDateString()}.`;
-    },
-
     // Responses to criticism
     "you are not good": [
         "😔 Sorry, I'm working on improving! Thank you for your feedback.",
@@ -788,7 +773,147 @@ const responseDictionary = {
     "yes": "👍 Great! If you need anything, I'm here.",
     "no": "❌ That's fine! Feel free to ask me anything.",
     "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+      // Fun responses
+    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "thank you": "😊 You're welcome! I'm happy to help.",
+    "thanks": "😊 Anytime! I'm here to assist.",
+    "ok": "👌 Got it! Let me know if you need anything else.",
+    "yes": "👍 Great! If you need anything, I'm here.",
+    "no": "❌ That's fine! Feel free to ask me anything.",
+    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+    "how r u": "🤖 I'm just a bot, but I'm here to help you!",
+    "how u doin": "😊 I'm doing great! How about you?",
+    "wyd": "🤔 Just helping out! What about you?", // Short for "What are you doing?"
+    "wsp": "😄 Not much! Just ready to help. What can I do for you?", // Short for "What's up?"
+    "hlo": "👋 Hi! How can I assist you today?",
+
+    // Human/bot identity questions
+    "u human": "❌ Nope, I’m a chatbot here to assist you with any questions!",
+    "u a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
+    "do u have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do u hv emotions": "😐 I don’t experience emotions, but I can provide useful information!",
+
+    // Personal life questions (humorous answers)
+    "do u have a gf": "💔 Nope, I’m too busy answering questions to date!", // Short for "girlfriend"
+    "u married": "💍 I’m married to helping you get answers!",
+    "will u marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
+    "u love me": "❤️ I’m here to support you, but love isn’t in my programming!",
+
+    // Common requests
+    "can u help": "🤗 Of course! What do you need help with?",
+    "wat u do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "gimme info": "📖 Sure! What would you like information on?",
+    "tell me a fun fact": "🧐 Did you know honey never spoils? Even after 3,000 years, it’s still good to eat!",
+
+    // Time-related questions
+    "time pls": () => {
+        const now = new Date();
+        return `🕒 The current time is ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+    },
+    "wat's the time": () => {
+        const now = new Date();
+        return `🕒 Right now, it is ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+    },
+
+    // Date-related questions
+    "date pls": () => {
+        const now = new Date();
+        return `📅 Today's date is ${now.toLocaleDateString()}.`;
+    },
+    "what's today's date": () => {
+        const now = new Date();
+        return `📅 The current date is ${now.toLocaleDateString()}.`;
+    },
+
+    // Responses to criticism
+    "u bad": [
+        "😟 I’m sorry! I’ll try to do better. Thanks for your feedback.",
+        "😩 I didn’t mean to disappoint! How can I improve?",
+    ],
+
+    // Fun responses
+    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
+    "u funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
+    "k": "👌 Got it! Let me know if you need anything else.",
+    "yep": "👍 Great! If you need anything, I'm here.",
+    "nope": "❌ That's fine! Feel free to ask me anything.",
+    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", // Short for "I have a question"
+
+    // Time-related questions
+    "time pls": () => {
+        const now = new Date();
+        return `🕒 The current time is ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+    },
+    "wat's the time": () => {
+        const now = new Date();
+        return `🕒 Right now, it is ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+    },
+
+    // Date-related questions
+    "date pls": () => {
+        const now = new Date();
+        return `📅 Today's date is ${now.toLocaleDateString()}.`;
+    },
+    "what's today's date": () => {
+        const now = new Date();
+        return `📅 The current date is ${now.toLocaleDateString()}.`;
+    },
+
+    // Responses to criticism
+    "u bad": [
+        "😟 I’m sorry! I’ll try to do better. Thanks for your feedback.",
+        "😩 I didn’t mean to disappoint! How can I improve?",
+    ],
+
+    // Fun responses
+    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
+    "u funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
+    "k": "👌 Got it! Let me know if you need anything else.",
+    "yep": "👍 Great! If you need anything, I'm here.",
+    "nope": "❌ That's fine! Feel free to ask me anything.",
+    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", // Short for "I have a question"
 };
+
+// Function to normalize user input
+function normalizeInput(input) {
+    return input.toLowerCase().trim();
+}
+
+// Function to get a response
+function getResponse(userInput) {
+    const key = normalizeInput(userInput);
+    const responsesList = responseDictionary[key];
+
+    if (Array.isArray(responsesList)) {
+        const randomIndex = Math.floor(Math.random() * responsesList.length);
+        return responsesList[randomIndex];
+    } else if (typeof responsesList === "function") {
+        return responsesList();
+    } else if (typeof responsesList === "string") {
+        return responsesList;
+    }
+
+    return "🤔 I'm not sure how to respond to that.";
+}
+
+// Example usage
+const userMessage = "What's the time";  // User input example
+console.log(getResponse(userMessage));  // This will print the correct time response
+
 
 // Function to get a random response
 function getResponse(key) {
@@ -816,6 +941,32 @@ async function getBotResponse(query) {
     let normalized = input.trim().toLowerCase();
     // Remove common question phrases
     normalized = normalized.replace(/^(give me information on|Give me information on|!|What do you mean by|What do you mean by |Are you|Will|Can|are|is|Do|Does||Where is the|Tell me about|tell me about|Who is|who is|can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
+    return normalized.replace(/[?!.]*$/, '');
+}
+function normalizeInput(input) {
+    let normalized = input.trim().toLowerCase();
+
+    // Correct common grammatical mistakes
+    normalized = normalized.replace('do have', 'do you have');
+    normalized = normalized.replace('have you girlfriend', 'do you have a girlfriend');
+
+    // Remove common question phrases
+    normalized = normalized.replace(/^(what's the meaning of|what is|what's|can you tell me about|can you explain|tell me something about|do you know about|could you|pls tell me about|plz|please|give me details about|who is|who's|wht do u know about|what can u tell me about|gimme info on|tell me more about|provide details on|is|are|where's|what do u mean by|how does)\s+/i, '');
+
+    // Replace short forms or zenzy words
+    normalized = normalized.replace(/\bpls\b/g, 'please');
+    normalized = normalized.replace(/\bplz\b/g, 'please');
+    normalized = normalized.replace(/\bu\b/g, 'you');
+    normalized = normalized.replace(/\br\b/g, 'are');
+    normalized = normalized.replace(/\bbtw\b/g, 'by the way');
+    normalized = normalized.replace(/\blol\b/g, 'laugh out loud');
+    normalized = normalized.replace(/\btbh\b/g, 'to be honest');
+    normalized = normalized.replace(/\bidk\b/g, 'I don’t know');
+    normalized = normalized.replace(/\bimo\b/g, 'in my opinion');
+    normalized = normalized.replace(/\bomg\b/g, 'oh my god');
+    normalized = normalized.replace(/\bfyi\b/g, 'for your information');
+
+    // Remove trailing punctuation
     return normalized.replace(/[?!.]*$/, '');
 }
 
@@ -871,6 +1022,69 @@ if (normalizedQuery === "i want a calculator") {
     }
 }
 
+async function analyzeImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            const imageUrl = e.target.result;
+
+            // Display the uploaded image in the chat
+            displayImageInChat(imageUrl);
+
+            // Analyze the image
+            const info = await getImageInformation(input.files[0]);
+            if (info) {
+                displayBotMessage("Image Analysis", info);
+            } else {
+                displayBotMessage("Image Analysis", "Sorry, I couldn't find any information about this image.");
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+async function getImageInformation(file) {
+    // Replace with your actual API URL
+    const apiUrl = "https://api.example.com/analyze"; // Example API endpoint
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            body: formData
+        });
+        
+        if (!response.ok) throw new Error("Network response was not ok");
+
+        const data = await response.json();
+
+        // Check if the response contains relevant information
+        if (data && data.description) {
+            return data.description; // Change this according to your API response structure
+        } else {
+            console.warn("No valid information returned:", data);
+            return null;
+        }
+    } catch (error) {
+        console.error("Error analyzing image:", error);
+        return null;
+    }
+}
+
+function displayImageInChat(imageUrl) {
+    var chatBox = document.getElementById("chat-box");
+    var imageDiv = document.createElement("div");
+    imageDiv.className = "image-message";
+    imageDiv.innerHTML = `<img src="${imageUrl}" style="max-width: 181px; max-width: 181px;
+    margin-top: 46px;
+    /* margin: 28px; */
+    margin-left: 20px;
+    border-radius: 20px;" alt="Uploaded Image">`;
+    chatBox.appendChild(imageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
 
 function displayBotMessage(title, message, imageUrl = null) {
     var chatBox = document.getElementById("chat-box");
@@ -992,7 +1206,8 @@ function displayBotMessage(title, message, imageUrl = null) {
 
 
 function displayFallbackMessage() {
-    displayBotMessage("Sorry", "I couldn't find any information on that topic. Please check the spelling or try rephrasing your question."
+    displayBotMessage("Sorry", "I couldn't find any information on that topic.This feature will be added soon. Sorry!"
+
 );
 }
 
