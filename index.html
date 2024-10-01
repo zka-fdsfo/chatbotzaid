@@ -102,6 +102,42 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
     box-shadow: 0px 0px 105px 45px #2196f361;
 }
 
+.cir3 {
+    height: 300px;
+    width: 300px;
+    background-color: #2196f3;
+    border-radius: 50%;
+    /* right: -64px; */
+    /* top: 196px; */
+    /* box-shadow: 0px 0px 105px 45px #2196f361; */
+    /* display: none; */
+    z-index: -1;
+    left: -43px;
+    position: relative;
+}
+.cir4 {
+    height: 50px;
+    width: 50px;
+    background-color: #ffffff52;
+    border-radius: 50%;
+    position: static;
+    /* left: -69px; */
+    /* bottom: 409px; */
+    -webkit-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
+    -moz-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
+    box-shadow: 0px 0px 105px 45px rgb(248 255 253 / 45%);
+    height: 13px;
+    width: 50px;
+    background-color: #2196f333;
+    border-radius: 50%;
+    /* position: fixed; */
+    /* right: -69px; */
+    /* top: 322px; */
+    box-shadow: 0px 0px 105px 45px #2196f361;
+    /* z-index: -1; */
+    margin-left: 84px;
+}
+
     </style>
 </head>
 <body>
@@ -210,25 +246,38 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
             </div>
         </div>
         <div id="calculator" class="calculator" style="display:none;">
+            <div class="cir3"></div>
+            <div class="calculatorin">
+          
+            <div class="cir4"></div>
             <input type="text" id="calc-display" class="calc-display" disabled>
             <div class="calc-buttons">
                 <button onclick="insert(7)">7</button>
                 <button onclick="insert(8)">8</button>
                 <button onclick="insert(9)">9</button>
-                <button onclick="clearDisplay()">C</button>
+                <button onclick="clearDisplay()" style="    background-color: #053053;
+    color: white">C</button>
                 <button onclick="insert(4)">4</button>
                 <button onclick="insert(5)">5</button>
                 <button onclick="insert(6)">6</button>
-                <button onclick="operate('/')">/</button>
+                <button onclick="operate('/')" style="    background-color: #0068bb;
+    color: white;">/</button>
                 <button onclick="insert(1)">1</button>
                 <button onclick="insert(2)">2</button>
                 <button onclick="insert(3)">3</button>
-                <button onclick="operate('*')">*</button>
+                <button onclick="operate('*')" style="background-color: #0068bb;
+                /* background-color: #212020; */
+                color: #ffffff;">*</button>
                 <button onclick="insert(0)">0</button>
-                <button onclick="operate('-')">-</button>
-                <button onclick="operate('+')">+</button>
-                <button onclick="calculate()">=</button>
+                <button onclick="operate('-')"style="background-color: #717171;
+    color: #ffffff;">-</button>
+                <button onclick="operate('+')"style="    background-color: #717171;
+    color: #ffffff;">+</button>
+                <button onclick="calculate()"style="background-color: #2196F3;
+                /* background-color: #212020; */
+                color: #ffffff;" >=</button>
             </div>
+        </div>
         </div>
         
 
