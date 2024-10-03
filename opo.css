@@ -742,7 +742,7 @@ width: 100%;
 
 .topographic-texture {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background:
       radial-gradient(circle, transparent, transparent 10%, rgba(255, 255, 255, 0.1) 11%, transparent 12%) 0 0 / 100px 100px,
       radial-gradient(circle, transparent, transparent 8%, rgba(255, 255, 255, 0.2) 9%, transparent 10%) 50px 50px / 100px 100px,
