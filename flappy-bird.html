@@ -9,7 +9,7 @@
         body {
     display: flex;
     zoom: 0.7;
-    
+    transition: 1ms;
 }
 
 .game-container {
@@ -57,10 +57,7 @@
 }
 @keyframes op {
    
-    0%{
-        background-image: url('gp (3).gif');
-    }
-    20%{
+   0%{
         background-image: url("gp (1).gif");
     }
     50%{
@@ -173,6 +170,9 @@
     z-index: 10;
     
   }
+  .bird {
+    transition: bottom 20ms;
+}
 
     </style>
   </head>
@@ -220,10 +220,11 @@
     }
 
     function jump() {
-        if (birdBottom < 500) birdBottom += 50
-        bird.style.bottom = birdBottom + 'px'
-        console.log(birdBottom)
-    }
+    bird.style.transition = 'bottom 1ms';  // Adding transition
+    if (birdBottom < 500) birdBottom += 50;
+    bird.style.bottom = birdBottom + 'px';
+    console.log(birdBottom);
+}
     document.addEventListener('keyup', control)
 
     function updateScore() {
