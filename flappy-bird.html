@@ -7,177 +7,170 @@
     <script src="app.js" charset="utf-8"></script>
     <style>
         body {
-    display: flex;
-    zoom: 0.7;
-    transition: 1ms;
-}
+            display: flex;
+            zoom: 0.7;
+            transition: 1ms;
+        }
 
-.game-container {
-    width: 500px;
-    height: 730px;
-    position: absolute;
-    left: 0px;
-    transition: 1ms;
-}
+        .game-container {
+            width: 500px;
+            height: 730px;
+            position: absolute;
+            left: 0px;
+            transition: 1ms;
+        }
 
-.border-left {
-    width: 80px;
-    height: 790px;
-    position:  absolute;
-    background-color: white;
-    z-index: +2;
-}
+        .border-left {
+            width: 80px;
+            height: 790px;
+            position:  absolute;
+            background-color: white;
+            z-index: 2;
+        }
 
-.border-right {
-    width: 80px;
-    height: 790px;
-    position: absolute;
-    background-color: white;
-    z-index: +2;
-    left: 580px;
-}
+        .border-right {
+            width: 80px;
+            height: 790px;
+            position: absolute;
+            background-color: white;
+            z-index: 2;
+            left: 580px;
+        }
 
-.border-top {
-    width: 660px;
-    height: 50px;
-    position:  absolute;
-    background-color: white;
-    z-index: +2;
-    top: -50px;
-}
+        .border-top {
+            width: 660px;
+            height: 50px;
+            position:  absolute;
+            background-color: white;
+            z-index: 2;
+            top: -50px;
+        }
 
-.sky {
-  
-    width: 500px;
-    height: 580px;
-    position: absolute;
-    background-size: cover;
-    animation: op 40s infinite alternate-reverse;
-    transition: revert-layer 2s;
-}
-@keyframes op {
-   
-   0%{
-        background-image: url("gp (1).gif");
-    }
-    50%{
-        background-image: url('gp (2).gif');
-    }
-    100%{
-        background-image: url('gp (4).gif');
-    }
-}
+        .sky {
+            width: 500px;
+            height: 580px;
+            position: absolute;
+            background-size: cover;
+            animation: op 40s infinite alternate-reverse;
+            transition: revert-layer 2s;
+        }
 
-.ground {
-    background-image: url('bottom-background.png');
-    width: 500px;
-    height: 150px;
-    position: absolute;
-    top: 580px;
-    z-index: +1;
-}
+        @keyframes op {
+            0% {
+                background-image: url("gp (1).gif");
+            }
+            50% {
+                background-image: url('gp (2).gif');
+            }
+            100% {
+                background-image: url('gp (4).gif');
+            }
+        }
 
-.bird {
-    background-image: url('lili-unscreen.gif');
-    background-size: cover;
-    position: absolute;
-    width: 60px;
-    height: 45px;
-    left: 220px;
-    bottom: 100px;
-    transition: 1ms;
-      background-color: transparent;
-}
+        .ground {
+            background-image: url('bottom-background.png');
+            width: 500px;
+            height: 150px;
+            position: absolute;
+            top: 580px;
+            z-index: 1;
+        }
 
-.obstacle {
-    background-image: url('ut.png');
-    width: 72px;
-    height: 300px;
-    position: absolute;
-    transition: 1ms;
-}
+        .bird {
+            background-image: url('lili-unscreen.gif');
+            background-size: cover;
+            position: absolute;
+            width: 60px;
+            height: 45px;
+            left: 220px;
+            bottom: 100px;
+            transition: bottom 150ms ease-out;
+            background-color: transparent;
+        }
 
-.topObstacle {
-    background-image: url('ut.png');
-    transform: rotate(180deg);
-    width: 72px;
-    height: 300px;
-    position: absolute;
-    transition: 1ms;
-}
+        .obstacle {
+            background-image: url('ut.png');
+            width: 72px;
+            height: 300px;
+            position: absolute;
+            /* Removing transition for better performance */
+        }
 
-@keyframes slideright {
-    from {
-        background-position: 10000%;
-    }
-    to {
-        background-position: 0%;
-    }
-  }
-  
-  @-webkit-keyframes slideright {
-    from {
-        background-position: 10000%;
-    }
-    to {
-        background-position: 0%;
-    }
-  }
+        .topObstacle {
+            background-image: url('ut.png');
+            transform: rotate(180deg);
+            width: 72px;
+            height: 300px;
+            position: absolute;
+            /* Removing transition for better performance */
+        }
 
-  .ground-container {
-      height: 150px;
-      width: 580px;
-      left: 0px;
-      position:  absolute;
-  }
-  
-  .ground-moving {
-    position: absolute;
-    top: 580px;
-    height: 150px;
-    background-image: url('bottom-background.png');
-    background-repeat: repeat-x;
-    animation: slideright 100s infinite linear;
-    -webkit-animation: slideright 100s infinite linear;
-    width: 100%;
-    z-index: +1;
-  }
+        @keyframes slideright {
+            from {
+                background-position: 10000%;
+            }
+            to {
+                background-position: 0%;
+            }
+        }
 
-  /* Style for the score and restart button */
-  .score {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 24px;
-    font-weight: bold;
-    z-index: 10;
-    color: white;
-  }
+        @-webkit-keyframes slideright {
+            from {
+                background-position: 10000%;
+            }
+            to {
+                background-position: 0%;
+            }
+        }
 
-  .restart-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: rgb(0, 255, 0);
-    color: white;
-    border: none;
-    cursor: pointer;
-    display: none;
-    z-index: 10;
-    
-  }
-  .bird {
-    transition: bottom 20ms;
-}
+        .ground-container {
+            height: 150px;
+            width: 580px;
+            left: 0px;
+            position: absolute;
+        }
 
+        .ground-moving {
+            position: absolute;
+            top: 580px;
+            height: 150px;
+            background-image: url('bottom-background.png');
+            background-repeat: repeat-x;
+            animation: slideright 100s infinite linear;
+            -webkit-animation: slideright 100s infinite linear;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* Style for the score and restart button */
+        .score {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 10;
+            color: white;
+        }
+
+        .restart-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: rgb(0, 255, 0);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            z-index: 10;
+        }
     </style>
   </head>
   <body>
-
   
   <div class="game-container">
       <div class="border-top"></div>
@@ -193,106 +186,108 @@
   
 <script>
     document.addEventListener('DOMContentLoaded' , () => {
-    const bird = document.querySelector('.bird')
-    const gameDisplay = document.querySelector('.game-container')
-    const ground = document.querySelector('.ground-moving')
-    const scoreElement = document.querySelector('.score')
-    const restartButton = document.querySelector('.restart-button')
+        const bird = document.querySelector('.bird');
+        const gameDisplay = document.querySelector('.game-container');
+        const ground = document.querySelector('.ground-moving');
+        const scoreElement = document.querySelector('.score');
+        const restartButton = document.querySelector('.restart-button');
 
-    let birdLeft = 220
-    let birdBottom = 200
-    let gravity = 2
-    let isGameOver = false
-    let gap = 530
-    let score = 0
+        let birdLeft = 220;
+        let birdBottom = 200;
+        let gravity = 2;
+        let isGameOver = false;
+        let gap = 530;
+        let score = 0;
+        let canJump = true;
 
-    function startGame() {
-        birdBottom -= gravity
-        bird.style.bottom = birdBottom + 'px'
-        bird.style.left = birdLeft + 'px'
-    }
-    let gameTimerId = setInterval(startGame, 20)
-
-    function control(e) {
-        if (e.keyCode === 32) {
-            jump()
+        function startGame() {
+            birdBottom -= gravity;
+            bird.style.bottom = birdBottom + 'px';
+            bird.style.left = birdLeft + 'px';
         }
-    }
+        let gameTimerId = setInterval(startGame, 20);
 
-    function jump() {
-    bird.style.transition = 'bottom 1ms';  // Adding transition
-    if (birdBottom < 500) birdBottom += 50;
-    bird.style.bottom = birdBottom + 'px';
-    console.log(birdBottom);
-}
-    document.addEventListener('keyup', control)
-
-    function updateScore() {
-        score++
-        scoreElement.textContent = 'Score: ' + score
-    }
-
-    function generateObstacle() {
-        let obstacleLeft = 500
-        let randomHeight = Math.random() * 60
-        let obstacleBottom = randomHeight
-        const obstacle = document.createElement('div')
-        const topObstacle = document.createElement('div')
-        if (!isGameOver) {
-            obstacle.classList.add('obstacle')
-            topObstacle.classList.add('topObstacle')
-        }
-        gameDisplay.appendChild(obstacle)
-        gameDisplay.appendChild(topObstacle)
-        obstacle.style.left = obstacleLeft + 'px'
-        topObstacle.style.left = obstacleLeft + 'px'
-        obstacle.style.bottom = obstacleBottom + 'px'
-        topObstacle.style.bottom = obstacleBottom + gap + 'px'
-
-        function moveObstacle() {
-            obstacleLeft -=2
-            obstacle.style.left = obstacleLeft + 'px'
-            topObstacle.style.left = obstacleLeft + 'px'
-
-            if (obstacleLeft === -60) {
-                clearInterval(timerId)
-                gameDisplay.removeChild(obstacle)
-                gameDisplay.removeChild(topObstacle)
-                updateScore()
+        function control(e) {
+            if (e.keyCode === 32) {
+                jump();
             }
-            if (
-                obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 &&
-                (birdBottom < obstacleBottom + 153 || birdBottom > obstacleBottom + gap -200) ||
-                birdBottom === 0 
+        }
+
+        function jump() {
+            if (canJump && birdBottom < 500) {
+                birdBottom += 50;
+                bird.style.bottom = birdBottom + 'px';
+                console.log(birdBottom);
+                canJump = false; // Disable further jumps
+                setTimeout(() => canJump = true, 200); // Re-enable jumps after 200ms
+            }
+        }
+
+        document.addEventListener('keyup', control);
+        document.addEventListener('touchstart', jump);
+
+        function updateScore() {
+            score++;
+            scoreElement.textContent = 'Score: ' + score;
+        }
+
+        function generateObstacle() {
+            let obstacleLeft = 500;
+            let randomHeight = Math.random() * 60;
+            let obstacleBottom = randomHeight;
+            const obstacle = document.createElement('div');
+            const topObstacle = document.createElement('div');
+            if (!isGameOver) {
+                obstacle.classList.add('obstacle');
+                topObstacle.classList.add('topObstacle');
+            }
+            gameDisplay.appendChild(obstacle);
+            gameDisplay.appendChild(topObstacle);
+            obstacle.style.left = obstacleLeft + 'px';
+            topObstacle.style.left = obstacleLeft + 'px';
+            obstacle.style.bottom = obstacleBottom + 'px';
+            topObstacle.style.bottom = obstacleBottom + gap + 'px';
+
+            function moveObstacle() {
+                obstacleLeft -= 2;
+                obstacle.style.left = obstacleLeft + 'px';
+                topObstacle.style.left = obstacleLeft + 'px';
+
+                if (obstacleLeft === -60) {
+                    clearInterval(timerId);
+                    gameDisplay.removeChild(obstacle);
+                    gameDisplay.removeChild(topObstacle);
+                    updateScore();
+                }
+                if (
+                    obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 &&
+                    (birdBottom < obstacleBottom + 153 || birdBottom > obstacleBottom + gap - 200) ||
+                    birdBottom === 0
                 ) {
-                gameOver()
-                clearInterval(timerId)
+                    gameOver();
+                    clearInterval(timerId);
+                }
             }
+            let timerId = setInterval(moveObstacle, 30); // Slower movement for performance
+            if (!isGameOver) setTimeout(generateObstacle, 3000);
         }
-        let timerId = setInterval(moveObstacle, 20) 
-        if (!isGameOver) setTimeout(generateObstacle, 3000)
 
-    }
-    generateObstacle()
-    // Handle tap (touch) controls
-document.addEventListener('touchstart', jump);
+        generateObstacle();
 
+        function gameOver() {
+            clearInterval(gameTimerId);
+            console.log('game over');
+            isGameOver = true;
+            document.removeEventListener('keyup', control);
+            ground.classList.add('ground');
+            ground.classList.remove('ground-moving');
+            restartButton.style.display = 'block';
+        }
 
-    function gameOver() {
-        clearInterval(gameTimerId)
-        console.log('game over')
-        isGameOver = true
-        document.removeEventListener('keyup', control)
-        ground.classList.add('ground')
-        ground.classList.remove('ground-moving')
-        restartButton.style.display = 'block'
-    }
-
-    // Restart the game when the button is clicked
-    restartButton.addEventListener('click', () => {
-        location.reload()
-    })
-})
+        restartButton.addEventListener('click', () => {
+            location.reload();
+        });
+    });
 </script>
   </body>
 </html>
