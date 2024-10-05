@@ -9,7 +9,7 @@
         body {
     display: flex;
     zoom: 0.7;
-    
+    transition: bottom 150ms;
 }
 .bird {
     transition: bottom 150ms;
@@ -21,6 +21,10 @@
     position: absolute;
     left: 0px;
     transition: 1ms;
+    transition: bottom 150ms;
+}
+button:hover {
+    background-color: #dd8650;
 }
 
 .border-left {
@@ -29,6 +33,7 @@
     position:  absolute;
     background-color: white;
     z-index: +2;
+    transition: bottom 150ms;
 }
 
 .border-right {
@@ -38,6 +43,7 @@
     background-color: white;
     z-index: +2;
     left: 580px;
+    transition: bottom 150ms;
 }
 
 .border-top {
@@ -47,6 +53,7 @@
     background-color: white;
     z-index: +2;
     top: -50px;
+    transition: bottom 150ms;
 }
 
 .sky {
@@ -57,6 +64,7 @@
     background-size: cover;
     animation: op 40s infinite alternate-reverse;
     transition: revert-layer 2s;
+  
 }
 @keyframes op {
    
@@ -78,19 +86,21 @@
     position: absolute;
     top: 580px;
     z-index: +1;
+    transition: bottom 150ms;
 }
 
 .bird {
     background-image: url('lili-unscreen.gif');
     background-size: cover;
     position: absolute;
-    width: 45px;
-    height: 45px;
-    left: 220px;
+    width: 59px;
+    height: 47px;
+    left: 231px;
     bottom: 100px;
     transition: 1ms;
       background-color: transparent;
       border-radius: 50%;
+      transition: bottom 150ms;
 }
 
 .obstacle {
@@ -133,6 +143,7 @@
       width: 580px;
       left: 0px;
       position:  absolute;
+      transition: bottom 150ms;
   }
   
   .ground-moving {
@@ -145,6 +156,7 @@
     -webkit-animation: slideright 100s infinite linear;
     width: 100%;
     z-index: +1;
+    transition: bottom 150ms;
   }
 
   /* Style for the score and restart button */
@@ -164,29 +176,32 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 10px 20px;
+    padding: 5px 16px;
     font-size: 18px;
-    background-color: rgb(0, 255, 0);
+    background-color: rgb(2 2 2 / 59%);
     color: white;
     border: none;
     cursor: pointer;
     display: none;
     z-index: 10;
+    width: 100px;
+    font-weight: bolder;
+}
     
-  }
+  
 
     </style>
   </head>
   <body>
 
   
-  <div class="game-container">
+  <div class="game-container" >
       <div class="border-top"></div>
       <div class="sky">
           <div class="bird"></div>
       </div>
       <div class="score">Score: 0</div>
-      <button class="restart-button">Restart</button>
+      <button class="restart-button" >Restart</button>
   </div>
   <div class="ground-container">
     <div class="ground-moving"></div>
@@ -243,21 +258,26 @@
     let gameTimerId = setInterval(startGame, 20)
 
     function updateScore() {
-        score++
-        scoreElement.textContent = 'Score: ' + score
+    score++;
+    scoreElement.textContent = 'Score: ' + score;
 
-        // Adjust game speed based on score
-        if (score >= 15 && score < 25) {
-            obstacleSpeed = 3 // Speed up after score of 15
-        } else if (score >= 25 && score < 40) {
-            obstacleSpeed = 4 // Speed up more after score of 25
-        } else if (score >= 40) {
-            obstacleSpeed = 5 // Keep increasing speed for more challenge
-        }
+    // Adjust game speed based on score
+    if (score >= 5 && score < 15) {
+        obstacleSpeed = 2;
+    } else if (score >= 15 && score < 20) {
+        obstacleSpeed = 3;
+    } else if (score >= 20 && score < 30) {
+        obstacleSpeed = 6; 
+    } else if (score >= 30) {
+        obstacleSpeed = 9;
     }
+}
+console.log('Current Score:', score);
+console.log('Obstacle Speed:', obstacleSpeed);
+
 
     function generateObstacle() {
-        let obstacleLeft = 400
+        let obstacleLeft = 700
         let randomHeight = Math.random() * 90
         let obstacleBottom = randomHeight
         const obstacle = document.createElement('div')
@@ -280,7 +300,7 @@
             obstacle.style.left = obstacleLeft + 'px'
             topObstacle.style.left = obstacleLeft + 'px'
 
-            if (obstacleLeft === -90) {
+            if (obstacleLeft === -60) {
                 clearInterval(timerId)
                 gameDisplay.removeChild(obstacle)
                 gameDisplay.removeChild(topObstacle)
@@ -289,7 +309,7 @@
 
             if (
                 obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 &&
-                (birdBottom < obstacleBottom + 153 || birdBottom > obstacleBottom + gap - 200) ||
+                (birdBottom < obstacleBottom + 143 || birdBottom > obstacleBottom + gap - 200) ||
                 birdBottom === 0
             ) {
                 gameOver()
