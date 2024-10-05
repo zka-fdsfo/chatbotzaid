@@ -253,27 +253,12 @@ button:hover {
 
     document.addEventListener('touchstart', jump)
     document.addEventListener('keyup', control)
-
-    // Start the game loop
+   
     let gameTimerId = setInterval(startGame, 20)
-
     function updateScore() {
-    score++;
-    scoreElement.textContent = 'Score: ' + score;
-
-    // Adjust game speed based on score
-    if (score >= 5 && score < 15) {
-        obstacleSpeed = 2;
-    } else if (score >= 15 && score < 20) {
-        obstacleSpeed = 3;
-    } else if (score >= 20 && score < 30) {
-        obstacleSpeed = 6; 
-    } else if (score >= 30) {
-        obstacleSpeed = 9;
+        score++
+        scoreElement.textContent = 'Score: ' + score
     }
-}
-console.log('Current Score:', score);
-console.log('Obstacle Speed:', obstacleSpeed);
 
 
     function generateObstacle() {
