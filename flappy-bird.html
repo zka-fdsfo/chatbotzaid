@@ -11,6 +11,9 @@
     zoom: 0.7;
     
 }
+.bird {
+    transition: bottom 150ms;
+}
 
 .game-container {
     width: 500px;
@@ -81,12 +84,13 @@
     background-image: url('lili-unscreen.gif');
     background-size: cover;
     position: absolute;
-    width: 60px;
+    width: 45px;
     height: 45px;
     left: 220px;
     bottom: 100px;
     transition: 1ms;
       background-color: transparent;
+      border-radius: 50%;
 }
 
 .obstacle {
@@ -189,7 +193,7 @@
   </div>
   
 <script>
-    document.addEventListener('DOMContentLoaded' , () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const bird = document.querySelector('.bird')
     const gameDisplay = document.querySelector('.game-container')
     const ground = document.querySelector('.ground-moving')
@@ -198,46 +202,72 @@
 
     let birdLeft = 220
     let birdBottom = 200
-    let gravity = 2
+    let gravity = 0.1
     let isGameOver = false
-    let gap = 530
+    let gap = 450
     let score = 0
+    let lift = 3
+    let velocity = 1
+    let obstacleSpeed = 2; // Initial speed of the obstacles
 
+    // Smooth gravity and velocity application
     function startGame() {
-        birdBottom -= gravity
-        bird.style.bottom = birdBottom + 'px'
-        bird.style.left = birdLeft + 'px'
-    }
-    let gameTimerId = setInterval(startGame, 20)
+        velocity -= gravity
+        birdBottom += velocity
 
+        // Prevent the bird from going below the ground
+        if (birdBottom < 0) {
+            birdBottom = 0
+            velocity = 0
+        }
+
+        bird.style.bottom = birdBottom + 'px'
+    }
+
+    // Update jump function for smooth upward movement
+    function jump() {
+        velocity = lift
+    }
+
+    // Control with spacebar or tap for mobile
     function control(e) {
-        if (e.keyCode === 32) {
+        if (e.keyCode === 30) {
             jump()
         }
     }
 
-    function jump() {
-        if (birdBottom < 500) birdBottom += 50
-        bird.style.bottom = birdBottom + 'px'
-        console.log(birdBottom)
-    }
+    document.addEventListener('touchstart', jump)
     document.addEventListener('keyup', control)
+
+    // Start the game loop
+    let gameTimerId = setInterval(startGame, 20)
 
     function updateScore() {
         score++
         scoreElement.textContent = 'Score: ' + score
+
+        // Adjust game speed based on score
+        if (score >= 15 && score < 25) {
+            obstacleSpeed = 3 // Speed up after score of 15
+        } else if (score >= 25 && score < 40) {
+            obstacleSpeed = 4 // Speed up more after score of 25
+        } else if (score >= 40) {
+            obstacleSpeed = 5 // Keep increasing speed for more challenge
+        }
     }
 
     function generateObstacle() {
-        let obstacleLeft = 500
-        let randomHeight = Math.random() * 60
+        let obstacleLeft = 400
+        let randomHeight = Math.random() * 90
         let obstacleBottom = randomHeight
         const obstacle = document.createElement('div')
         const topObstacle = document.createElement('div')
+
         if (!isGameOver) {
             obstacle.classList.add('obstacle')
             topObstacle.classList.add('topObstacle')
         }
+
         gameDisplay.appendChild(obstacle)
         gameDisplay.appendChild(topObstacle)
         obstacle.style.left = obstacleLeft + 'px'
@@ -246,33 +276,32 @@
         topObstacle.style.bottom = obstacleBottom + gap + 'px'
 
         function moveObstacle() {
-            obstacleLeft -=2
+            obstacleLeft -= obstacleSpeed // Adjust speed based on current value
             obstacle.style.left = obstacleLeft + 'px'
             topObstacle.style.left = obstacleLeft + 'px'
 
-            if (obstacleLeft === -60) {
+            if (obstacleLeft === -90) {
                 clearInterval(timerId)
                 gameDisplay.removeChild(obstacle)
                 gameDisplay.removeChild(topObstacle)
                 updateScore()
             }
+
             if (
                 obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 &&
-                (birdBottom < obstacleBottom + 153 || birdBottom > obstacleBottom + gap -200) ||
-                birdBottom === 0 
-                ) {
+                (birdBottom < obstacleBottom + 153 || birdBottom > obstacleBottom + gap - 200) ||
+                birdBottom === 0
+            ) {
                 gameOver()
                 clearInterval(timerId)
             }
         }
-        let timerId = setInterval(moveObstacle, 20) 
+
+        let timerId = setInterval(moveObstacle, 20)
         if (!isGameOver) setTimeout(generateObstacle, 3000)
-
     }
-    generateObstacle()
-    // Handle tap (touch) controls
-document.addEventListener('touchstart', jump);
 
+    generateObstacle()
 
     function gameOver() {
         clearInterval(gameTimerId)
@@ -289,6 +318,7 @@ document.addEventListener('touchstart', jump);
         location.reload()
     })
 })
+
 </script>
   </body>
 </html>
