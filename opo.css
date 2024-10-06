@@ -470,7 +470,7 @@ h3 {
 }
 .logo{
     height: 50px;
-    width: 50px;
+   min-width: 50px;
     border-radius: 50%;
     background-color: #C6FF00;
     margin-top: 50px;
