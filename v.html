@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Wiki Search</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000000;
+}
+.topographic-texture {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(circle, transparent, transparent 10%, rgba(255, 255, 255, 0.1) 11%, transparent 12%) 0 0 / 100px 100px,
+      radial-gradient(circle, transparent, transparent 8%, rgba(255, 255, 255, 0.2) 9%, transparent 10%) 50px 50px / 100px 100px,
+      radial-gradient(circle, transparent, transparent 12%, rgba(255, 255, 255, 0.1) 13%, transparent 14%) 25px 25px / 100px 100px,
+      radial-gradient(circle, transparent, transparent 6%, rgba(255, 255, 255, 0.3) 7%, transparent 8%) 75px 75px / 100px 100px;
+    background-size: 100px 100px, 100px 100px, 100px 100px, 100px 100px;
+    animation: moveTexture1 10s linear infinite, moveTexture2 15s linear infinite, moveTexture3 20s linear infinite, moveTexture4 25s linear infinite;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+  @keyframes moveTexture1 {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+  }
+
+  @keyframes moveTexture2 {
+    0% { background-position: 0% 100%; }
+    100% { background-position: 100% 0%; }
+  }
+
+  @keyframes moveTexture3 {
+    0% { background-position: 100% 0%; }
+    100% { background-position: 0% 100%; }
+  }
+
+  @keyframes moveTexture4 {
+    0% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+.container {
+  text-align: center;
+}
+
+button {
+    padding: 15px 25px;
+    font-size: 16px;
+    background-color: #c1c1c1;
+    color: white;
+    border: none;
+    height: 100px;
+    /* aspect-ratio: 1; */
+    width: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    
+
+}.cir1 {
+    height: 100px;
+    width: 100px;
+    background-color: #2196f340;
+    border-radius: 50%;
+    position: fixed;
+    right: -69px;
+    top: 322px;
+    box-shadow: 0px 0px 105px 45px #2196f361;
+}
+.cir2 {
+    height: 200px;
+    width: 200px;
+    background-color: #ffffff52;
+    border-radius: 50%;
+    position: absolute;
+    left: -69px;
+    bottom: 409px;
+    -webkit-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
+    -moz-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
+    box-shadow: 0px 0px 105px 45px rgb(248 255 253 / 45%);
+    height: 100px;
+    width: 100px;
+    background-color: #2196f340;
+    border-radius: 50%;
+    position: fixed;
+    /* right: -69px; */
+    /* top: 322px; */
+    box-shadow: 0px 0px 105px 45px #2196f361;
+}
+
+button:hover {
+  background-color: #ffffff;
+  color: #000;
+}
+
+#outputText {
+    margin-top: 20px;
+    font-size: 12px;
+    text-align: center;
+    color: white;
+}
+.drt{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+  </style>
+</head>
+<body>
+    <div class="topographic-texture">
+        <div class="cir2"></div>
+        <div class="cir1"></div>
+    <div class="drt">
+        <button id="startBtn">Start</button>
+        <button id="stopSpeakingBtn" style="display: none;padding: 15px 25px;
+        margin-top: 20px;
+        font-size: 16px;
+        background-color: #c1c1c1;
+        color: white;
+        border: none;
+        height: 44px;
+        /* aspect-ratio: 1; */
+        width: 89px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: center;
+    
+        align-items: center;" >Stop</button>
+        <div id="outputText"></div>
+        <img id="topicImage" src="" alt="" style="display: none; max-width: 150px; margin-top: 20px;">
+  </div>
+  </div>
+  <script>
+const startBtn = document.getElementById('startBtn');
+const stopSpeakingBtn = document.getElementById('stopSpeakingBtn');
+const outputText = document.getElementById('outputText');
+const topicImage = document.getElementById('topicImage');
+
+let recognition;
+let speechSynthesisUtterance = new SpeechSynthesisUtterance();
+let isListening = false;
+let inactivityTimer;
+let hasGreeted = false; // Flag to check if greeting has been displayed
+
+// Predefined responses
+const responseDictionary = {
+    "OKay": "👌 Got it! Let me know if you need anything else.",
+    "okay": "👌 Got it! Let me know if you need anything else.",
+    "hi": "Hello! How can I assist you today?",
+    "Hello": "Hello! How can I assist you today?",
+    "how are you": "I'm just a program, but I'm here to help you!",
+    "what's your name": "I'm a voice assistant, here to answer your questions!",
+    "what can you do": "I can help you with various topics, just ask me anything!",
+    "thank you": "You're welcome! If you have any more questions, feel free to ask.",
+    "bye": "Goodbye! Have a great day!",
+    "What are you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "Who made you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "Do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "how are you": "🤖 I'm just a bot, but I'm here to help you!",
+    "how are you doing": "😊 I'm doing great! How about you?",
+    "how’s it going": "🤗 I’m here to assist you. How about you?",
+    "what’s up": "😄 Not much! Just ready to help. What can I do for you?",
+    "who created you": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "who ": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    // Human/bot identity questions
+    "are you human": "❌ No, I’m a chatbot here to assist you with any questions!",
+    "are you a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
+    "do you have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do you have feeling": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do you feel": "😶 Nope, I don’t have feel, but I’m great at answering questions!",
+    "do you have emotions": "😐 I don’t experience emotions, but I can provide useful information!",
+    "do you have emotion": "😐 I don’t experience emotions, but I can provide useful information!",
+
+    // Personal life questions (humorous answers)
+    "do you have a girlfriend": "💔 Nope, I’m too busy answering questions today!",
+    "are you married": "💍 I’m married to helping you get answers!",
+    "will you marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
+    "do you love me": "❤️ I’m here to support you, but love isn’t in my programming!",
+
+    // Common requests
+    "can you help me": "🤗 Of course! What do you need help with?",
+    "what can you do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "what can you": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "tell me something interesting": "🧐 Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
+    "tell me something fun": "🐙 Did you know octopuses have three hearts and blue blood?",
+    "ok": "👌 Got it! Let me know if you need anything else.",
+    "Ok": "👌 Got it! Let me know if you need anything else.",
+    "OK": "👌 Got it! Let me know if you need anything else.",
+    "Got it":" Let me know if you need anything else.",
+    "got it":" Let me know if you need anything else.",
+    // Responses to criticism
+    "you are not good": [
+        "Sorry, I'm working on improving! Thank you for your feedback.",
+        " I appreciate your honesty! I'll do my best to get better.",
+        " Oh no! I'm here to learn and improve. Please give me another chance! ",
+        " I'm sorry to hear that! How can I assist you better?",
+        "I understand! Let me know what I can do to improve.",
+        "Your feedback is valuable! I'll strive to do better.",
+        "I know I can improve! Thank you for letting me know.",
+    ],
+    "you are bad": [
+        "😟 I am sorry! Your feedback helps me get better. Thank you!",
+        "😩 I didn't mean to disappoint you! How can I make it right?",
+        "😕 I’m sorry to hear that! I’ll strive to do better next time.",
+        "😔 I understand your concern! Please tell me how I can improve.",
+        "😳 I apologize! I'm constantly learning and would love your guidance.",
+        "😢 I didn't mean to upset you! What can I do to assist you better?",
+        "🙁 Thank you for your feedback! I’ll work on improving.",
+    ],
+
+    // Fun responses
+    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "thank you": "😊 You're welcome! I'm happy to help.",
+    "thanks": "😊 Anytime! I'm here to assist.",
+    "ok": "👌 Got it! Let me know if you need anything else.",
+    "yes": "👍 Great! If you need anything, I'm here.",
+    "no": "❌ That's fine! Feel free to ask me anything.",
+    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+      // Fun responses
+    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "thank you": "😊 You're welcome! I'm happy to help.",
+    "thanks": "😊 Anytime! I'm here to assist.",
+    
+    "yes": "👍 Great! If you need anything, I'm here.",
+    "no": "❌ That's fine! Feel free to ask me anything.",
+    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+    "how r u": "🤖 I'm just a bot, but I'm here to help you!",
+    "how u doin": "😊 I'm doing great! How about you?",
+    "wyd": "🤔 Just helping out! What about you?", // Short for "What are you doing?"
+    "wsp": "😄 Not much! Just ready to help. What can I do for you?", // Short for "What's up?"
+    "hlo": "👋 Hi! How can I assist you today?",
+
+    // Human/bot identity questions
+    "u human": "❌ Nope, I’m a chatbot here to assist you with any questions!",
+    "u a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
+    "do u have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do u hv emotions": "😐 I don’t experience emotions, but I can provide useful information!",
+
+    // Personal life questions (humorous answers)
+    "do u have a gf": "💔 Nope, I’m too busy answering questions to date!", // Short for "girlfriend"
+    "u married": "💍 I’m married to helping you get answers!",
+    "will u marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
+    "u love me": "❤️ I’m here to support you, but love isn’t in my programming!",
+
+    // Common requests
+    "can u help": "🤗 Of course! What do you need help with?",
+    "wat u do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "gimme info": "📖 Sure! What would you like information on?",
+    "tell me a fun fact": "🧐 Did you know honey never spoils? Even after 3,000 years, it’s still good to eat!",
+    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
+    "u funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
+    "k": "👌 Got it! Let me know if you need anything else.",
+    "yep": "👍 Great! If you need anything, I'm here.",
+    "nope": "❌ That's fine! Feel free to ask me anything.",
+    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", 
+    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
+    "u funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
+    "k": "👌 Got it! Let me know if you need anything else.",
+    "yep": "👍 Great! If you need anything, I'm here.",
+    "nope": "❌ That's fine! Feel free to ask me anything.",
+    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!"
+ 
+
+};
+
+function normalizeInput(input) {
+    return input.replace(/^(Hazrat|when we say|okay|ok|in|what's the meaning of|what is|what's|can you tell me about|can you explain|tell me something about|do you know about|could you|pls tell me about|plz|please|give me details about|who is|who's|wht do u know about|what can u tell me about|gimme info on|tell me more about|provide details on|is|are|where's|what do u mean by|how does)\s+/i, '');
+}
+
+function speak(text) {
+    speechSynthesisUtterance.text = text;
+    speechSynthesisUtterance.onstart = () => {
+        stopSpeakingBtn.style.display = "block"; // Show stop button when speaking starts
+    };
+    speechSynthesisUtterance.onend = () => {
+        stopSpeakingBtn.style.display = "none"; // Hide stop button when speaking ends
+    };
+    window.speechSynthesis.speak(speechSynthesisUtterance);
+}
+
+function fetchWikiInfo(query) {
+    const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.extract) {
+                outputText.innerHTML = data.extract;
+                speak(data.extract);
+                
+                // Show the image if it exists
+                if (data.thumbnail) {
+                    topicImage.src = data.thumbnail.source;
+                    topicImage.alt = data.title;
+                    topicImage.style.display = "block"; // Show image
+                } else {
+                    topicImage.style.display = "none"; // Hide image if not available
+                }
+            } else {
+                outputText.innerHTML = `Sorry, I couldn't find information on: "${query}".`;
+                speak(`Sorry, I couldn't find information on: "${query}".`);
+                topicImage.style.display = "none"; // Hide image
+            }
+        })
+        .catch(() => {
+            outputText.innerHTML = "Error fetching data.";
+            speak("Error fetching data.");
+            topicImage.style.display = "none"; // Hide image
+        });
+}
+
+function startRecognition() {
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = () => {
+            isListening = true;
+            outputText.innerHTML = "Listening...";
+            resetInactivityTimer(); // Start the inactivity timer
+            startBtn.style.display = "none"; // Hide the start button
+            stopSpeakingBtn.style.display = "none"; // Hide the stop button
+        };
+
+        recognition.onresult = (event) => {
+            const speechResult = event.results[0][0].transcript.toLowerCase();
+            outputText.innerHTML = `You said: ${speechResult}`;
+            resetInactivityTimer(); // Reset the inactivity timer on result
+
+            // Check predefined responses
+            const response = responseDictionary[speechResult] || null;
+            if (response) {
+                outputText.innerHTML = response;
+                speak(response);
+                return; // Exit if a predefined response is found
+            }
+
+            // If user says "hay zaid," don't restart listening yet
+            if (speechResult.includes("hay zaid")) {
+                speak("How can I help you?");
+            } else {
+                let normalizedQuery = normalizeInput(speechResult);
+                fetchWikiInfo(normalizedQuery);
+            }
+        };
+
+        recognition.onend = () => {
+            isListening = false;
+            outputText.innerHTML += "<br>Recording stopped.";
+            startBtn.style.display = "block"; // Show the start button
+            stopSpeakingBtn.style.display = "none"; // Hide the stop button
+        };
+
+        recognition.onerror = (event) => {
+            outputText.innerHTML = "Error occurred: " + event.error;
+        };
+
+        recognition.start();
+    } else {
+        outputText.innerHTML = "Speech recognition not supported in this browser.";
+    }
+}
+
+function startListening() {
+    // If the assistant is not currently listening or speaking, start the process
+    if (!isListening) {
+        // If greeting has not been displayed, show it
+        if (!hasGreeted) {
+            const greetingText = "Hi! How are you? I'm here to help you with any topic. Ask anything you like.";
+            outputText.innerHTML = greetingText; // Display greeting text on the page
+            speak(greetingText); // Speak the greeting
+
+            // Wait for the greeting to finish speaking, then start recognition
+            speechSynthesisUtterance.onend = () => {
+                hasGreeted = true; // Set the flag to true to avoid greeting again
+                startRecognition(); // Start listening after greeting
+            };
+        } else {
+            // If already greeted, start recognition immediately
+            startRecognition();
+        }
+    } else {
+        // If already listening, stop the speaking and restart listening
+        window.speechSynthesis.cancel(); // Stop any ongoing speech
+        startRecognition(); // Start voice recognition again
+    }
+}
+
+// Stop speaking when the stop button is clicked
+stopSpeakingBtn.addEventListener('click', () => {
+    window.speechSynthesis.cancel(); // Stop any ongoing speech
+    stopSpeakingBtn.style.display = "none"; // Hide stop button
+    if (isListening) {
+        recognition.stop(); // Stop recognition immediately if it's listening
+    }
+});
+
+// Inactivity timer functions
+function resetInactivityTimer() {
+    clearTimeout(inactivityTimer); // Clear the previous timer
+    inactivityTimer = setTimeout(() => {
+        if (isListening) {
+            recognition.stop(); // Stop recognition after 5 seconds of inactivity
+            outputText.innerHTML += "<br>Stopped listening due to inactivity.";
+            startBtn.style.display = "block"; // Show the start button
+            stopSpeakingBtn.style.display = "none"; // Hide the stop button
+        }
+    }, 5000); // 5000 milliseconds = 5 seconds
+}
+
+// Event listener for the start button
+startBtn.addEventListener('click', startListening);
+
+
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
