@@ -291,6 +291,7 @@ body {
 .robot-gif {
     width: 60%;
     height: auto;
+    z-index: 5;
 }
 #game-container {
     margin-top: 20px;
