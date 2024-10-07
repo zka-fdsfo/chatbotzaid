@@ -142,7 +142,7 @@ button:hover {
         <img id="topicImage" src="" alt="" style="display: none; max-width: 150px; margin-top: 20px;">
   </div>
   </div>
-  <script>
+  <!-- <script>
 const startBtn = document.getElementById('startBtn');
 const stopSpeakingBtn = document.getElementById('stopSpeakingBtn');
 const outputText = document.getElementById('outputText');
@@ -332,12 +332,14 @@ function fetchWikiInfo(query) {
                 speak(`Sorry, I couldn't find information on: "${query}".`);
                 topicImage.style.display = "none"; // Hide image
             }
+            
         })
         .catch(() => {
             outputText.innerHTML = "Error fetching data.";
             speak("Error fetching data.");
             topicImage.style.display = "none"; // Hide image
         });
+        
 }
 
 function startRecognition() {
@@ -444,6 +446,293 @@ function resetInactivityTimer() {
 // Event listener for the start button
 startBtn.addEventListener('click', startListening);
 
+
+  </script> -->
+  <script>
+    let recognition;
+let isListening = false;
+const outputText = document.getElementById('outputText');
+const startBtn = document.getElementById('startBtn');
+const stopSpeakingBtn = document.getElementById('stopSpeakingBtn');
+
+// Adjust speech synthesis rate
+let speechSynthesisUtterance = new SpeechSynthesisUtterance();
+speechSynthesisUtterance.rate = 0.9;
+
+// Predefined responses
+const predefinedResponses = {
+    "OKay": "👌 Got it! Let me know if you need anything else.",
+    "okay": "👌 Got it! Let me know if you need anything else.",
+    "hi": "Hello! How can I assist you today?",
+    "Hello": "Hello! How can I assist you today?",
+    "how are you": "I'm just a program, but I'm here to help you!",
+    "what's your name": "I'm a voice assistant, here to answer your questions!",
+    "what can you do": "I can help you with various topics, just ask me anything!",
+    "thank you": "You're welcome! If you have any more questions, feel free to ask.",
+    "bye": "Goodbye! Have a great day!",
+    "What are you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "Who made you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "Do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "how are you": "🤖 I'm just a bot, but I'm here to help you!",
+    "how are you doing": "😊 I'm doing great! How about you?",
+    "how’s it going": "🤗 I’m here to assist you. How about you?",
+    "what’s up": "😄 Not much! Just ready to help. What can I do for you?",
+    "who created you": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "who ": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    // Human/bot identity questions
+    "are you human": "❌ No, I’m a chatbot here to assist you with any questions!",
+    "are you a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
+    "do you have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do you have feeling": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do you feel": "😶 Nope, I don’t have feel, but I’m great at answering questions!",
+    "do you have emotions": "😐 I don’t experience emotions, but I can provide useful information!",
+    "do you have emotion": "😐 I don’t experience emotions, but I can provide useful information!",
+
+    // Personal life questions (humorous answers)
+    "do you have a girlfriend": "💔 Nope, I’m too busy answering questions today!",
+    "are you married": "💍 I’m married to helping you get answers!",
+    "will you marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
+    "do you love me": "❤️ I’m here to support you, but love isn’t in my programming!",
+
+    // Common requests
+    "can you help me": "🤗 Of course! What do you need help with?",
+    "what can you do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "what can you": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "tell me something interesting": "🧐 Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
+    "tell me something fun": "🐙 Did you know octopuses have three hearts and blue blood?",
+    "ok": "👌 Got it! Let me know if you need anything else.",
+    "Ok": "👌 Got it! Let me know if you need anything else.",
+    "OK": "👌 Got it! Let me know if you need anything else.",
+    "Got it":" Let me know if you need anything else.",
+    "got it":" Let me know if you need anything else.",
+    // Responses to criticism
+    "you are not good": [
+        "Sorry, I'm working on improving! Thank you for your feedback.",
+        " I appreciate your honesty! I'll do my best to get better.",
+        " Oh no! I'm here to learn and improve. Please give me another chance! ",
+        " I'm sorry to hear that! How can I assist you better?",
+        "I understand! Let me know what I can do to improve.",
+        "Your feedback is valuable! I'll strive to do better.",
+        "I know I can improve! Thank you for letting me know.",
+    ],
+    "you are bad": [
+        "😟 I am sorry! Your feedback helps me get better. Thank you!",
+        "😩 I didn't mean to disappoint you! How can I make it right?",
+        "😕 I’m sorry to hear that! I’ll strive to do better next time.",
+        "😔 I understand your concern! Please tell me how I can improve.",
+        "😳 I apologize! I'm constantly learning and would love your guidance.",
+        "😢 I didn't mean to upset you! What can I do to assist you better?",
+        "🙁 Thank you for your feedback! I’ll work on improving.",
+    ],
+
+    // Fun responses
+    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "thank you": "😊 You're welcome! I'm happy to help.",
+    "thanks": "😊 Anytime! I'm here to assist.",
+    "ok": "👌 Got it! Let me know if you need anything else.",
+    "yes": "👍 Great! If you need anything, I'm here.",
+    "no": "❌ That's fine! Feel free to ask me anything.",
+    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+      // Fun responses
+    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "thank you": "😊 You're welcome! I'm happy to help.",
+    "thanks": "😊 Anytime! I'm here to assist.",
+    
+    "yes": "👍 Great! If you need anything, I'm here.",
+    "no": "❌ That's fine! Feel free to ask me anything.",
+    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+    "how r u": "🤖 I'm just a bot, but I'm here to help you!",
+    "how u doin": "😊 I'm doing great! How about you?",
+    "wyd": "🤔 Just helping out! What about you?", // Short for "What are you doing?"
+    "wsp": "😄 Not much! Just ready to help. What can I do for you?", // Short for "What's up?"
+    "hlo": "👋 Hi! How can I assist you today?",
+
+    // Human/bot identity questions
+    "u human": "❌ Nope, I’m a chatbot here to assist you with any questions!",
+    "u a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
+    "do u have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do u hv emotions": "😐 I don’t experience emotions, but I can provide useful information!",
+
+    // Personal life questions (humorous answers)
+    "do u have a gf": "💔 Nope, I’m too busy answering questions to date!", // Short for "girlfriend"
+    "u married": "💍 I’m married to helping you get answers!",
+    "will u marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
+    "u love me": "❤️ I’m here to support you, but love isn’t in my programming!",
+
+    // Common requests
+    "can u help": "🤗 Of course! What do you need help with?",
+    "wat u do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "gimme info": "📖 Sure! What would you like information on?",
+    "tell me a fun fact": "🧐 Did you know honey never spoils? Even after 3,000 years, it’s still good to eat!",
+    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
+    "u funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
+    "k": "👌 Got it! Let me know if you need anything else.",
+    "yep": "👍 Great! If you need anything, I'm here.",
+    "nope": "❌ That's fine! Feel free to ask me anything.",
+    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", 
+    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
+    "u funny": "😄 Thanks! I try my best!",
+
+    // Miscellaneous
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
+    "k": "👌 Got it! Let me know if you need anything else.",
+    "yep": "👍 Great! If you need anything, I'm here.",
+    "nope": "❌ That's fine! Feel free to ask me anything.",
+    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!",
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "how are you": "I'm just a program, but thanks for asking! How can I assist you today?",
+    "what is javascript": "JavaScript is a programming language commonly used to create interactive effects within web browsers.",
+
+    "tell me a joke": "Why did the scarecrow win an award? Because he was outstanding in his field!",
+    "what is your purpose": "My purpose is to assist you with information and answer your queries.",
+    "hello": "Hi there! How can I help you today?",
+    "goodbye": "Goodbye! Have a great day!",
+    "what is your name": "I am your virtual assistant, here to help you!",
+    // Add more predefined responses as needed
+};
+
+// Function to normalize user input
+function normalizeInput(input) {
+    return input.replace(/^(what is|tell me about|who is|can you tell me about|please tell me about|give me info on|what do you know about|explain|tell me something about|can you explain|who's|who's the|who are|what can you tell me about|give details about|what about|how does)\s+/i, '').trim();
+}
+
+// Function to display bot message
+function displayBotMessage(extract, imageUrl) {
+    outputText.innerHTML = extract; // Removed title from display
+    const topicImage = document.getElementById('topicImage');
+    if (imageUrl) {
+        topicImage.src = imageUrl;
+        topicImage.style.display = 'block';
+    } else {
+        topicImage.style.display = 'none'; // Hide if no image
+    }
+    speak(extract);
+}
+
+// Function to display a fallback message
+function displayFallbackMessage() {
+    outputText.innerHTML = "Sorry, I couldn't find any information on that topic.";
+    speak("Sorry, I couldn't find any information on that topic.");
+}
+
+// Function to handle user queries
+async function processQuery(query) {
+    const normalizedQuery = normalizeInput(query);
+    const response = predefinedResponses[normalizedQuery.toLowerCase()];
+
+    if (response) {
+        // If predefined response exists
+        displayBotMessage(response, null); // Pass response directly
+    } else {
+        // If not, fetch info from Wikipedia
+        await fetchWikiInfo(normalizedQuery);
+    }
+}
+
+// Fetch information from Wikipedia
+async function fetchWikiInfo(query) {
+    try {
+        // First, search for the article
+        let searchResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`);
+        let searchData = await searchResponse.json();
+
+        if (searchData.query.search.length > 0) {
+            let title = searchData.query.search[0].title;
+
+            // Get summary of the article
+            let summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+            let summaryData = await summaryResponse.json();
+
+            if (summaryData.extract) {
+                let imageUrl = summaryData.thumbnail ? summaryData.thumbnail.source : null;
+                displayBotMessage(summaryData.extract, imageUrl);
+            } else {
+                displayFallbackMessage();
+            }
+        } else {
+            displayFallbackMessage();
+        }
+    } catch (error) {
+        console.error('Error fetching from Wikipedia:', error);
+        outputText.innerHTML = "Oops! Something went wrong while fetching from Wikipedia.";
+    }
+}
+
+// Main speech recognition function
+function startRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = () => {
+            isListening = true;
+            outputText.innerHTML = "Listening...";
+            startBtn.style.display = "none";
+            stopSpeakingBtn.style.display = "block";
+        };
+
+        recognition.onresult = (event) => {
+            const speechResult = event.results[0][0].transcript.toLowerCase();
+            outputText.innerHTML = `You said: ${speechResult}`;
+            processQuery(speechResult);
+        };
+
+        recognition.onend = () => {
+            isListening = false;
+            startBtn.style.display = "block";
+            stopSpeakingBtn.style.display = "none";
+        };
+
+        recognition.onerror = (event) => {
+            outputText.innerHTML = `Error occurred: ${event.error}`;
+        };
+
+        recognition.start();
+    } else {
+        outputText.innerHTML = "Speech recognition not supported in this browser.";
+    }
+}
+
+function speak(text) {
+    speechSynthesisUtterance.text = text;
+    speechSynthesisUtterance.onstart = () => {
+        stopSpeakingBtn.style.display = "block";
+    };
+    speechSynthesisUtterance.onend = () => {
+        stopSpeakingBtn.style.display = "none";
+    };
+    window.speechSynthesis.speak(speechSynthesisUtterance);
+}
+
+startBtn.addEventListener('click', () => {
+    if (!isListening) {
+        startRecognition();
+    }
+});
+
+stopSpeakingBtn.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    stopSpeakingBtn.style.display = "none";
+});
 
   </script>
   <script src="script.js"></script>
