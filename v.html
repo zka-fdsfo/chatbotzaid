@@ -121,20 +121,47 @@ button:hover {
       width: 100px;
       height: 100px;
       transition: width 0.1s ease, height 0.1s ease;
+      animation: op 2s infinite alternate-reverse;
+          transition: revert-layer 2s;
     }
     #gifContainer{
         display: flex;
 
     }
-  </style>
+    @keyframes op {
+          0% { width: 122px; height: 122px; }
+         
+          100% { width: 100px;
+            height: 100px; }
+      }
+    h1{
+        color: white;
+        text-align: left;
+        font-size: 46px;
+        margin: 0;
+        position: relative;
+        left: 10px;
+    }  
+    h2{
+        color: #00c3ff;
+        
+    margin: 0;
+    font-size: 41px;
+    }
+    .ui{
+        display: flex;
+    }
+    </style>
 </head>
 <body>
     <div class="topographic-texture">
         <div class="cir2"></div>
         <div class="cir1"></div>
+        <div id="ui">
+            <h1>Voice <h2>Assistant </h2></h1>
+        </div>
     <div class="drt">
-        <div id=""></div>
-        
+      
        
             <img id="listeningGif" src="output-onlinegiftools (4).gif" alt="Listening GIF">
             <button id="startBtn">Start</button>
