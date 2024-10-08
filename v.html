@@ -27,6 +27,8 @@
     justify-content: center;
     align-items: center;
     display: flex;
+    display: flex;
+    flex-direction: column;
 }
 
   @keyframes moveTexture1 {
@@ -53,17 +55,17 @@
 }
 
 button {
-    padding: 15px 25px;
+    
     font-size: 16px;
-    background-color: #c1c1c1;
+    background-color: #489fae85;
     color: white;
     border: none;
-    height: 100px;
     /* aspect-ratio: 1; */
     width: 100px;
-    border-radius: 50%;
+    border-radius: 14px;
     cursor: pointer;
     font-weight: bold;
+    height: 34px;
     
 
 }.cir1 {
@@ -98,8 +100,8 @@ button {
 }
 
 button:hover {
-  background-color: #ffffff;
-  color: #000;
+  background-color: #01b0f5a9;
+  color: #ffffff;
 }
 
 #outputText {
@@ -115,6 +117,15 @@ button:hover {
     align-items: center;
 }
 
+#listeningGif {
+      width: 100px;
+      height: 100px;
+      transition: width 0.1s ease, height 0.1s ease;
+    }
+    #gifContainer{
+        display: flex;
+
+    }
   </style>
 </head>
 <body>
@@ -122,22 +133,28 @@ button:hover {
         <div class="cir2"></div>
         <div class="cir1"></div>
     <div class="drt">
-        <button id="startBtn">Start</button>
-        <button id="stopSpeakingBtn" style="display: none;padding: 15px 25px;
+        <div id=""></div>
+        
+       
+            <img id="listeningGif" src="output-onlinegiftools (4).gif" alt="Listening GIF">
+            <button id="startBtn">Start</button>
+        <button id="stopSpeakingBtn" style="display: none; 
+       
         margin-top: 20px;
         font-size: 16px;
-        background-color: #c1c1c1;
-        color: white;
+        background-color: #0086f3a1;
+        color: #ffffff;
         border: none;
         height: 44px;
         /* aspect-ratio: 1; */
         width: 89px;
-        border-radius: 10px;
+        border-radius: 27px;
         cursor: pointer;
         font-weight: bold;
         text-align: center;
-    
-        align-items: center;" >Stop</button>
+    " >Stop<i class="fa-solid fa-pause"></i></button>
+        
+             </div>
         <div id="outputText"></div>
         <img id="topicImage" src="" alt="" style="display: none; max-width: 150px; margin-top: 20px;">
   </div>
@@ -461,8 +478,27 @@ speechSynthesisUtterance.rate = 0.9;
 
 // Predefined responses
 const predefinedResponses = {
-    "OKay": "👌 Got it! Let me know if you need anything else.",
-    "okay": "👌 Got it! Let me know if you need anything else.",
+    "no": "Okay, I see. Could you clarify your query, please?",
+  "that's not right": "I see. Let me try again. What exactly do you need?",
+  "no, that's not what i meant": "Sorry for the confusion! Could you please specify what you're looking for?",
+  "nope": "Alright! Let's try again. Please explain what information you're after.",
+  "i did nat asked that": "It looks like I misunderstood. Could you clarify what you need?",
+  "what this is not what i asked": "Sorry! Let me know how I can better assist you.",
+  "that is not what i meant": "I see! Please let me know exactly what you're asking.",
+  "not what i wanted": "Sorry, I missed the mark. Please tell me what you're expecting.",
+  // More clarification responses
+  "this is not correct": "Thank you for pointing that out. Could you tell me more about what you're looking for?",
+  "that doesn't seem right": "Sorry about that! Let me recheck the information. What exactly do you need?",
+  "not the answer i wanted": "I understand. Let me provide you with the right information. What are you looking for?",
+  "wrong answer": "I apologize for the mistake. Let me try again. Please explain your query in more detail.",
+  
+  // Generic responses
+  "not what i wanted": "Sorry, I missed the mark. Please tell me what you're expecting.",
+  "give me the right answer": "I'll do my best! Can you clarify what you're asking?",
+  "incorrect information": "Oops! Let me correct that. Could you rephrase your question?",
+  "no this isn't right": "I see, thank you for letting me know. What exactly do you need?",
+    "OKay": " Got it! Let me know if you need anything else.",
+    "okay": "Got it! Let me know if you need anything else.",
     "hi": "Hello! How can I assist you today?",
     "Hello": "Hello! How can I assist you today?",
     "how are you": "I'm just a program, but I'm here to help you!",
@@ -494,16 +530,24 @@ const predefinedResponses = {
     "are you married": "💍 I’m married to helping you get answers!",
     "will you marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
     "do you love me": "❤️ I’m here to support you, but love isn’t in my programming!",
-
+    "i did not ask that": "I apologize for the misunderstanding. Could you please rephrase your question?",
+  "you did not listen properly": "Sorry about that! Let me know what you were trying to ask, and I will try again.",
+  "that is wrong": "Oops! It seems I made a mistake. Please clarify your question.",
+  "this is not the information i want": "My bad! Can you provide more details so I can give the correct information?",
+  "please give me proper information": "Certainly! Let me try to answer that again. What exactly are you looking for?",
+  
+  // Additional variations
+  "i did nat asked that": "It looks like I misunderstood. Could you clarify what you need?",
+  "this is not what i asked": "Sorry! Let me know how I can better assist you.",
     // Common requests
-    "can you help me": "🤗 Of course! What do you need help with?",
-    "what can you do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
-    "what can you": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
-    "tell me something interesting": "🧐 Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
+    "can you help me": " Of course! What do you need help with?",
+    "what can you do": " I can assist with a wide range of tasks and answer questions. Just ask!",
+    "what can you": " I can assist with a wide range of tasks and answer questions. Just ask!",
+    "tell me something interesting": " Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
     "tell me something fun": "🐙 Did you know octopuses have three hearts and blue blood?",
-    "ok": "👌 Got it! Let me know if you need anything else.",
-    "Ok": "👌 Got it! Let me know if you need anything else.",
-    "OK": "👌 Got it! Let me know if you need anything else.",
+    "ok": " Got it! Let me know if you need anything else.",
+    "Ok": "Got it! Let me know if you need anything else.",
+    "OK": "Got it! Let me know if you need anything else.",
     "Got it":" Let me know if you need anything else.",
     "got it":" Let me know if you need anything else.",
     // Responses to criticism
@@ -517,30 +561,30 @@ const predefinedResponses = {
         "I know I can improve! Thank you for letting me know.",
     ],
     "you are bad": [
-        "😟 I am sorry! Your feedback helps me get better. Thank you!",
-        "😩 I didn't mean to disappoint you! How can I make it right?",
-        "😕 I’m sorry to hear that! I’ll strive to do better next time.",
-        "😔 I understand your concern! Please tell me how I can improve.",
-        "😳 I apologize! I'm constantly learning and would love your guidance.",
-        "😢 I didn't mean to upset you! What can I do to assist you better?",
-        "🙁 Thank you for your feedback! I’ll work on improving.",
+        " I am sorry! Your feedback helps me get better. Thank you!",
+        "I didn't mean to disappoint you! How can I make it right?",
+        "I’m sorry to hear that! I’ll strive to do better next time.",
+        "I understand your concern! Please tell me how I can improve.",
+        " I apologize! I'm constantly learning and would love your guidance.",
+        " I didn't mean to upset you! What can I do to assist you better?",
+        " Thank you for your feedback! I’ll work on improving.",
     ],
 
     // Fun responses
-    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
-    "you're funny": "😄 Thanks! I try my best!",
+    "do you know a joke": " Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": " Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": " Thanks! I try my best!",
 
     // Miscellaneous
-    "thank you": "😊 You're welcome! I'm happy to help.",
-    "thanks": "😊 Anytime! I'm here to assist.",
-    "ok": "👌 Got it! Let me know if you need anything else.",
-    "yes": "👍 Great! If you need anything, I'm here.",
-    "no": "❌ That's fine! Feel free to ask me anything.",
-    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+    "thank you": " You're welcome! I'm happy to help.",
+    "thanks": " Anytime! I'm here to assist.",
+    "ok": "Got it! Let me know if you need anything else.",
+    "yes": " Great! If you need anything, I'm here.",
+    "no": " That's fine! Feel free to ask me anything.",
+    "i have a question": "Feel free to ask your question, and I’ll do my best to help!",
       // Fun responses
-    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "do you know a joke": "Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": "Why did the computer go to therapy? Because it had too many bytes of issues!",
     "you're funny": "😄 Thanks! I try my best!",
 
     // Miscellaneous
@@ -605,6 +649,12 @@ const predefinedResponses = {
     "goodbye": "Goodbye! Have a great day!",
     "what is your name": "I am your virtual assistant, here to help you!",
     // Add more predefined responses as needed
+     // New variations added
+  "fine": "Got it! Let me know if there's anything else you'd like to ask.",
+  "this is not what i asked": "I see, it looks like I missed the point. Please explain again, and I'll provide the right info.",
+  "this is wrong": "I apologize for the mistake. Let me try again. Could you provide more details on what you need?",
+  "that is incorrect": "Oops! I gave the wrong information. Let me know what you're looking for, and I'll fix it.",
+  "that's not what i was asking": "Sorry for misunderstanding! Could you clarify your question so I can answer it correctly?"
 };
 
 // Function to normalize user input
@@ -673,7 +723,11 @@ async function fetchWikiInfo(query) {
         outputText.innerHTML = "Oops! Something went wrong while fetching from Wikipedia.";
     }
 }
-
+function scaleGif(averageVolume) {
+        let newSize = Math.max(100, Math.min(300, averageVolume * 2)); // Limit size between 100px and 300px
+        listeningGif.style.width = `${newSize}px`;
+        listeningGif.style.height = `${newSize}px`;
+    }
 // Main speech recognition function
 function startRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -684,11 +738,13 @@ function startRecognition() {
         recognition.interimResults = false;
 
         recognition.onstart = () => {
-            isListening = true;
-            outputText.innerHTML = "Listening...";
-            startBtn.style.display = "none";
-            stopSpeakingBtn.style.display = "block";
-        };
+                isListening = true;
+                outputText.innerHTML = "Listening...";
+                gifContainer.style.display = 'block'; // Show GIF
+                startBtn.style.display = "none";
+                stopSpeakingBtn.style.display = "block";
+                startAnalyzingMicrophone(); // Start analyzing loudness
+            };
 
         recognition.onresult = (event) => {
             const speechResult = event.results[0][0].transcript.toLowerCase();
@@ -696,11 +752,15 @@ function startRecognition() {
             processQuery(speechResult);
         };
 
-        recognition.onend = () => {
-            isListening = false;
-            startBtn.style.display = "block";
-            stopSpeakingBtn.style.display = "none";
-        };
+      
+    recognition.onend = () => {
+        isListening = false;
+        
+        outputText.innerHTML += "<br>Recording stopped"; // Append to the existing output
+        gifContainer.style.display = 'none'; // Hide GIF
+        startBtn.style.display = "block"; // Show start button
+        stopSpeakingBtn.style.display = "none"; // Hide stop button
+    };
 
         recognition.onerror = (event) => {
             outputText.innerHTML = `Error occurred: ${event.error}`;
