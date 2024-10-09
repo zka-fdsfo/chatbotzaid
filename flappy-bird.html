@@ -1,1759 +1,294 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatGPT Bot</title>
-    <link rel="stylesheet" href="opo.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="style.css">
-</head>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Flappy Bird</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" charset="utf-8"></script>
     <style>
-        /* Add some styling for the Wikipedia image */
-        .wiki-image {
-    max-width: 181px;
-    width: 100%; /* Optional: This makes the image responsive within the max-width */
-    height: auto; /* Maintains aspect ratio */
-max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
-                  /* Maintain aspect ratio */
-            display: block;    /* Display as block element to ensure it's on a new line */
-            margin: 10px 0;    /* Add some margin for better spacing */
-            border-bottom-right-radius: 7px;
-            border-bottom-left-radius: 7px;
-            float: none;
-        }
-        .loading-message {
-    display: flex;          /* Align items in a row */
-    justify-content: flex-start;  /* Align content to the left */
-    align-items: center;    /* Vertically center the GIFs */
-    
-}
-
-.loading-gif {
-    margin-right: 5px;      /* Reduce the gap between the two GIFs */
-    width: 50px;            /* Set size for the first GIF */
-    height: auto;
-}
-
-.loading-gif-small {
-    margin-right: 0;        /* No gap after the second GIF */
-    width: 20px;            /* Smaller size for the second GIF */
-    height: auto;
-    margin-top: 5px;
-    margin-left: -22px;
-}
-
-
-.bot-message {
-    transition: all 0.5s ease-in-out;
-}
-
-.bot-message p {
-    margin: 0;
-    font-size: 16px;
-}
-
-
-
-.message-icons i {
-    cursor: pointer;
-    font-size: 20px;
-    color: #5f5f5f;
-    transition: color 0.3s, transform 0.3s;
-    gap: 10;
-    margin: 5px;
-    margin-bottom: 50px;
-}
-.message-icons i:hover {
-    color: #ffffff;
-    transform: scale(1.2); /* Slightly enlarges the icon on hover */
-}
-
-
-.cir1 {
-    height: 100px;
-    width: 100px;
-    background-color: #2196f340;
-    border-radius: 50%;
-    position: fixed;
-    right: -69px;
-    top: 322px;
-    box-shadow: 0px 0px 105px 45px #2196f361;
-}
-.cir2 {
-    height: 200px;
-    width: 200px;
-    background-color: #ffffff52;
-    border-radius: 50%;
-    position: absolute;
-    left: -69px;
-    bottom: 409px;
-    -webkit-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
-    -moz-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
-    box-shadow: 0px 0px 105px 45px rgb(248 255 253 / 45%);
-    height: 100px;
-    width: 100px;
-    background-color: #2196f340;
-    border-radius: 50%;
-    position: fixed;
-    /* right: -69px; */
-    /* top: 322px; */
-    box-shadow: 0px 0px 105px 45px #2196f361;
-}
-
-.cir3 {
-    height: 300px;
-    width: 300px;
-    background-color: #2196f3;
-    border-radius: 50%;
-    /* right: -64px; */
-    /* top: 196px; */
-    /* box-shadow: 0px 0px 105px 45px #2196f361; */
-    /* display: none; */
-    z-index: -1;
-    left: -43px;
-    position: relative;
-}
-.cir4 {
-    height: 50px;
-    width: 50px;
-    background-color: #ffffff52;
-    border-radius: 50%;
-    position: static;
-    /* left: -69px; */
-    /* bottom: 409px; */
-    -webkit-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
-    -moz-box-shadow: 0px 0px 105px 45px rgba(45, 255, 196, 0.9);
-    box-shadow: 0px 0px 105px 45px rgb(248 255 253 / 45%);
-    height: 13px;
-    width: 50px;
-    background-color: #2196f333;
-    border-radius: 50%;
-    /* position: fixed; */
-    /* right: -69px; */
-    /* top: 322px; */
-    box-shadow: 0px 0px 105px 45px #2196f361;
-    /* z-index: -1; */
-    margin-left: 84px;
-}
-#v-icon {
-    cursor: pointer;
-    font-size: 24px;
-    margin-top: 6px;
-    border-radius: 50%;
-    /* background-color: #121212; */
-    padding: 8px;
-    /* padding-right: 22px; */
-    margin-left: 0;
-    /* padding-left: 23px; */
-}
-.bc{
-    color: #000000;
-    background-color: #084a62;
-    border-radius: 24px;
-    height: 32px;
-    width: 100px;
-    background: rgb(255 255 255 / 64%);
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    margin-left: 37%;
-    text-align: center;
-}
+      /* Your CSS styles here */
+      body {
+          display: flex;
+          zoom: 0.7;
+          transition: bottom 150ms;
+      }
+      .bird {
+          transition: bottom 150ms;
+      }
+      .game-container {
+          width: 500px;
+          height: 730px;
+          position: absolute;
+          left: 0px;
+          transition: 1ms;
+          transition: bottom 150ms;
+      }
+      button:hover {
+          background-color: #dd8650;
+      }
+      .border-left, .border-right, .border-top {
+          width: 80px;
+          height: 790px;
+          position: absolute;
+          background-color: white;
+          z-index: +2;
+          transition: bottom 150ms;
+      }
+      .border-right {
+          left: 580px;
+      }
+      .border-top {
+          width: 660px;
+          height: 50px;
+          top: -50px;
+      }
+      .sky {
+          width: 500px;
+          height: 580px;
+          position: absolute;
+          background-size: cover;
+          animation: op 40s infinite alternate-reverse;
+          transition: revert-layer 2s;
+      }
+      @keyframes op {
+          0% { background-image: url("gp (4).gif"); }
+          50% { background-image: url('gp (2).gif'); }
+          100% { background-image: url('gp (1).gif'); }
+      }
+      .ground {
+          background-image: url('bottom-background.png');
+          width: 500px;
+          height: 150px;
+          position: absolute;
+          top: 580px;
+          z-index: +1;
+          transition: bottom 150ms;
+      }
+      .bird {
+          background-image: url('lili-unscreen.gif');
+          background-size: cover;
+          position: absolute;
+          width: 62px;
+    height: 61px;
+          left: 231px;
+          bottom: 100px;
+          transition: 1ms;
+          background-color: transparent;
+          border-radius: 50%;
+          transition: bottom 150ms;
+      }
+      .obstacle {
+          background-image: url('ut.png');
+          width: 72px;
+          height: 300px;
+          position: absolute;
+          transition: 1ms;
+      }
+      .topObstacle {
+          background-image: url('ut.png');
+          transform: rotate(180deg);
+          width: 72px;
+          height: 300px;
+          position: absolute;
+          transition: 1ms;
+      }
+      @keyframes slideright {
+          from { background-position: 10000%; }
+          to { background-position: 0%; }
+      }
+      .ground-container {
+          height: 150px;
+          width: 580px;
+          left: 0px;
+          position: absolute;
+          transition: bottom 150ms;
+      }
+      .ground-moving {
+          position: absolute;
+          top: 580px;
+          height: 150px;
+          background-image: url('bottom-background.png');
+          background-repeat: repeat-x;
+          animation: slideright 100s infinite linear;
+          width: 100%;
+          z-index: +1;
+          transition: bottom 150ms;
+      }
+      .score {
+          position: absolute;
+          top: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 24px;
+          font-weight: bold;
+          z-index: 10;
+          color: white;
+      }
+      .restart-button {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 5px 16px;
+          font-size: 18px;
+          background-color: rgb(2 2 2 / 59%);
+          color: white;
+          border: none;
+          cursor: pointer;
+          display: none;
+          z-index: 10;
+          width: 100px;
+          font-weight: bolder;
+      }
     </style>
-</head>
-<body>
-    <div class="topographic-texture">
-       
-        <div class="en">
-            <i>
-                <div class="menu-icon" id="menuIcon">
-                    <div class="bar1"></div>
-                    <div class="bar2"></div>
-                    <div class="bar3"></div>
-                </div>
-                <div class="black">
-                   
-        <div class="log-content">
-            <div class="log"style="    margin: 6px;
-            text-align: right;
-            height: 47px;
-            width: 45px;">
-                <i class="bx bxl-c-plus-plus"></i>
-                <div class="log-name">Quest.Bot</div>
-            </div>
+  </head>
+  <body>
+    <div class="game-container">
+        <div class="border-top"></div>
+        <div class="sky">
+            <div class="bird"></div>
         </div>
-
-        <ul class="nav-list">
-            <li>
-                <a href="#">
-                    <i class="bx bx-grid-alt"></i>
-                    <span class="links-name" id="hrt">New chat</span>
-                </a>
-            </li>
-           
-            <li>
-                <a href="javascript:void(0);" onclick="toggleFeedbackForm()">
-                    <i class="bx bx-cog"></i>
-                    <span class="links-name">Send feedback</span>
-                </a>
-                <!-- Feedback form hidden by default -->
-                <div id="feedback-form" style="display: none; margin-top: 10px;">
-                    <h2>Help us improve!</h2>
-                    <p>How easy was it for you to configure the project?</p>
-                    <form id="feedbackForm" onsubmit="submitFeedback(event)">
-                        <input type="radio" name="rating" value="1"> 😞 
-                        <input type="radio" name="rating" value="2"> ☹️ 
-                        <input type="radio" name="rating" value="3"> 😐 
-                        <input type="radio" name="rating" value="4"> 😊 
-                        <input type="radio" name="rating" value="5"> 😍 
-                        <br><br>
-                        <label for="feedback">How can we improve the global snippet?</label>
-                        <textarea id="feedback" name="feedback" placeholder="It is perfect"></textarea>
-                        <br><br>
-                        <button type="submit">Submit feedback</button>
-                    </form>
-                </div>
-            </li>
-            
-        </ul>
-
-        <div class="profile-content">
-            <div class="profile">
-                <div class="profile-details">
-                    <img src="sounddesign_icon.gif" alt="profile">
-                    <div class="name-job">
-                        <div class="name">Mullick Zaid Khan</div>
-                        <div class="job">Web Designer</div>
-                    </div>
-                </div>
-                <i class="bx bx-log-out"></i>
-            </div>
-        </div>
-    
-                </div>
-            </i>
-
-            <div class="lr">
-                <h1>Quest Bot</h1>
-                <div class="frt">
-                    <div class="green"></div>
-                    Online
-                </div>
-            </div>
-            <video src="juy.mp4" autoplay muted loop></video>
-        </div>
-    
-         z
-    <div class="container">
-        <div class="chat-box" id="chat-box">
-            <div class="top-message">
-                <img src="lfpl.gif" alt="">
-                <p>Hello! This bot provides information from the internet. Simply write a topic to get information. For example, 'Tell me about...', or 'Give me information on...'. If you want a working calculator, just type 'I want a calculator.' If you want information related to a specific topic, you can write something like 'Topic (related things). <button id="te" style="    display: flex;
-                    font-size: 10px;
-                    width: 51px;
-                    height: 10px;
-                    align-items: center;
-                    justify-content: center;
-                    margin-top: 20px;">Game</button></p>
-            
-        </div><br>
-        <div class="uy" style="display: flex;
-        flex-direction: row;
-        align-items: flex-end;">
-            <div class="logo" >
-                
-            </div>
-            <div class="bot-message" style="    padding: 1px;
-            margin-bottom: 0px;
-            /* margin-top: -54px; */
-            font-size: 11px;
-            /* margin-left: 71px;">
-                <p style="margin-left: 10px; padding: 9px;">Please type a topic you'd like to know more about!</p>
-            </div>
-        </div>
-        <div id="calculator" class="calculator" style="display:none;">
-            <div class="cir3"></div>
-            <div class="calculatorin">
-          
-            <div class="cir4"></div>
-            <input type="text" id="calc-display" class="calc-display" disabled>
-            <div class="calc-buttons">
-                <button onclick="insert(7)">7</button>
-                <button onclick="insert(8)">8</button>
-                <button onclick="insert(9)">9</button>
-                <button onclick="clearDisplay()" style="    background-color: #053053;
-    color: white">C</button>
-                <button onclick="insert(4)">4</button>
-                <button onclick="insert(5)">5</button>
-                <button onclick="insert(6)">6</button>
-                <button onclick="operate('/')" style="    background-color: #0068bb;
-    color: white;">/</button>
-                <button onclick="insert(1)">1</button>
-                <button onclick="insert(2)">2</button>
-                <button onclick="insert(3)">3</button>
-                <button onclick="operate('*')" style="background-color: #0068bb;
-                /* background-color: #212020; */
-                color: #ffffff;">*</button>
-                <button onclick="insert(0)">0</button>
-                <button onclick="operate('-')"style="background-color: #717171;
-    color: #ffffff;">-</button>
-                <button onclick="operate('+')"style="    background-color: #717171;
-    color: #ffffff;">+</button>
-                <button onclick="calculate()"style="background-color: #2196F3;
-                /* background-color: #212020; */
-                color: #ffffff;" >=</button>
-            </div>
-        </div>
-        </div>
-       
-       
-        <iframe src="flappy-bird.html" id="game" style="display: none;
-        margin-top: 40px;
-        width: 336px;
-        height: 60vh; border-radius: 20px;" scrolling="no">This is the game!</iframe>
-        
-       </div>
-       </div>
-       <div class="robot-container">
-        <img src="output-onlinegiftools.gif" alt="Robot" class="robot-gif">
+        <div class="score">Score: 0</div>
+        <button class="restart-button">Restart</button>
     </div>
-    
-    <div class="chat-container">
-        
-        <input type="text" id="user-input" placeholder="Start a new chat..." />
-        
-        <input type="file" id="image-upload" accept="image/*" style="display:none;" onchange="analyzeImage(this)" />
-        <label for="image-upload" id="gallery-icon" title="Upload Image">
-            <i class="fas fa-image"></i> <!-- Font Awesome icon for gallery -->
-        </label>
-        <label  id="v-icon" >
-            <i class="fa-solid fa-chart-simple"></i>
-        </label>
-        <button onclick="sendMessage()" id="send-btn">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="currentColor"/>
-            </svg>
-        </button>
+    <div class="ground-container">
+        <div class="ground-moving"></div>
     </div>
-    
-    </div>
-    <iframe src="v.html" id="voice" style="display: none;
-          
-    margin-top: 40px;
-    width: 100%;
-    height: 60vh;
-    /* border-radius: 20px; */
-    position: absolute;
-    top: 29px;
-    height: 100%;
-    border: none;
-" ></iframe>
-<button class="bc">Back</button>
-</div>
-<!-- <script>
-    
-
-    function displayUserMessage(message) {
-    var chatBox = document.getElementById("chat-box");
-    var userMessageDiv = document.createElement("div");
-    userMessageDiv.className = "user-message";
-    userMessageDiv.textContent = message;
-    chatBox.appendChild(userMessageDiv);
-    document.getElementById("user-input").value = "";
-}
-
-function displayLoadingMessage() {
-    var chatBox = document.getElementById("chat-box");
-    var loadingMessageDiv = document.createElement("div");
-    loadingMessageDiv.className = "loading-message";
-    loadingMessageDiv.textContent = "Loading...";
-    loadingMessageDiv.id = "loading-message";
-    chatBox.appendChild(loadingMessageDiv);
-}
-
-function removeLoadingMessage() {
-    var loadingMessage = document.getElementById("loading-message");
-    if (loadingMessage) {
-        loadingMessage.remove();
-    }
-}
-
-function normalizeInput(input) {
-    let normalized = input.trim().toLowerCase();
-    // Remove common question phrases
-    normalized = normalized.replace(/^(what is|tell me something about|about|explain|give me information on|what's)\s+/i, '');
-    return normalized.replace(/[?!.]*$/, '');
-}
-
-async function getBotResponse(query) {
-    let normalizedQuery = normalizeInput(query);
-
-    try {
-        // Search for the query on Wikipedia
-        let searchResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(normalizedQuery)}&format=json&origin=*`);
-        let searchData = await searchResponse.json();
-
-        if (searchData.query.search.length > 0) {
-            let title = searchData.query.search[0].title;
-
-            // Get summary of the article
-            let summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
-            let summaryData = await summaryResponse.json();
-
-            let imageUrl = summaryData.thumbnail ? summaryData.thumbnail.source : null;
-            displayBotMessage(title, summaryData.extract, imageUrl);
-        } else {
-            displayFallbackMessage();
-        }
-    } catch (error) {
-        console.error('Error fetching from Wikipedia:', error);
-        displayBotMessage("Error", "Oops! Something went wrong while fetching from Wikipedia.");
-    }
-}
-
-function displayFallbackMessage() {
-    const fallbackMessages = [
-        "It looks like there's no information available on this topic. Why not try another word?",
-        "I'm sorry, I couldn't find anything. How about searching for something else?",
-        "Hmmm, it seems this topic is tricky. Maybe try exploring a different topic?",
-        "No info found on that. Did you know the Eiffel Tower can be 15 cm taller in the summer due to heat expansion?"
-    ];
-
-    let randomIndex = Math.floor(Math.random() * fallbackMessages.length);
-    displayBotMessage("Fallback", fallbackMessages[randomIndex]);
-}
-
-function displayBotMessage(title, message, imageUrl = null) {
-    var chatBox = document.getElementById("chat-box");
-    removeLoadingMessage();
-
-    var uyContainer = document.createElement("div");
-    uyContainer.className = "uy";
-
-    var logoDiv = document.createElement("div");
-    logoDiv.className = "logo";
-    var botImage = document.createElement("img");
-    botImage.src = "";  // Add path to your robot image if needed
-    botImage.className = "bot-logo";
-    logoDiv.appendChild(botImage);
-
-    var botMessageDiv = document.createElement("div");
-    botMessageDiv.className = "bot-message";
-
-    var topicHeading = document.createElement("h2");
-    topicHeading.textContent = title;
-    botMessageDiv.appendChild(topicHeading);
-
-    var botText = document.createElement("p");
-    botText.textContent = message;
-    botMessageDiv.appendChild(botText);
-
-    if (imageUrl) {
-        var botImg = document.createElement("img");
-        botImg.src = imageUrl;
-        botImg.className = "wiki-image";
-        botMessageDiv.appendChild(botImg);
-    }
-
-    uyContainer.appendChild(logoDiv);
-    uyContainer.appendChild(botMessageDiv);
-    chatBox.appendChild(uyContainer);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-document.getElementById("user-input").addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        sendMessage();
-    }
-});
-
-async function sendMessage() {
-    var userInput = document.getElementById("user-input").value;
-    if (userInput.trim() === "") return;
-    displayUserMessage(userInput);
-    displayLoadingMessage();
-    await getBotResponse(userInput);
-}
-
-
-
-// Predefined responses
-const predefinedResponses = {
-    "hi": "Hello! How can I help you today?",
-    "hello": "Hi there! How can I assist you?",
-    "hey": "Hey! What can I do for you?",
-    "hi there": "Hi! How's your day going?",
-    "good morning": "Good morning! How can I assist you today?",
-    "good afternoon": "Good afternoon! What can I help you with?",
-    "good evening": "Good evening! Feel free to ask me anything.",
-    "good night": "Good night! Let me know if you need anything before heading to bed.",
-    
-    "how are you": "I'm just a bot, but I'm here to help you!",
-    "how are you doing": "I'm doing great! How about you?",
-    "how’s it going": "I’m here to assist you. How about you?",
-    "what’s up": "Not much! Just ready to help. What can I do for you?",
-    "tell me something": "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible.",
-    "ok": "Got it! Let me know if you need anything else.",
-    "yes": "Great! If you need anything, I'm here.",
-    "no": "That's fine! Feel free to ask me anything.",
-    "i’ll do that now": "Awesome! Let me know if you need help.",
-    
-    "thank you": "You're welcome! I'm happy to help.",
-    "thanks": "Anytime! I'm here to assist.",
-    "goodbye": "Goodbye! Have a wonderful day.",
-    "bye": "Bye! Take care!",
-    "see you later": "See you later! I'm always here when you need help.",
-    
-    "how can you help me": "I can answer questions, provide information, and assist you with tasks. How can I help?",
-    "what can you do": "I can assist with a wide range of tasks and answer questions. Just ask!",
-    "can you help me": "Of course! What do you need help with?",
-    "i have a question": "Feel free to ask your question, and I’ll do my best to help!",
-    
-    "do you know a joke": "Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me a joke": "Why did the computer go to therapy? Because it had too many bytes of issues!",
-    "you’re funny": "Thanks! I'm always here for a laugh.",
-    "do you love me": "I’m here to assist and support you, but love is beyond my programming!",
-    "i love you": "That’s sweet! While I can’t feel love, I’m always here to help you.",
-    "will you marry me": "I’m flattered, but I’m just a bot built to assist!"
-    
-};
-
-async function getBotResponse(query) {
-    let normalizedQuery = normalizeInput(query);
-
-    // Check for predefined responses
-    if (predefinedResponses[normalizedQuery]) {
-        displayBotMessage("Answer", predefinedResponses[normalizedQuery]);
-        removeLoadingMessage(); // Remove loading message when bot responds
-        return;
-    }
-
-    // Fallback if no predefined response is found
-    try {
-        let response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${normalizedQuery}`);
-        let data = await response.json();
-
-        if (data.extract) {
-            let imageUrl = data.thumbnail ? data.thumbnail.source : null;
-            displayBotMessage(data.title, data.extract, imageUrl);
-        } else {
-            displayFallbackMessage();
-        }
-    } catch (error) {
-        console.error('Error fetching from Wikipedia:', error);
-        displayBotMessage("Error", "Oops! Something went wrong while fetching from Wikipedia.");
-    }
-}
-
-function displayBotMessage(title, message, imageUrl = null) {
-    var chatBox = document.getElementById("chat-box");
-    removeLoadingMessage();
-
-    var uyContainer = document.createElement("div");
-    uyContainer.className = "uy";
-
-    var logoDiv = document.createElement("div");
-    logoDiv.className = "logo";
-    var botImage = document.createElement("img");
-    botImage.src = ""; // path to your robot image
-    botImage.className = "bot-logo";
-    logoDiv.appendChild(botImage);
-
-    var botMessageDiv = document.createElement("div");
-    botMessageDiv.className = "bot-message";
-
-    var topicHeading = document.createElement("h2");
-    topicHeading.textContent = title;
-    botMessageDiv.appendChild(topicHeading);
-
-    var botText = document.createElement("p");
-    botText.textContent = message;
-    botMessageDiv.appendChild(botText);
-
-    if (imageUrl) {
-        var botImg = document.createElement("img");
-        botImg.src = imageUrl;
-        botImg.className = "wiki-image";
-        botMessageDiv.appendChild(botImg);
-    }
-
-    uyContainer.appendChild(logoDiv);
-    uyContainer.appendChild(botMessageDiv);
-
-    chatBox.appendChild(uyContainer);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function displayFallbackMessage() {
-    const fallbackMessages = [
-        "I couldn't find information on this topic. Please try something else. If you want a calculator, just type 'I want a calculator",
-        "Sorry, no info available. Try searching for something else.",
-        "It seems that I couldn't find what you're looking for."
-    ];
-
-    let randomIndex = Math.floor(Math.random() * fallbackMessages.length);
-    displayBotMessage("Fallback", fallbackMessages[randomIndex]);
-}
-
-document.getElementById("user-input").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault(); // Prevent form submission if inside a form
-        sendMessage(); // Call the sendMessage function
-    }
-});
-
-
-</script>
 
 <script>
-   function normalizeInput(input) { 
-    return input.trim().toLowerCase().replace(/[?!.]*$/, '');
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const bird = document.querySelector('.bird');
+    const gameDisplay = document.querySelector('.game-container');
+    const scoreElement = document.querySelector('.score');
+    const restartButton = document.querySelector('.restart-button');
 
-// Function to toggle calculator visibility
-function toggleCalculator(shouldShow) {
-    const calculator = document.getElementById('calculator');
-    calculator.style.display = shouldShow ? 'block' : 'none';
-}
+    let birdLeft = 220;
+    let birdBottom = 200;
+    let gravity = 0.1;
+    let isGameOver = false;
+    let gap = 450;
+    let score = 0;
+    let lift = 3;
+    let velocity = 1;
+    let obstacleSpeed = 2; // Initial speed of the obstacles
 
-// Function to insert number or operator into the calculator display
-function insert(value) {
-    const display = document.getElementById('calc-display');
-    display.value += value;
-}
+    function startGame() {
+        velocity -= gravity;
+        birdBottom += velocity;
 
-// Function to clear calculator display
-function clearDisplay() {
-    const display = document.getElementById('calc-display');
-    display.value = '';
-}
-
-// Function to perform calculation and display result
-function calculate() {
-    const display = document.getElementById('calc-display');
-    try {
-        // Use the Function constructor for better security than eval
-        const result = new Function('return ' + display.value)();
-        display.value = result;
-    } catch (error) {
-        display.value = 'Error';
-    }
-}
-
-// Function to display user message in chat box
-function displayUserMessage(message) {
-    var chatBox = document.getElementById("chat-box");
-    var userMessageDiv = document.createElement("div");
-    userMessageDiv.className = "user-message";
-    userMessageDiv.textContent = message;
-    chatBox.appendChild(userMessageDiv);
-    document.getElementById("user-input").value = ""; // Clear input field after submitting
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-// Function to display loading message
-function displayLoadingMessage() {
-    var chatBox = document.getElementById("chat-box");
-    var loadingMessageDiv = document.createElement("div");
-    loadingMessageDiv.className = "loading-message";
-    loadingMessageDiv.textContent = "Loading...";
-    loadingMessageDiv.id = "loading-message";
-    chatBox.appendChild(loadingMessageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-// Function to remove loading message
-function removeLoadingMessage() {
-    var loadingMessage = document.getElementById("loading-message");
-    if (loadingMessage) {
-        loadingMessage.remove();
-    }
-}
-
-// Object to manage predefined responses
-const responseDictionary = {
-    "hi": "Hello! How can I help you today?",
-    "i want a calculator": "Sure! Here's a calculator for you.",
-    "calculator disappear": "The calculator has been hidden.",
-    "disappear calculator": "The calculator has been hidden."
-};
-
-// Function to get bot response
-async function getBotResponse(query) {
-    let normalizedQuery = normalizeInput(query);
-
-    // Check for specific commands related to the calculator
-    if (normalizedQuery === "i want a calculator") {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
-        toggleCalculator(true);  // Show calculator
-        removeLoadingMessage();
-        return;
-    } else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
-        toggleCalculator(false);  // Hide calculator
-        removeLoadingMessage();
-        return;
-    }
-
-    // Check for predefined responses
-    if (responseDictionary[normalizedQuery]) {
-        displayBotMessage("Answer", responseDictionary[normalizedQuery]);
-        removeLoadingMessage();
-        return;
-    }
-
-    // Attempt to get information from Wikipedia
-    try {
-        let response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${normalizedQuery}`);
-        let data = await response.json();
-
-        if (data.extract) {
-            let imageUrl = data.thumbnail ? data.thumbnail.source : null;
-            displayBotMessage(data.title, data.extract, imageUrl);
-        } else {
-            displayFallbackMessage();
+        // Prevent the bird from going below the ground
+        if (birdBottom < 0) {
+            birdBottom = 0;
+            velocity = 0;
         }
-    } catch (error) {
-        console.error('Error fetching from Wikipedia:', error);
-        displayBotMessage("Error", "Oops! Something went wrong while fetching from Wikipedia.");
-    }
-}
 
-// Function to display bot message
-function displayBotMessage(title, message, imageUrl = null) {
-    var chatBox = document.getElementById("chat-box");
-    removeLoadingMessage();
-
-    var uyContainer = document.createElement("div");
-    uyContainer.className = "uy";
-
-    var botMessageDiv = document.createElement("div");
-    botMessageDiv.className = "bot-message";
-    botMessageDiv.innerHTML = `<strong>${title}</strong><p>${message}</p>`;
-    
-    if (imageUrl) {
-        var image = document.createElement("img");
-        image.src = imageUrl;
-        image.alt = title;
-        image.className = "wiki-image";
-        botMessageDiv.prepend(image);
-    }
-    
-    uyContainer.appendChild(botMessageDiv);
-    chatBox.appendChild(uyContainer);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-// Function to display fallback message when no data is found
-function displayFallbackMessage() {
-    displayBotMessage("Sorry", "I couldn't find any information on that topic.");
-}
-
-// Function to handle user message and bot response
-function sendMessage() {
-    var userInput = document.getElementById("user-input").value;
-    if (userInput.trim() !== "") {
-        displayUserMessage(userInput);
-        displayLoadingMessage();
-        getBotResponse(userInput);
-    }
-}
-
-// Attach event listener to enter key for sending messages
-document.getElementById("user-input").addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-});
-
-
-
-</script> -->
-<script>
-    
-    function displayUserMessage(message) {
-    var chatBox = document.getElementById("chat-box");
-    var userMessageDiv = document.createElement("div");
-    userMessageDiv.className = "user-message";
-    userMessageDiv.textContent = message;
-    chatBox.appendChild(userMessageDiv);
-    document.getElementById("user-input").value = ""; // Clear input field after submitting
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-function displayLoadingMessage() {
-    var chatBox = document.getElementById("chat-box");
-    var loadingMessageDiv = document.createElement("div");
-    loadingMessageDiv.className = "loading-message";
-    loadingMessageDiv.id = "loading-message";
-
-    // Create img elements for the GIFs
-    var loadingGif1 = document.createElement("img");
-    loadingGif1.src = "tjhg.gif";  // Set the path to your first GIF
-    loadingGif1.alt = "Loading..."; // Alternative text for the first image
-    loadingGif1.className = "loading-gif"; // Add a class for CSS styling if needed
-
-    var loadingGif2 = document.createElement("img");
-    loadingGif2.src = "gokf.gif";  // Set the path to your second GIF
-    loadingGif2.alt = "Loading..."; // Alternative text for the second image
-    loadingGif2.className = "loading-gif-small"; // Separate class for custom styling
-
-    // Append both GIFs to the loadingMessageDiv
-    loadingMessageDiv.appendChild(loadingGif1);
-    loadingMessageDiv.appendChild(loadingGif2);
-
-    chatBox.appendChild(loadingMessageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-function removeLoadingMessage() {
-    var loadingMessage = document.getElementById("loading-message");
-    if (loadingMessage) {
-        loadingMessage.remove();
-    }
-}
-
-
-function removeLoadingMessage() {
-    var loadingMessage = document.getElementById("loading-message");
-    if (loadingMessage) {
-        loadingMessage.remove();
-    }
-}
-
-function normalizeInput(input) {
-    return input.trim().toLowerCase().replace(/[?!.]*$/, '');
-}
-
-// Function to toggle calculator visibility
-function toggleCalculator(shouldShow) {
-    const calculator = document.getElementById('calculator');
-    calculator.style.display = shouldShow ? 'block' : 'none';
-}
-// Predefined responses
-const responseDictionary = {
-    // Greetings
-    "OKay": "👌 Got it! Let me know if you need anything else.",
-    "okay": "👌 Got it! Let me know if you need anything else.",
-    "hi": "Hello! How can I assist you today?",
-    "Hello": "Hello! How can I assist you today?",
-    "how are you": "I'm just a program, but I'm here to help you!",
-    "what's your name": "I'm a voice assistant, here to answer your questions!",
-    "what can you do": "I can help you with various topics, just ask me anything!",
-    "thank you": "You're welcome! If you have any more questions, feel free to ask.",
-    "bye": "Goodbye! Have a great day!",
-    "What are you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-    "Who made you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-    "Do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-    "how are you": "🤖 I'm just a bot, but I'm here to help you!",
-    "how are you doing": "😊 I'm doing great! How about you?",
-    "how’s it going": "🤗 I’m here to assist you. How about you?",
-    "what’s up": "😄 Not much! Just ready to help. What can I do for you?",
-    "who created you": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-    "who ": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-    "do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-    // Human/bot identity questions
-    "are you human": "❌ No, I’m a chatbot here to assist you with any questions!",
-    "are you a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
-    "do you have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
-    "do you have feeling": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
-    "do you feel": "😶 Nope, I don’t have feel, but I’m great at answering questions!",
-    "do you have emotions": "😐 I don’t experience emotions, but I can provide useful information!",
-    "do you have emotion": "😐 I don’t experience emotions, but I can provide useful information!",
-
-    // Personal life questions (humorous answers)
-    "do you have a girlfriend": "💔 Nope, I’m too busy answering questions today!",
-    "are you married": "💍 I’m married to helping you get answers!",
-    "will you marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
-    "do you love me": "❤️ I’m here to support you, but love isn’t in my programming!",
-
-    // Common requests
-    "can you help me": "🤗 Of course! What do you need help with?",
-    "what can you do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
-    "what can you": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
-    "tell me something interesting": "🧐 Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
-    "tell me something fun": "🐙 Did you know octopuses have three hearts and blue blood?",
-    "ok": "👌 Got it! Let me know if you need anything else.",
-    "Ok": "👌 Got it! Let me know if you need anything else.",
-    "OK": "👌 Got it! Let me know if you need anything else.",
-    "Got it":" Let me know if you need anything else.",
-    "got it":" Let me know if you need anything else.",
-    // Responses to criticism
-    "you are not good": [
-        "Sorry, I'm working on improving! Thank you for your feedback.",
-        " I appreciate your honesty! I'll do my best to get better.",
-        " Oh no! I'm here to learn and improve. Please give me another chance! ",
-        " I'm sorry to hear that! How can I assist you better?",
-        "I understand! Let me know what I can do to improve.",
-        "Your feedback is valuable! I'll strive to do better.",
-        "I know I can improve! Thank you for letting me know.",
-    ],
-    "you are bad": [
-        "😟 I am sorry! Your feedback helps me get better. Thank you!",
-        "😩 I didn't mean to disappoint you! How can I make it right?",
-        "😕 I’m sorry to hear that! I’ll strive to do better next time.",
-        "😔 I understand your concern! Please tell me how I can improve.",
-        "😳 I apologize! I'm constantly learning and would love your guidance.",
-        "😢 I didn't mean to upset you! What can I do to assist you better?",
-        "🙁 Thank you for your feedback! I’ll work on improving.",
-    ],
-
-    // Fun responses
-    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
-    "you're funny": "😄 Thanks! I try my best!",
-
-    // Miscellaneous
-    "thank you": "😊 You're welcome! I'm happy to help.",
-    "thanks": "😊 Anytime! I'm here to assist.",
-    "ok": "👌 Got it! Let me know if you need anything else.",
-    "yes": "👍 Great! If you need anything, I'm here.",
-    "no": "❌ That's fine! Feel free to ask me anything.",
-    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
-      // Fun responses
-    "do you know a joke": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me a joke": "🤣 Why did the computer go to therapy? Because it had too many bytes of issues!",
-    "you're funny": "😄 Thanks! I try my best!",
-
-    // Miscellaneous
-    "thank you": "😊 You're welcome! I'm happy to help.",
-    "thanks": "😊 Anytime! I'm here to assist.",
-    
-    "yes": "👍 Great! If you need anything, I'm here.",
-    "no": "❌ That's fine! Feel free to ask me anything.",
-    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
-    "how r u": "🤖 I'm just a bot, but I'm here to help you!",
-    "how u doin": "😊 I'm doing great! How about you?",
-    "wyd": "🤔 Just helping out! What about you?", // Short for "What are you doing?"
-    "wsp": "😄 Not much! Just ready to help. What can I do for you?", // Short for "What's up?"
-    "hlo": "👋 Hi! How can I assist you today?",
-
-    // Human/bot identity questions
-    "u human": "❌ Nope, I’m a chatbot here to assist you with any questions!",
-    "u a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
-    "do u have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
-    "do u hv emotions": "😐 I don’t experience emotions, but I can provide useful information!",
-
-    // Personal life questions (humorous answers)
-    "do u have a gf": "💔 Nope, I’m too busy answering questions to date!", // Short for "girlfriend"
-    "u married": "💍 I’m married to helping you get answers!",
-    "will u marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
-    "u love me": "❤️ I’m here to support you, but love isn’t in my programming!",
-
-    // Common requests
-    "can u help": "🤗 Of course! What do you need help with?",
-    "wat u do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
-    "gimme info": "📖 Sure! What would you like information on?",
-    "tell me a fun fact": "🧐 Did you know honey never spoils? Even after 3,000 years, it’s still good to eat!",
-    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
-    "u funny": "😄 Thanks! I try my best!",
-
-    // Miscellaneous
-    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
-    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
-    "k": "👌 Got it! Let me know if you need anything else.",
-    "yep": "👍 Great! If you need anything, I'm here.",
-    "nope": "❌ That's fine! Feel free to ask me anything.",
-    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", 
-    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
-    "u funny": "😄 Thanks! I try my best!",
-
-    // Miscellaneous
-    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
-    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
-    "k": "👌 Got it! Let me know if you need anything else.",
-    "yep": "👍 Great! If you need anything, I'm here.",
-    "nope": "❌ That's fine! Feel free to ask me anything.",
-    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!",
-    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
-    "how are you": "I'm just a program, but thanks for asking! How can I assist you today?",
-    "what is javascript": "JavaScript is a programming language commonly used to create interactive effects within web browsers.",
-
-    "tell me a joke": "Why did the scarecrow win an award? Because he was outstanding in his field!",
-    "what is your purpose": "My purpose is to assist you with information and answer your queries.",
-    "hello": "Hi there! How can I help you today?",
-    "goodbye": "Goodbye! Have a great day!",
-    "what is your name": "I am your virtual assistant, here to help you!",
-    // Time-related questions
-    "time pls": () => {
-        const now = new Date();
-        return `🕒 The current time is ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
-    },
-    "wat's the time": () => {
-        const now = new Date();
-        return `🕒 Right now, it is ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
-    },
-
-    // Date-related questions
-    "date pls": () => {
-        const now = new Date();
-        return `📅 Today's date is ${now.toLocaleDateString()}.`;
-    },
-    "what's today's date": () => {
-        const now = new Date();
-        return `📅 The current date is ${now.toLocaleDateString()}.`;
-    },
-
-    // Responses to criticism
-    "u bad": [
-        "😟 I’m sorry! I’ll try to do better. Thanks for your feedback.",
-        "😩 I didn’t mean to disappoint! How can I improve?",
-    ],
-
-    // Fun responses
-    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
-    "u funny": "😄 Thanks! I try my best!",
-
-    // Miscellaneous
-    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
-    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
-    "k": "👌 Got it! Let me know if you need anything else.",
-    "yep": "👍 Great! If you need anything, I'm here.",
-    "nope": "❌ That's fine! Feel free to ask me anything.",
-    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", // Short for "I have a question"
-
-    // Time-related questions
-    "time pls": () => {
-        const now = new Date();
-        return `🕒 The current time is ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
-    },
-    "wat's the time": () => {
-        const now = new Date();
-        return `🕒 Right now, it is ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
-    },
-
-    // Date-related questions
-    "date pls": () => {
-        const now = new Date();
-        return `📅 Today's date is ${now.toLocaleDateString()}.`;
-    },
-    "what's today's date": () => {
-        const now = new Date();
-        return `📅 The current date is ${now.toLocaleDateString()}.`;
-    },
-
-    // Responses to criticism
-    "u bad": [
-        "😟 I’m sorry! I’ll try to do better. Thanks for your feedback.",
-        "😩 I didn’t mean to disappoint! How can I improve?",
-    ],
-
-    // Fun responses
-    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
-    "u funny": "😄 Thanks! I try my best!",
-
-    // Miscellaneous
-    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
-    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
-    "k": "👌 Got it! Let me know if you need anything else.",
-    "yep": "👍 Great! If you need anything, I'm here.",
-    "nope": "❌ That's fine! Feel free to ask me anything.",
-    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", // Short for "I have a question"
-};
-
-// Function to normalize user input
-function normalizeInput(input) {
-    return input.toLowerCase().trim();
-}
-
-// Function to get a response
-function getResponse(userInput) {
-    const key = normalizeInput(userInput);
-    const responsesList = responseDictionary[key];
-
-    if (Array.isArray(responsesList)) {
-        const randomIndex = Math.floor(Math.random() * responsesList.length);
-        return responsesList[randomIndex];
-    } else if (typeof responsesList === "function") {
-        return responsesList();
-    } else if (typeof responsesList === "string") {
-        return responsesList;
+        bird.style.bottom = birdBottom + 'px';
     }
 
-    return "🤔 I'm not sure how to respond to that.";
-}
-
-// Example usage
-const userMessage = "What's the time";  // User input example
-console.log(getResponse(userMessage));  // This will print the correct time response
-
-
-// Function to get a random response
-function getResponse(key) {
-    const responsesList = responseDictionary[key];
-    if (Array.isArray(responsesList)) {
-        const randomIndex = Math.floor(Math.random() * responsesList.length);
-        return responsesList[randomIndex];
-    } else if (typeof responsesList === "function") {
-        return responsesList();
-    }
-    return "🤔 I'm not sure how to respond to that.";
-}
-
-
-    function normalizeInput(input) {
-    let normalized = input.trim().toLowerCase();
-    // Correct common grammatical mistakes
-    normalized = normalized.replace('do have', 'do you have');
-    normalized = normalized.replace('have you girlfriend', 'do you have a girlfriend');
-    // Remove trailing punctuation
-    return normalized.replace(/[?!.]*$/, '');
-}
-async function getBotResponse(query) {
-    function normalizeInput(input) {
-    let normalized = input.trim().toLowerCase();
-    // Remove common question phrases
-    normalized = normalized.replace(/^(give me information on|Give me information on|!|What do you mean by|What do you mean by |Are you|Will|Can|are|is|Do|Does||Where is the|Tell me about|tell me about|Who is|who is|can you tell me about|can you tell me something about|tell me something about|what is|give me information on|explain|about|what's)\s+/i, '');
-    return normalized.replace(/[?!.]*$/, '');
-}
-function normalizeInput(input) {
-    let normalized = input.trim().toLowerCase();
-
-    // Correct common grammatical mistakes
-    normalized = normalized.replace('do have', 'do you have');
-    normalized = normalized.replace('have you girlfriend', 'do you have a girlfriend');
-
-    // Remove common question phrases
-    normalized = normalized.replace(/^(what's the meaning of|what is|what's|can you tell me about|can you explain|tell me something about|do you know about|could you|pls tell me about|plz|please|give me details about|who is|who's|wht do u know about|what can u tell me about|gimme info on|tell me more about|provide details on|is|are|where's|what do u mean by|how does)\s+/i, '');
-
-    // Replace short forms or zenzy words
-    normalized = normalized.replace(/\bpls\b/g, 'please');
-    normalized = normalized.replace(/\bplz\b/g, 'please');
-    normalized = normalized.replace(/\bu\b/g, 'you');
-    normalized = normalized.replace(/\br\b/g, 'are');
-    normalized = normalized.replace(/\bbtw\b/g, 'by the way');
-    normalized = normalized.replace(/\blol\b/g, 'laugh out loud');
-    normalized = normalized.replace(/\btbh\b/g, 'to be honest');
-    normalized = normalized.replace(/\bidk\b/g, 'I don’t know');
-    normalized = normalized.replace(/\bimo\b/g, 'in my opinion');
-    normalized = normalized.replace(/\bomg\b/g, 'oh my god');
-    normalized = normalized.replace(/\bfyi\b/g, 'for your information');
-
-    // Remove trailing punctuation
-    return normalized.replace(/[?!.]*$/, '');
-}
-
-let normalizedQuery = normalizeInput(query);
-
-// Check for specific commands related to the calculator
-if (normalizedQuery === "i want a calculator") {
-    displayBotMessage("", "Here is your calculator the calculator is at the top of the page"); // Show the initial bot response
-    toggleCalculator(true);  // Show calculator
-    removeLoadingMessage();
-    scrollToTop(); // Scroll to the top when calculator appears
-    return;
-} else if (normalizedQuery === "calculator disappear" || normalizedQuery === "disappear calculator") {
-    displayBotMessage("", "The calculator has been removed."); // Show the message for hiding the calculator
-    toggleCalculator(false);  // Hide calculator
-    removeLoadingMessage();
-    scrollToTop(); // Scroll to the top when calculator disappears
-    return;
-}
-
-    // Check for predefined responses
-    if (responseDictionary[normalizedQuery]) {
-        displayBotMessage("", responseDictionary[normalizedQuery]);
-        removeLoadingMessage();
-        return;
+    function jump() {
+        velocity = lift;
     }
 
-    // Attempt to get information from Wikipedia
-    try {
-        // First, search for the article
-        let searchResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(normalizedQuery)}&format=json&origin=*`);
-        let searchData = await searchResponse.json();
+    function control(e) {
+        if (e.keyCode === 32) { // Correct key code for space bar
+            jump();
+        }
+    }
 
-        if (searchData.query.search.length > 0) {
-            let title = searchData.query.search[0].title;
+    document.addEventListener('touchstart', jump);
+    document.addEventListener('keyup', control);
 
-            // Get summary of the article
-            let summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
-            let summaryData = await summaryResponse.json();
+    let gameTimerId = setInterval(startGame, 20);
 
-            if (summaryData.extract) {
-                let imageUrl = summaryData.thumbnail ? summaryData.thumbnail.source : null;
-                displayBotMessage(title, summaryData.extract, imageUrl);
-            } else {
-                displayFallbackMessage();
+    function updateScore() {
+        score++;
+        scoreElement.textContent = 'Score: ' + score;
+
+        // Increase obstacle speed based on score
+        if (score === 10 || score === 15) {
+            obstacleSpeed += 1; // Increase speed at 10 and 20
+        }
+        if (score === 15 || score === 25) {
+            obstacleSpeed += 1.5; // Increase speed at 10 and 20
+        }
+        if (score === 25 || score === 30) {
+            obstacleSpeed += 2; // Increase speed at 10 and 20
+        }
+
+        if (score === 35 || score === 35) {
+            obstacleSpeed += 3; // Increase speed at 10 and 20
+        }
+    }
+
+    function generateObstacle() {
+        let obstacleLeft = 700;
+        let randomHeight = Math.random() * 90;
+        let obstacleBottom = randomHeight;
+        const obstacle = document.createElement('div');
+        const topObstacle = document.createElement('div');
+        let scored = false; // To track if score has been updated for this obstacle
+
+        if (!isGameOver) {
+            obstacle.classList.add('obstacle');
+            topObstacle.classList.add('topObstacle');
+        }
+
+        gameDisplay.appendChild(obstacle);
+        gameDisplay.appendChild(topObstacle);
+        obstacle.style.left = obstacleLeft + 'px';
+        topObstacle.style.left = obstacleLeft + 'px';
+        obstacle.style.bottom = obstacleBottom + 'px';
+        topObstacle.style.bottom = obstacleBottom + gap + 'px';
+
+        function moveObstacle() {
+            obstacleLeft -= obstacleSpeed; // Adjust speed based on current value
+            obstacle.style.left = obstacleLeft + 'px';
+            topObstacle.style.left = obstacleLeft + 'px';
+
+            // Check if the bird has successfully crossed the obstacle
+            if (obstacleLeft < 220 && obstacleLeft > 200 && !scored) {
+                updateScore(); // Update score when the bird passes the obstacle
+                scored = true; // Prevent scoring again for this obstacle
             }
-        } else {
-            displayFallbackMessage();
-        }
-    } catch (error) {
-        console.error('Error fetching from Wikipedia:', error);
-        displayBotMessage("Error", "Oops! Something went wrong while fetching from Wikipedia.");
-    }
-}
 
-async function analyzeImage(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = async function(e) {
-            const imageUrl = e.target.result;
-
-            // Display the uploaded image in the chat
-            displayImageInChat(imageUrl);
-
-            // Analyze the image using DeepAI API
-            const tags = await getImageTags(input.files[0]);
-            if (tags) {
-                // Use the first tag to search Wikipedia
-                const info = await searchWikipedia(tags[0]);
-                if (info) {
-                    displayBotMessage("Image Analysis", info);
-                } else {
-                    displayBotMessage("Image Analysis", "Sorry, I couldn't find any information about this image.");
-                }
-            } else {
-                displayBotMessage("Image Analysis", "Sorry, I couldn't find any information about this image.");
+            // Check for collision
+            if (
+                obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 &&
+                (birdBottom < obstacleBottom + 143 || birdBottom > obstacleBottom + gap - 200) ||
+                birdBottom === 0
+            ) {
+                gameOver();
+                clearInterval(timerId);
             }
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
 
-async function getImageTags(file) {
-    const apiKey = 'YOUR_DEEPAI_API_KEY'; // Replace with your DeepAI API key
-    const apiUrl = 'https://api.deepai.org/api/image-recognition';
-
-    const formData = new FormData();
-    formData.append('image', file);
-
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'api-key': apiKey
-            },
-            body: formData
-        });
-
-        if (!response.ok) throw new Error("Network response was not ok");
-
-        const data = await response.json();
-
-        // Check if the response contains relevant information
-        if (data && data.output && data.output.captions) {
-            // Return the tags as an array
-            return data.output.captions.map(caption => caption.text);
-        } else {
-            console.warn("No valid information returned:", data);
-            return null;
-        }
-    } catch (error) {
-        console.error("Error analyzing image:", error);
-        return null;
-    }
-}async function handleSearch() {
-    const tag = 'your search term here'; // Replace with user input
-    const result = await searchWikipedia(tag);
-    document.getElementById('output').innerHTML = result; // Assuming you have an element with this ID
-}
-
-
-async function searchWikipedia(tag) {
-    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(tag)}&format=json&origin=*`;
-
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.query.search.length > 0) {
-            const title = data.query.search[0].title; // Get the first search result
-            const summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
-            const summaryData = await summaryResponse.json();
-
-            if (summaryData.extract) {
-                return `<strong>${summaryData.title}</strong><br/><img src="${summaryData.thumbnail?.source}" alt="${summaryData.title}" class="wiki-image"/><br/><p>${summaryData.extract}</p>`;
-            }
-        }
-        return null;
-    } catch (error) {
-        console.error("Error searching Wikipedia:", error);
-        return null;
-    }
-    async function searchWikipedia(tag) {
-    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(tag)}&format=json&origin=*`;
-
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.query && data.query.search.length > 0) {
-            // Create an array to hold all the summaries
-            const summaries = await Promise.all(data.query.search.map(async (result) => {
-                const title = result.title; // Get the title of each search result
-                const summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
-                const summaryData = await summaryResponse.json();
-
-                // Check if summary data is valid
-                if (summaryData && summaryData.extract) {
-                    return `<strong>${summaryData.title}</strong><br/><img src="${summaryData.thumbnail?.source}" alt="${summaryData.title}" class="wiki-image"/><br/><p>${summaryData.extract}</p>`;
-                }
-                return null; // Return null if no valid summary found
-            }));
-
-            // Filter out any null results
-            const validSummaries = summaries.filter(summary => summary !== null);
-            if (validSummaries.length > 0) {
-                return validSummaries.join('<hr/>'); // Join all summaries with a separator
+            // Remove the obstacle once it's out of view
+            if (obstacleLeft < -60) {
+                clearInterval(timerId);
+                gameDisplay.removeChild(obstacle);
+                gameDisplay.removeChild(topObstacle);
             }
         }
 
-        return `<p>No results found for "<strong>${tag}</strong>". Please try a different search term.</p>`;
-    } catch (error) {
-        console.error("Error searching Wikipedia:", error);
-        return `<p>Error occurred while searching Wikipedia. Please try again later.</p>`;
+        let timerId = setInterval(moveObstacle, 20);
+        if (!isGameOver) setTimeout(generateObstacle, 3000);
     }
-}
 
-}
-
-function displayImageInChat(imageUrl) {
-    var chatBox = document.getElementById("chat-box");
-    var imageDiv = document.createElement("div");
-    imageDiv.className = "image-message";
-    imageDiv.innerHTML = `<img src="${imageUrl}" style="max-width: 181px; margin-top: 46px; margin-left: 20px; border-radius: 20px;" alt="Uploaded Image">`;
-    chatBox.appendChild(imageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-
-function displayBotMessage(title, message, imageUrl = null) {
-    var chatBox = document.getElementById("chat-box");
-    removeLoadingMessage();
-    
-    var uyContainer = document.createElement("div");
-    uyContainer.className = "uy";
-    
-    var botMessageDiv = document.createElement("div");
-    botMessageDiv.className = "bot-message";
-
-    // Rearranging the HTML structure
-    var messageContent = `<strong>${title}</strong>`; // Topic name
-    if (imageUrl) {
-        messageContent += `<br/><img src="${imageUrl}" alt="${title}" class="wiki-image"/><br/>`; // Image followed by a line break
+    function gameOver() {
+        clearInterval(gameTimerId);
+        isGameOver = true;
+        restartButton.style.display = 'block';
+        // Optional: Display a game over message or handle the end of the game here
     }
-    messageContent += `<p class="message-content">${message}</p>`; // Paragraph content
 
-    botMessageDiv.innerHTML = messageContent;
-
-    var logoDiv = document.createElement("div");
-    logoDiv.className = "logo";
-
-    // Create the icons container
-    var iconsDiv = document.createElement("div");
-    iconsDiv.className = "message-icons";
-    
-    // Add icons (using Font Awesome here)
-    iconsDiv.innerHTML = `
-        <i class="fas fa-copy copy-icon" title="Copy"></i>
-        <i class="fas fa-thumbs-up like-icon" title="Like"></i>
-        <i class="fas fa-thumbs-down dislike-icon" title="Dislike"></i>
-        <i class="fas fa-sync-alt refresh-icon" title="Refresh"></i>
-        <i class="fas fa-volume-up sound-icon" title="Sound"></i>
-    `;
-
-    // Append both logo, message, and icons
-    uyContainer.appendChild(logoDiv);
-    uyContainer.appendChild(botMessageDiv);
-    uyContainer.appendChild(iconsDiv);
-
-    // Append the uyContainer to the chat box
-    chatBox.appendChild(uyContainer);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-
-    // Add copy functionality
-    var copyIcon = iconsDiv.querySelector('.copy-icon');
-    copyIcon.addEventListener('click', function() {
-        var tempInput = document.createElement("input");
-        tempInput.style.position = "absolute";
-        tempInput.style.left = "-9999px";
-        tempInput.value = message;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand("copy");
-        document.body.removeChild(tempInput);
-        alert("Message copied!");
+    restartButton.addEventListener('click', () => {
+        // Restart the game logic here
+        location.reload();
     });
 
-    // Add speech functionality for the audio icon with play/pause toggle
-    var soundIcon = iconsDiv.querySelector('.sound-icon');
-    var isSpeaking = false;
-    var speechInstance = null;
-
-    soundIcon.addEventListener('click', function() {
-        if (isSpeaking) {
-            window.speechSynthesis.cancel();
-            soundIcon.classList.remove('fa-pause');
-            soundIcon.classList.add('fa-volume-up');
-            isSpeaking = false;
-        } else {
-            speechInstance = new SpeechSynthesisUtterance(message);
-            speechInstance.lang = 'en-US';
-            window.speechSynthesis.speak(speechInstance);
-            
-            soundIcon.classList.remove('fa-volume-up');
-            soundIcon.classList.add('fa-pause');
-            isSpeaking = true;
-
-            speechInstance.onend = function() {
-                soundIcon.classList.remove('fa-pause');
-                soundIcon.classList.add('fa-volume-up');
-                isSpeaking = false;
-            };
-        }
-    });
-
-    // Add refresh functionality for the refresh icon
-    var refreshIcon = iconsDiv.querySelector('.refresh-icon');
-    refreshIcon.addEventListener('click', async function() {
-        // Fetch new data related to the same topic
-        try {
-            let searchResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(title)}&format=json&origin=*`);
-            let searchData = await searchResponse.json();
-
-            if (searchData.query.search.length > 1) {
-                let newTitle = searchData.query.search[1].title; // Get another article related to the topic
-                let summaryResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(newTitle)}`);
-                let summaryData = await summaryResponse.json();
-
-                if (summaryData.extract) {
-                    // Update bot message with new content
-                    botMessageDiv.innerHTML = `<strong>${newTitle}</strong><br/><img src="${summaryData.thumbnail.source}" alt="${newTitle}" class="wiki-image"/><br/><p>${summaryData.extract}</p>`;
-                } else {
-                    alert("No additional information found!");
-                }
-            } else {
-                alert("No additional results for this topic.");
-            }
-        } catch (error) {
-            console.error("Error fetching refreshed content:", error);
-            alert("Error refreshing content!");
-        }
-    });
-
-    // Add other event listeners (like, dislike) if needed
-}
-
-
-
-function displayFallbackMessage() {
-    displayBotMessage("Sorry", "I couldn't find any information on that topic.. This feature will be added soon. Sorry!"
-
-);
-}
-
-function sendMessage() {
-    var userInput = document.getElementById("user-input").value;
-    if (userInput.trim() !== "") {
-        displayUserMessage(userInput);
-        displayLoadingMessage();
-        getBotResponse(userInput);
-    }
-}
-
-document.getElementById("user-input").addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-}); let display = document.getElementById("calc-display");
-    let currentInput = "";
-    let operator = null;
-    let previousInput = "";
-
-    function insert(num) {
-        // If there is an operator and the current input is empty, replace the last number
-        if (operator && currentInput === "") {
-            currentInput = num;  // Start new input after an operator
-        } else {
-            currentInput += num;  // Append the clicked number to the current input
-        }
-        updateDisplay();  // Update the display
-    }
-
-    function clearDisplay() {
-        currentInput = "";
-        previousInput = "";
-        operator = null;
-        display.value = "";  // Clear the display
-    }
-
-    function operate(op) {
-        if (currentInput === "") return;  // Prevent operation if no input
-
-        if (previousInput !== "") {
-            calculate();  // Calculate if there's a previous input before assigning the operator
-        }
-
-        operator = op;  // Set the operator (e.g., +, -, *, /)
-        previousInput = currentInput;  // Save the current input as the previous one
-        currentInput = "";  // Clear current input for the next number
-
-        updateDisplay();  // Update display to show the operation
-    }
-
-    function calculate() {
-        if (operator === null || currentInput === "") return;  // Prevent calculation if inputs are missing
-
-        let result;
-
-        // Convert strings to numbers and perform the operation
-        switch (operator) {
-            case "+":
-                result = parseFloat(previousInput) + parseFloat(currentInput);
-                break;
-            case "-":
-                result = parseFloat(previousInput) - parseFloat(currentInput);
-                break;
-            case "*":
-                result = parseFloat(previousInput) * parseFloat(currentInput);
-                break;
-            case "/":
-                result = parseFloat(previousInput) / parseFloat(currentInput);
-                break;
-            default:
-                return;  // Exit if the operator is not recognized
-        }
-
-        display.value = result;  // Show the result on the display
-        previousInput = result.toString();  // Save the result for further calculations
-        currentInput = "";  // Reset current input
-        operator = null;  // Clear the operator for the next calculation
-    }
-
-    function updateDisplay() {
-        // Show the current operation in the display
-        if (previousInput && operator) {
-            display.value = previousInput + " " + operator + " " + currentInput;
-        } else {
-            display.value = currentInput;  // If no previous input or operator, just show current input
-        }
-    }
-   // Function to show the robot
-// Function to show the robot
-function showRobot() {
-    const robotContainer = document.querySelector('.robot-container');
-    robotContainer.classList.add('pop-out');
-    
-    // Hide after 5 seconds
-    setTimeout(() => {
-        robotContainer.classList.remove('pop-out');
-    }, 5000);
-}
-
-// Call the function every 5 seconds in a loop
-setInterval(showRobot, 10000); // 10s loop: 5s visible, 5s hidden
-document.getElementById("menuIcon").addEventListener("click", function() {
-    this.classList.toggle("change");
-});
-document.getElementById("menuIcon").addEventListener("click", function() {
-    const blackDiv = document.querySelector(".black");
-    
-    // Toggle the "active" class to show or hide the black div
-    blackDiv.classList.toggle("active");
-});
-document.getElementById("hrt").addEventListener("click", function(event) {
-    event.preventDefault();  // Prevent the default action of the link
-    location.reload();       // Reload the page
-});
-document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  const feedback = document.getElementById('feedback').value;
-  const rating = document.querySelector('input[name="rating"]:checked').value;
-
-  const data = {
-    rating: rating,
-    feedback: feedback
-  };
-
-  fetch('/sendFeedback', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-  .then(response => response.json())
-  .then(data => {
-    alert('Feedback sent successfully!');
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-});
-function toggleFeedbackForm() {
-    const feedbackForm = document.getElementById('feedback-form');
-    
-    // Toggle the visibility
-    if (feedbackForm.style.display === 'none' || feedbackForm.style.display === '') {
-        feedbackForm.style.display = 'block'; // Show the form
-    } else {
-        feedbackForm.style.display = 'none'; // Hide the form
-    }
-}
-
-function submitFeedback(event) {
-    event.preventDefault(); // Prevent the form from reloading the page
-    
-    const rating = document.querySelector('input[name="rating"]:checked');
-    const feedback = document.getElementById('feedback').value;
-
-    if (rating) {
-        // Here, you can handle the form data (e.g., sending it to the server)
-        console.log(`Rating: ${rating.value}`);
-        console.log(`Feedback: ${feedback}`);
-        
-        // Hide the feedback form after submission
-        document.getElementById('feedback-form').style.display = 'none';
-
-        // Reset the form
-        document.getElementById('feedbackForm').reset();
-    } else {
-        alert("Please select a rating before submitting.");
-    }
-}
-
-document.getElementById('te').addEventListener('click', function() {
-    const gameElement = document.getElementById('game');
-    
-    if (gameElement.style.display === 'none') {
-        gameElement.style.display = 'block'; // Show the game
-    } else {
-        gameElement.style.display = 'none'; // Hide the game
-    }
-});
-// Show the voice and bc elements when the v-icon is clicked
-document.getElementById('v-icon').addEventListener('click', function() {
-    const voiceElement = document.getElementById('voice');
-    const bcElements = document.querySelectorAll('.bc');
-
-    voiceElement.style.display = 'block'; // Show the voice element
-    bcElements.forEach(bc => bc.style.display = 'block'); // Show all elements with class 'bc'
-});
-
-// Hide the voice and all bc elements when any bc element is clicked
-document.querySelectorAll('.bc').forEach(bc => {
-    bc.addEventListener('click', function() {
-        const voiceElement = document.getElementById('voice');
-        
-        voiceElement.style.display = 'none'; // Hide the voice element
-        // Hide all elements with class 'bc'
-        document.querySelectorAll('.bc').forEach(bc => {
-            bc.style.display = 'none'; // Hide all bc elements
-        });
-    });
-});
-
-// Reference to the back button using its class
-const backBtn = document.querySelector('.bc');
-
-// Function to stop speech synthesis
-function stopSpeech() {
-    window.speechSynthesis.cancel();  // Stops any ongoing speech
-}
-
-// Add event listener to the back button
-backBtn.addEventListener('click', function() {
-    // Stop the speech
-    stopSpeech();
-
-    // Optionally hide the iframe when the button is clicked
-    document.getElementById('iframe').style.display = 'none';
-});
-
-
-// Stop speech synthesis when the page is refreshed or unloaded
-window.onbeforeunload = function() {
-    window.speechSynthesis.cancel();  // Cancel any ongoing speech
-};
-
-// New code for stopping speech when closing the iframe
-const closeBtn = document.getElementById('closeBtn');
-
-function stopSpeech() {
-    window.speechSynthesis.cancel();  // Stops ongoing speech
-}
-
-closeBtn.addEventListener('click', function() {
-    stopSpeech();
-    document.getElementById('iframe').style.display = 'none';  // Hide iframe
+    generateObstacle();
 });
 
 </script>
-<!-- <script>
-    // Predefined responses
-    const predefinedResponses = {
-        "hi": "Hello! How can I help you today?",
-        "hello": "Hi there! How can I assist you?",
-        "hey": "Hey! What can I do for you?",
-        "hi there": "Hi! How's your day going?",
-        "good morning": "Good morning! How can I assist you today?",
-        "good afternoon": "Good afternoon! What can I help you with?",
-        "good evening": "Good evening! Feel free to ask me anything.",
-        "good night": "Good night! Let me know if you need anything before heading to bed.",
-        "how are you": "I'm just a bot, but I'm here to help you!",
-        "how are you doing": "I'm doing great! How about you?",
-        "how’s it going": "I’m here to assist you. How about you?",
-        "what’s up": "Not much! Just ready to help. What can I do for you?",
-        "tell me something": "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible.",
-        "ok": "Got it! Let me know if you need anything else.",
-        "yes": "Great! If you need anything, I'm here.",
-        "no": "That's fine! Feel free to ask me anything.",
-        "i’ll do that now": "Awesome! Let me know if you need help.",
-        "thank you": "You're welcome! I'm happy to help.",
-        "thanks": "Anytime! I'm here to assist.",
-        "goodbye": "Goodbye! Have a wonderful day.",
-        "bye": "Bye! Take care!",
-        "see you later": "See you later! I'm always here when you need help.",
-        "how can you help me": "I can answer questions, provide information, and assist you with tasks. How can I help?",
-        "what can you do": "I can assist with a wide range of tasks and answer questions. Just ask!",
-        "can you help me": "Of course! What do you need help with?",
-        "i have a question": "Feel free to ask your question, and I’ll do my best to help!",
-        "do you know a joke": "Sure! Why don't scientists trust atoms? Because they make up everything!",
-        "tell me a joke": "Why did the computer go to therapy? Because it had too many bytes of issues!",
-        "you’re funny": "Thanks! I'm always here for a laugh.",
-        "do you love me": "I’m here to assist and support you, but love is beyond my programming!",
-        "i love you": "That’s sweet! While I can’t feel love, I’m always here to help you.",
-        "will you marry me": "I’m flattered, but I’m just a bot built to assist!"
-    };
-
-    function normalizeInput(input) {
-        return input.trim().toLowerCase().replace(/[?!.]*$/, '');
-    }
-
-    async function getBotResponse(query) {
-        let normalizedQuery = normalizeInput(query);
-
-        // Check for predefined responses
-        if (predefinedResponses[normalizedQuery]) {
-            displayBotMessage("Answer", predefinedResponses[normalizedQuery]);
-            removeLoadingMessage();
-            return;
-        }
-
-        // Your existing logic for fetching from Wikipedia or other sources...
-        try {
-            // Fetch from Wikipedia as before...
-        } catch (error) {
-            console.error('Error fetching from Wikipedia:', error);
-            displayBotMessage("Error", "Oops! Something went wrong while fetching from Wikipedia.");
-        }
-    }
-
-    // Other functions remain the same...
-</script> -->
-
-<script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
-</body>
+  </body>
 </html>
+
