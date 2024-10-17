@@ -10,6 +10,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="style.css">
+<link rel="preload" href="h.jgk.gif" as="gif">
+  <link rel="preload" href="hkkfgh.png" as="png">
+  <link rel="preload" href="output-onlinegiftools.gif" as="gif">
+  <link rel="preload" href="clipfly-ai-20241008222907.mp4" as="mp4">
 </head>
     <style>
         /* Add some styling for the Wikipedia image */
@@ -160,14 +164,298 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
     display: none;
     position: fixed;
     bottom: 20px;
-    margin-left: 37%;
+ 
     text-align: center;
+} 
+.mira{
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    color: white;
+    background-color: black;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(h.jgk.gif);
+    background-size: cover;
+}
+.videoContainer {
+    position: relative;
+    width: 100%;
+}
+
+.playButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+#introVideo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 250px;
+    max-width: 250px;
+    border-radius: 50%;
+    border: 13px white solid;
+    /* margin: 20px auto; */
+    padding: 1px;
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+}
+.intimg {
+   
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 250px;
+    max-width: 250px;
+    border-radius: 50%;
+    border: 13px white solid;
+    /* margin: 20px auto; */
+    background-size: cover;
+    padding: 1px;
+    background-image: url(hkkfgh.png);
+    animation: hi 2s;
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+    animation: hi 2s ease-in;
+    transition: margin 2s cubic-bezier(0.075, 0.82, 0.165, 1), width 2s, height 2s, background-color 2s;
+}.intimg.active {
+    margin-bottom: 100px;
+   
+   
+}
+
+.nameInputContainer > h1{
+    margin: 22px;
+    text-align: center;
+    
+    
+    
+}
+@keyframes hi {
+    0% {
+        height: 71px;
+        width: 147px;
+        border: 3px #ffffff00 solid;
+        transform: translateY(-200px); /* Starting point, way above */
+    }
+    40% {
+        height: 250px;
+        width: 100%;
+        border: 13px white solid;
+        transform: translateY(30px); /* Drop below final position to simulate bounce */
+    }
+    70% {
+        height: 230px;
+        width: 95%;
+        border: 13px white solid;
+        transform: translateY(-10px); /* Bounce upward */
+    }
+    90% {
+        height: 245px;
+        width: 98%;
+        border: 13px white solid;
+        transform: translateY(5px); /* Small bounce down */
+    }
+    100% {
+        height: 250px;
+        width: 100%;
+        border: 13px white solid;
+        transform: translateY(0); /* Settle in final position */
+    }
+}
+
+  @keyframes op {
+          0% { height: 0px;  width: 0px;  
+            border-radius: 40px;transform: translateY(200px)  }
+         
+          100% {height:45px ; width: 127px;       border-radius: 40px; transform: translateY(0);}
+      } 
+.nameInputContainer > 
+    input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
+    max-width: 300px; /* Control the maximum width */
+    box-sizing: border-box; /* Make sure padding is inside width */
+}
+
+.nameInputContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#nameSubmitButton{
+    margin: 20px;
+    width: 127px;
+    background-color:#4CAF50;
+    height: 45px;
+    border-radius: 20px;
+    animation: op 2s;
+    
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+}
+#userNameInput{
+    border-radius: 25px;
+    height: 36px;
+    width: 237px;
+    
+}
+.ani{
+    height: 360px;
+    z-index: -1;
+    width: 360px;
+    margin-bottom: 258px;
+    position: absolute;
+    /* background-color: #1f8f1f; */
+    background-image: url(kjojfg.gif);
+    background-size: cover;
+    animation: uy 2s ease-in;
+    
+}
+@keyframes uy {
+          0% { width: 0;height: 0; }
+         
+          100% {height: 360px;  width: 360px;}
+      }/* Preloader styling */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: white;
+    transition: transform 3s ease, opacity 2s ease;
+}
+.bl{ width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(circle, transparent, transparent 10%, rgba(255, 255, 255, 0.1) 11%, transparent 12%) 0 0 / 100px 100px,
+      radial-gradient(circle, transparent, transparent 8%, rgba(255, 255, 255, 0.2) 9%, transparent 10%) 50px 50px / 100px 100px,
+      radial-gradient(circle, transparent, transparent 12%, rgba(255, 255, 255, 0.1) 13%, transparent 14%) 25px 25px / 100px 100px,
+      radial-gradient(circle, transparent, transparent 6%, rgba(255, 255, 255, 0.3) 7%, transparent 8%) 75px 75px / 100px 100px;
+    background-size: 100px 100px, 100px 100px, 100px 100px, 100px 100px;
+    animation: moveTexture1 10s linear infinite, moveTexture2 15s linear infinite, moveTexture3 20s linear infinite, moveTexture4 25s linear infinite;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    display: flex;
+    flex-direction: column;
+}
+@keyframes moveTexture1 {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+  }
+
+  @keyframes moveTexture2 {
+    0% { background-position: 0% 100%; }
+    100% { background-position: 100% 0%; }
+  }
+
+  @keyframes moveTexture3 {
+    0% { background-position: 100% 0%; }
+    100% { background-position: 0% 100%; }
+  }
+
+  @keyframes moveTexture4 {
+    0% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+.loading-bar {
+    width: 80%;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 60px;
+    margin-bottom: 13px;
+    box-shadow: rgba(46, 91, 240, 0.4) 5px 5px, rgba(46, 91, 240, 0.3) 10px 10px, rgba(46, 124, 240, 0.2) 15px 15px, rgba(146, 46, 240, 0.1) 20px 20px, rgba(104, 46, 240, 0.05) 25px 25px;
+}
+
+.progress {
+    width: 0;
+    height: 100%;
+    background-color: #03bff4;
+    border-radius: 10px;
+    transition: width 1s;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+/* Optional content styling */
+#content {
+    text-align: center;
+    margin-top: 50px;
+    font-family: Arial, sans-serif;
+}
+
+p {
+    font-size: 18px;
+}.intimg.active {
+    visibility: hidden;    margin-bottom: 100px;
+    margin-top: 7px;
+    opacity: -1px;
+    opacity: 0.5;  transition: transform 3s ease, opacity 2s ease;
+}
+.loading-bar.active {
+    margin: 20px;
+    width: 127px;
+    background-color: #4CAF50;
+    height: 45px;
+    border-radius: 20px;
+    opacity: 0.8; /* Slightly transparent */
+    transform: translateY(20px); /* Move the element down slowly */
+    transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1), opacity 2s ease-in-out; /* Smoother transition */
 }
     </style>
 </head>
 <body>
+    <div id="preloader">
+        <div class="bl">
+            <div class="intimg"></div>
+        <div class="loading-bar">
+            <div class="progress"></div>
+        </div>
+        <p>Just a Sec...</p>
+    </div>
+    </div>
+
+
+  
+    <div class="mira">
+      
+    <video id="introVideo" width="100%"  muted>
+        <source src="clipfly-ai-20241008222907.mp4"  width: 100%; type="video/mp4" >
+        Your browser does not support the video tag.
+        
+    </video>
+
+    <div class="nameInputContainer">
+        <h1>Please enter your name</h1>
+        
+        <input type="text" id="userNameInput" placeholder="Type your name here">
+        <button id="nameSubmitButton">Submit</button>
+        <p id="nameGreeting" class="hidden"></p>
+    </div></div>
     <div class="topographic-texture">
-       
+        <div class="cir2"></div>
+        <div class="cir1"></div>
         <div class="en">
             <i>
                 <div class="menu-icon" id="menuIcon">
@@ -183,7 +471,7 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
             height: 47px;
             width: 45px;">
                 <i class="bx bxl-c-plus-plus"></i>
-                <div class="log-name">Quest.Bot</div>
+                <div class="log-name">mira.Bot</div>
             </div>
         </div>
 
@@ -238,7 +526,7 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
             </i>
 
             <div class="lr">
-                <h1>Quest Bot</h1>
+                <h1>Mira Bot</h1>
                 <div class="frt">
                     <div class="green"></div>
                     Online
@@ -251,7 +539,7 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
     <div class="container">
         <div class="chat-box" id="chat-box">
             <div class="top-message">
-                <img src="lfpl.gif" alt="">
+                <img src="kuyy.gif" alt="">
                 <p>Hello! This bot provides information from the internet. Simply write a topic to get information. For example, 'Tell me about...', or 'Give me information on...'. If you want a working calculator, just type 'I want a calculator.' If you want information related to a specific topic, you can write something like 'Topic (related things). <button id="te" style="    display: flex;
                     font-size: 10px;
                     width: 51px;
@@ -272,7 +560,9 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
             /* margin-top: -54px; */
             font-size: 11px;
             /* margin-left: 71px;">
-                <p style="margin-left: 10px; padding: 9px;">Please type a topic you'd like to know more about!</p>
+                <p id="nameGreeting" class="hidden" style="margin-left: 10px; padding: 9px;">
+                    Hello <span id="userNamePlaceholder"></span>, please type a topic you'd like to know more about!
+                </p>
             </div>
         </div>
         <div id="calculator" class="calculator" style="display:none;">
@@ -1721,6 +2011,174 @@ document.querySelectorAll('.bc').forEach(bc => {
 
     // Other functions remain the same...
 </script> -->
+<script>
+    // Get the video element
+// Get the video element
+const video = document.getElementById('introVideo');
+
+// Check if the video has been played before
+const hasVideoPlayed = localStorage.getItem('videoPlayed');
+
+// If video has not been played before, play it and store the state
+if (!hasVideoPlayed) {
+    video.play().then(() => {
+        console.log('Video is playing for the first time');
+        localStorage.setItem('videoPlayed', 'true'); // Store that the video has played
+    }).catch(error => {
+        console.log('Autoplay failed, user interaction may be required.');
+    });
+}
+
+// When the video ends, reset it and prevent replaying
+video.addEventListener('ended', function() {
+    video.currentTime = 0;  // Reset to the start
+    video.pause();          // Pause the video after it ends
+});
+
+// Optional: Unmute the video when user clicks anywhere on the page
+document.addEventListener('click', function() {
+    video.muted = false; // Unmute the video on user interaction
+    video.play(); // Play the video with sound if it's not finished
+}, { once: true });  // Ensures this event runs only once
+// Event listener for the submit button
+document.getElementById('nameSubmitButton').addEventListener('click', function() {
+    const nameInput = document.getElementById('userNameInput');
+    const greeting = document.getElementById('nameGreeting');
+    const container = document.querySelector('.nameInputContainer'); // Select the container div
+    const miraElement = document.querySelector('.mira'); // Select the mira class
+    const videoElement = document.getElementById('introVideo'); // Select the video element
+
+    const name = nameInput.value.trim(); // Get the input value and trim spaces
+
+    if (name) {
+        greeting.textContent = `Hello, ${name}! Welcome to Mira!`;
+        greeting.classList.remove('hidden');
+        container.style.display = 'none'; // Hide the input container
+        miraElement.style.display = 'none'; // Hide the mira element
+        
+        // Pause the video if it's playing
+        if (!videoElement.paused) {
+            videoElement.pause();
+            videoElement.currentTime = 0; // Reset the video to the start
+        }
+    } else {
+        greeting.textContent = 'Please enter a valid name.';
+        greeting.classList.remove('hidden');
+    }
+});
+
+
+
+
+
+</script>
+<script>
+    // Simulate loading progress
+document.addEventListener("DOMContentLoaded", function() {
+    var progress = document.querySelector(".progress");
+
+    // Simulate the loading process
+    var width = 0;
+    var interval = setInterval(function() {
+        if (width >= 100) {
+            clearInterval(interval);
+            // Hide preloader and show content
+            document.getElementById("preloader").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        } else {
+            width += 10; // Increase progress
+            progress.style.width = width + "%";
+        }
+    }, 500); // Adjust the interval speed (500ms for demonstration)
+});
+// Simulate loading progress
+// Simulate loading progress
+// Simulate loading progress
+// Simulate loading progress
+document.addEventListener("DOMContentLoaded", function() {
+    var progress = document.querySelector(".progress");
+    var intimg = document.querySelector(".intimg");
+    var loadingBar = document.querySelector(".loading-bar");
+    var preloader = document.getElementById("preloader"); // Get preloader element
+    var width = 0;
+
+    var interval = setInterval(function() {
+        width += 10; // Increment the width
+        progress.style.width = width + "%";
+
+        // Trigger intimg style change and reduce preloader opacity when progress reaches 50%
+        if (width === 80) {
+            intimg.classList.add("active");
+            loadingBar.classList.add("active"); // Trigger changes for loading bar
+            preloader.style.opacity = '0.1'; // Reduce preloader opacity
+        }
+
+        // Complete loading
+        if (width >= 95) {
+            clearInterval(interval);
+
+            // Reduce preloader opacity to 0 smoothly before hiding
+            preloader.style.opacity = '0'; // Fade out preloader
+            
+            // Hide preloader and show content after animation
+            setTimeout(function() {
+                preloader.style.display = "none"; // Hide preloader
+                document.getElementById("content").style.display = "block";
+            }, 1000); // Match timing to opacity transition duration
+        }
+    }, 500); // Adjust the interval speed
+});
+
+// Trigger opacity change dynamically with JavaScript
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyBackgrounds = [].slice.call(document.querySelectorAll(".lazy-background"));
+  
+  if ("IntersectionObserver" in window) {
+    let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.backgroundImage = 'url(' + entry.target.dataset.background + ')';
+          lazyBackgroundObserver.unobserve(entry.target);
+        }
+      });
+    });
+    
+    lazyBackgrounds.forEach(function(lazyBackground) {
+      lazyBackgroundObserver.observe(lazyBackground);
+    });
+  }
+});
+
+
+</script>
+
+<script>
+    // Add an event listener to the submit button
+    document.getElementById("nameSubmitButton").addEventListener("click", function() {
+        // Get the value of the input field
+        const userName = document.getElementById("userNameInput").value;
+        
+        // Get the placeholder where the name will be inserted
+        const userNamePlaceholder = document.getElementById("userNamePlaceholder");
+        
+        // Check if the user has entered a name
+        if (userName) {
+            // Insert the user's name into the placeholder
+            userNamePlaceholder.textContent = userName;
+
+            // Show the greeting paragraph by removing the 'hidden' class
+            document.getElementById("nameGreeting").classList.remove("hidden");
+        } else {
+            // If no name is entered, you can optionally handle this case (e.g., show an alert)
+            alert("Please enter your name!");
+        }
+    });     // Add an event listener to the submit button
+       
+</script>
+
+<!-- You can style the hidden class in CSS to hide the element initially -->
 
 <script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
 </body>
