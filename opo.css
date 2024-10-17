@@ -5,6 +5,8 @@ body {
     background-color:#000000;
     background-image:url(oiop.png) ;
     background-size: cover;
+    display: flex;
+    justify-content: center;
 
 }
 #gallery-icon {
@@ -125,7 +127,7 @@ body {
     border-radius: 50%;
     background-color: #C6FF00;
     margin-top: 50px;
-    background-image: url(ghjlkm.png);
+    background-image: url(hkkfgh.png);
     background-size: cover;
 }
 .sidebar {
@@ -395,7 +397,7 @@ h3 {
     backdrop-filter: blur(3px);
     box-shadow: 5px 5px 5px black;
     width: 100vw;
-  height: 85vh;
+  height: 100%;
   overflow-y:hidden; /* Allow scrolling inside the element */
 }
 .chat-box {
@@ -475,7 +477,7 @@ h3 {
     border-radius: 50%;
     background-color: #C6FF00;
     margin-top: 50px;
-    background-image: url(ghjlkm.png);
+    background-image: url(hkkfgh.png);
     background-size: cover;
 }
 .uy {
@@ -588,6 +590,7 @@ h3 {
     border-bottom-right-radius: 43px;
     border-top-right-radius: 47px;
 }
+
 .top-message p {
     padding: 10px;
     margin: 4px;
@@ -761,7 +764,7 @@ width: 100%;
       radial-gradient(circle, transparent, transparent 8%, rgba(255, 255, 255, 0.2) 9%, transparent 10%) 50px 50px / 100px 100px,
       radial-gradient(circle, transparent, transparent 12%, rgba(255, 255, 255, 0.1) 13%, transparent 14%) 25px 25px / 100px 100px,
       radial-gradient(circle, transparent, transparent 6%, rgba(255, 255, 255, 0.3) 7%, transparent 8%) 75px 75px / 100px 100px;
-    background-size: 100px 100px, 100px 100px, 100px 100px, 100px 100px;
+    background-size: 100px 100px, 100px 100px, 100px 100px, 100px 100px;    overflow-y: hidden;
     animation: moveTexture1 10s linear infinite, moveTexture2 15s linear infinite, moveTexture3 20s linear infinite, moveTexture4 25s linear infinite;
   }
 
