@@ -117,13 +117,20 @@ button:hover {
     align-items: center;
 }
 
-#listeningGif {
-      width: 100px;
-      height: 100px;
-      transition: width 0.1s ease, height 0.1s ease;
-      animation: op 2s infinite alternate-reverse;
-          transition: revert-layer 2s;
-    }
+#listeningGif, #introVideo {
+    width: 85%;
+    display: flex;
+    justify-content: center;
+    height: 111px;
+    max-width: 250px;
+    border-radius: 50%;
+    border: 8px white solid;
+    margin: 20px auto;
+    padding: 1px;
+    box-shadow: rgba(46, 91, 240, 0.4) 5px 5px, rgba(46, 91, 240, 0.3) 10px 10px, rgba(46, 124, 240, 0.2) 15px 15px, rgba(146, 46, 240, 0.1) 20px 20px, rgba(104, 46, 240, 0.05) 25px 25px;
+}
+
+
     #gifContainer{
         display: flex;
 
@@ -163,7 +170,12 @@ button:hover {
     <div class="drt">
       
        
-            <img id="listeningGif" src="output-onlinegiftools (4).gif" alt="Listening GIF">
+            <img id="listeningGif" src="hkkfgh.png"  alt="Listening GIF">
+            <video id="introVideo" width="100%" muted style="display: none;">
+                <source src="clipfly-ai-20241008222907.mp4"  width: 100%; type="video/mp4" >
+                Your browser does not support the video tag.
+                
+            </video>
             <button id="startBtn">Start</button>
         <button id="stopSpeakingBtn" style="display: none; 
        
@@ -183,7 +195,7 @@ button:hover {
         
              </div>
         <div id="outputText"></div>
-        <img id="topicImage" src="" alt="" style="display: none; max-width: 150px; margin-top: 20px;">
+        <img id="topicImage" src="" alt="" style="display: none; max-width: 150px;margin-top: 20px; margin-bottom:250px;">
   </div>
   </div>
   <!-- <script>
@@ -820,6 +832,82 @@ stopSpeakingBtn.addEventListener('click', () => {
     window.speechSynthesis.cancel();
     stopSpeakingBtn.style.display = "none";
 });
+
+  </script>
+  <script>
+   function startRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = () => {
+            isListening = true;
+            outputText.innerHTML = "Listening...";
+            toggleVisibility(listeningGif, true);  // Show the listening image
+            toggleVisibility(introVideo, false);   // Hide the video
+            startBtn.style.display = "none";
+            stopSpeakingBtn.style.display = "block";
+        };
+
+        recognition.onresult = (event) => {
+            const speechResult = event.results[0][0].transcript.toLowerCase();
+            outputText.innerHTML = `You said: ${speechResult}`;
+            processQuery(speechResult);  // Process user's speech
+            startBotSpeaking();           // Start bot speaking
+        };
+
+        recognition.onend = () => {
+            isListening = false;
+            outputText.innerHTML += "<br>Recording stopped";
+            toggleVisibility(listeningGif, false);  // Hide the image
+            startBtn.style.display = "block";
+            stopSpeakingBtn.style.display = "none";
+        };
+
+        recognition.onerror = (event) => {
+            outputText.innerHTML = `Error occurred: ${event.error}`;
+        };
+
+        recognition.start();
+    }
+}
+
+function startBotSpeaking() {
+    toggleVisibility(listeningGif, false);  // Hide image when bot starts speaking
+    toggleVisibility(introVideo, true);      // Show video when bot is speaking
+
+    // Load the video to ensure it plays from the beginning every time
+    introVideo.load(); // Reset the video to the beginning
+
+    // Try to play the video and handle any issues with video playback
+    introVideo.play().then(() => {
+        console.log("Video is playing");
+    }).catch(error => {
+        console.log("Error playing video:", error);
+    });
+
+    // Simulate bot speaking time (adjust as needed)
+    setTimeout(() => {
+        stopBotSpeaking();
+    }, 5000);  // Assume bot speaks for 5 seconds
+}
+
+function stopBotSpeaking() {
+    introVideo.pause();  // Pause video when bot finishes speaking
+    toggleVisibility(introVideo, false);  // Hide video
+    toggleVisibility(listeningGif, true);  // Show image again
+}
+
+function toggleVisibility(element, show) {
+    if (show) {
+        element.style.display = "block";
+    } else {
+        element.style.display = "none";
+    }
+}
 
   </script>
   <script src="script.js"></script>
