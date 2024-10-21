@@ -16,6 +16,27 @@
   <link rel="preload" href="clipfly-ai-20241008222907.mp4" as="mp4">
 </head>
     <style>
+    .uy {
+  opacity: 0; /* Initially hidden */
+  transform: translateX(-100%); /* Positioned off-screen to the left */
+  transition: transform 1s ease, opacity 1s ease;
+  animation: slideIn 1s ease forwards;
+}
+
+/* This class will be applied when the element is visible */
+
+
+@keyframes slideIn {
+  from {
+    transform: translatey(-21%);
+    opacity: 0;
+  }
+  to {
+    transform: translatey(0);
+    opacity: 1;
+  }
+}
+
         /* Add some styling for the Wikipedia image */
         .wiki-image {
     max-width: 181px;
@@ -69,7 +90,7 @@ max-width: 200px;  /* Ensure the image doesn't exceed a specific width */
     transition: color 0.3s, transform 0.3s;
     gap: 10;
     margin: 5px;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
 }
 .message-icons i:hover {
     color: #ffffff;
@@ -1131,7 +1152,7 @@ const responseDictionary = {
     "OKay": "👌 Got it! Let me know if you need anything else.",
     "okay": "👌 Got it! Let me know if you need anything else.",
     "hi": "Hello! How can I assist you today?",
-    "Hello": "Hello! How can I assist you today?",
+    "Hello": "Hello! ${userName} How can I assist you today?",
     "how are you": "I'm just a program, but I'm here to help you!",
     "what's your name": "I'm a voice assistant, here to answer your questions!",
     "what can you do": "I can help you with various topics, just ask me anything!",
@@ -2176,8 +2197,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });     // Add an event listener to the submit button
        
-</script>
 
+</script>
 <!-- You can style the hidden class in CSS to hide the element initially -->
 
 <script src="https://kit.fontawesome.com/4748bef489.js" crossorigin="anonymous"></script>
