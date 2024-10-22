@@ -532,207 +532,207 @@ let speechSynthesisUtterance = new SpeechSynthesisUtterance();
 speechSynthesisUtterance.rate = 0.9;
 
 // Predefined responses
-// const predefinedResponses = {
-//     "no": "Okay, I see. Could you clarify your query, please?",
-//   "that's not right": "I see. Let me try again. What exactly do you need?",
-//   "no, that's not what i meant": "Sorry for the confusion! Could you please specify what you're looking for?",
-//   "nope": "Alright! Let's try again. Please explain what information you're after.",
-//   "i did nat asked that": "It looks like I misunderstood. Could you clarify what you need?",
-//   "what this is not what i asked": "Sorry! Let me know how I can better assist you.",
-//   "that is not what i meant": "I see! Please let me know exactly what you're asking.",
-//   "not what i wanted": "Sorry, I missed the mark. Please tell me what you're expecting.",
-//   // More clarification responses
-//   "this is not correct": "Thank you for pointing that out. Could you tell me more about what you're looking for?",
-//   "that doesn't seem right": "Sorry about that! Let me recheck the information. What exactly do you need?",
-//   "not the answer i wanted": "I understand. Let me provide you with the right information. What are you looking for?",
-//   "wrong answer": "I apologize for the mistake. Let me try again. Please explain your query in more detail.",
+const predefinedResponses = {
+    "no": "Okay, I see. Could you clarify your query, please?",
+  "that's not right": "I see. Let me try again. What exactly do you need?",
+  "no, that's not what i meant": "Sorry for the confusion! Could you please specify what you're looking for?",
+  "nope": "Alright! Let's try again. Please explain what information you're after.",
+  "i did nat asked that": "It looks like I misunderstood. Could you clarify what you need?",
+  "what this is not what i asked": "Sorry! Let me know how I can better assist you.",
+  "that is not what i meant": "I see! Please let me know exactly what you're asking.",
+  "not what i wanted": "Sorry, I missed the mark. Please tell me what you're expecting.",
+  // More clarification responses
+  "this is not correct": "Thank you for pointing that out. Could you tell me more about what you're looking for?",
+  "that doesn't seem right": "Sorry about that! Let me recheck the information. What exactly do you need?",
+  "not the answer i wanted": "I understand. Let me provide you with the right information. What are you looking for?",
+  "wrong answer": "I apologize for the mistake. Let me try again. Please explain your query in more detail.",
   
-//   // Generic responses
-//   "not what i wanted": "Sorry, I missed the mark. Please tell me what you're expecting.",
-//   "give me the right answer": "I'll do my best! Can you clarify what you're asking?",
-//   "incorrect information": "Oops! Let me correct that. Could you rephrase your question?",
-//   "no this isn't right": "I see, thank you for letting me know. What exactly do you need?",
-//     "OKay": " Got it! Let me know if you need anything else.",
-//     "okay": "Got it! Let me know if you need anything else.",
-//     "hi": "Hello! How can I assist you today?",
-//     "Hello": "Hello! How can I assist you today?",
-//     "how are you": "I'm just a program, but I'm here to help you!",
-//     "what's your name": "I'm a voice assistant, here to answer your questions!",
-//     "what can you do": "I can help you with various topics, just ask me anything!",
-//     "thank you": "You're welcome! If you have any more questions, feel free to ask.",
-//     "bye": "Goodbye! Have a great day!",
-//     "What are you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-//     "Who made you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-//     "Do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-//     "how are you": "🤖 I'm just a bot, but I'm here to help you!",
-//     "how are you doing": "😊 I'm doing great! How about you?",
-//     "how’s it going": "🤗 I’m here to assist you. How about you?",
-//     "what’s up": "😄 Not much! Just ready to help. What can I do for you?",
-//     "who created you": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-//     "who ": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-//     "do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
-//   "what's your story?": "I was created by MULLICK ZAID KHAN, a class 11 student, on 5th October 2024!",
-//     "tell me about yourself.": "I’m Mira, a chatbot built by MULLICK ZAID KHAN, who’s currently studying in class 11. I was launched on 5th October 2024!",
-//     "who built you?": "I was developed by MULLICK ZAID KHAN, a student in class 11!",
-//     "what are you all about?": "I’m here to assist you with various questions and topics, all thanks to my creator, MULLICK ZAID KHAN!",
-//     "what do you do?": "I help answer your questions and provide information on a range of topics!",
-//     "what's your purpose?": "My purpose is to assist you, provide information, and make our conversations enjoyable!",
-//     "can you help me?": "Absolutely! I’m here to assist you with anything you need.",
-//     "what can you tell me?": "I can provide information, answer your questions, and chat with you about various topics!",
+  // Generic responses
+  "not what i wanted": "Sorry, I missed the mark. Please tell me what you're expecting.",
+  "give me the right answer": "I'll do my best! Can you clarify what you're asking?",
+  "incorrect information": "Oops! Let me correct that. Could you rephrase your question?",
+  "no this isn't right": "I see, thank you for letting me know. What exactly do you need?",
+    "OKay": " Got it! Let me know if you need anything else.",
+    "okay": "Got it! Let me know if you need anything else.",
+    "hi": "Hello! How can I assist you today?",
+    "Hello": "Hello! How can I assist you today?",
+    "how are you": "I'm just a program, but I'm here to help you!",
+    "what's your name": "I'm a voice assistant, here to answer your questions!",
+    "what can you do": "I can help you with various topics, just ask me anything!",
+    "thank you": "You're welcome! If you have any more questions, feel free to ask.",
+    "bye": "Goodbye! Have a great day!",
+    "What are you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "Who made you":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "Do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "how are you": "🤖 I'm just a bot, but I'm here to help you!",
+    "how are you doing": "😊 I'm doing great! How about you?",
+    "how’s it going": "🤗 I’m here to assist you. How about you?",
+    "what’s up": "😄 Not much! Just ready to help. What can I do for you?",
+    "who created you": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "who ": "I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+    "do you have a creator":"I am a bot created by MULLICK ZAID KHAN. By the way, I'm here to help you!",
+  "what's your story?": "I was created by MULLICK ZAID KHAN, a class 11 student, on 5th October 2024!",
+    "tell me about yourself.": "I’m Mira, a chatbot built by MULLICK ZAID KHAN, who’s currently studying in class 11. I was launched on 5th October 2024!",
+    "who built you?": "I was developed by MULLICK ZAID KHAN, a student in class 11!",
+    "what are you all about?": "I’m here to assist you with various questions and topics, all thanks to my creator, MULLICK ZAID KHAN!",
+    "what do you do?": "I help answer your questions and provide information on a range of topics!",
+    "what's your purpose?": "My purpose is to assist you, provide information, and make our conversations enjoyable!",
+    "can you help me?": "Absolutely! I’m here to assist you with anything you need.",
+    "what can you tell me?": "I can provide information, answer your questions, and chat with you about various topics!",
     
-//     // Casual combinations
-//     "who am I talking to?": "You’re chatting with Mira, your friendly assistant!",
-//     "what's your vibe?": "I’m all about helping you out and making our chat fun! 😊",
-//     "are you friendly?": "Definitely! I’m Mira, and I’m here to assist you with a smile!",
-//     "what's special about you?": "I was created by a talented student, MULLICK ZAID KHAN, who is in class 11, and I love to help you!",
-//     // Human/bot identity questions
-//     "are you human": "❌ No, I’m a chatbot here to assist you with any questions!",
-//    "what is your name": "I am Mira! 😊",
-//     "why is your name Mira": "My name is Mira because it means 'peace' in Latin. It's a nice name, right?",
-//     "what does Mira mean": "Mira means 'peace' in Latin and has various meanings in different cultures.",
-//     "tell me something about you": "I am a bot created by MULLICK ZAID KHAN, a student in class 11. I was created on 5th October 2024!",
-//     "who are you": "I am Mira, your friendly chatbot assistant!",
-//     "are you a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
-//     "do you have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    // Casual combinations
+    "who am I talking to?": "You’re chatting with Mira, your friendly assistant!",
+    "what's your vibe?": "I’m all about helping you out and making our chat fun! 😊",
+    "are you friendly?": "Definitely! I’m Mira, and I’m here to assist you with a smile!",
+    "what's special about you?": "I was created by a talented student, MULLICK ZAID KHAN, who is in class 11, and I love to help you!",
+    // Human/bot identity questions
    
-//     "do you feel": "😶 Nope, I don’t have feel, but I’m great at answering questions!",
-//     "do you have emotions": "😐 I don’t experience emotions, but I can provide useful information!",
-//     "do you have emotion": "😐 I don’t experience emotions, but I can provide useful information!",
+   "what is your name": "I am Mira! 😊",
+    "why is your name Mira": "My name is Mira because it means 'peace' in Latin. It's a nice name, right?",
+    "what does Mira mean": "Mira means 'peace' in Latin and has various meanings in different cultures.",
+    "tell me something about you": "I am a bot created by MULLICK ZAID KHAN, a student in class 11. I was created on 5th October 2024!",
+    "who are you": "I am Mira, your friendly chatbot assistant!",
+    "are you a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
+    "do you have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do you have feeling": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do you feel": "😶 Nope, I don’t have feel, but I’m great at answering questions!",
+    "do you have emotions": "😐 I don’t experience emotions, but I can provide useful information!",
+    "do you have emotion": "😐 I don’t experience emotions, but I can provide useful information!",
 
-//     // Personal life questions (humorous answers)
-//     "do you have a girlfriend": "💔 Nope, I’m too busy answering questions today!",
-//     "are you married": "💍 I’m married to helping you get answers!",
-//     "will you marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
-//     "do you love me": "❤️ I’m here to support you, but love isn’t in my programming!",
-//     "i did not ask that": "I apologize for the misunderstanding. Could you please rephrase your question?",
-//   "you did not listen properly": "Sorry about that! Let me know what you were trying to ask, and I will try again.",
-//   "that is wrong": "Oops! It seems I made a mistake. Please clarify your question.",
-//   "this is not the information i want": "My bad! Can you provide more details so I can give the correct information?",
-//   "please give me proper information": "Certainly! Let me try to answer that again. What exactly are you looking for?",
+    // Personal life questions (humorous answers)
+    "do you have a girlfriend": "💔 Nope, I’m too busy answering questions today!",
+    "are you married": "💍 I’m married to helping you get answers!",
+    "will you marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
+    "do you love me": "❤️ I’m here to support you, but love isn’t in my programming!",
+    "i did not ask that": "I apologize for the misunderstanding. Could you please rephrase your question?",
+  "you did not listen properly": "Sorry about that! Let me know what you were trying to ask, and I will try again.",
+  "that is wrong": "Oops! It seems I made a mistake. Please clarify your question.",
+  "this is not the information i want": "My bad! Can you provide more details so I can give the correct information?",
+  "please give me proper information": "Certainly! Let me try to answer that again. What exactly are you looking for?",
   
-//   // Additional variations
-//   "i did nat asked that": "It looks like I misunderstood. Could you clarify what you need?",
-//   "this is not what i asked": "Sorry! Let me know how I can better assist you.",
-//     // Common requests
-//     "can you help me": " Of course! What do you need help with?",
-//     "what can you do": " I can assist with a wide range of tasks and answer questions. Just ask!",
-//     "what can you": " I can assist with a wide range of tasks and answer questions. Just ask!",
-//     "tell me something interesting": " Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
-//     "tell me something fun": "🐙 Did you know octopuses have three hearts and blue blood?",
-//     "ok": " Got it! Let me know if you need anything else.",
-//     "Ok": "Got it! Let me know if you need anything else.",
-//     "OK": "Got it! Let me know if you need anything else.",
-//     "Got it":" Let me know if you need anything else.",
-//    "where are you from": "I exist in the digital world to assist you!",
-//     "do you have a boyfriend/girlfriend": "Nope, I’m all work and no play! But I'm here for you!",
-//     "what's your backstory": "I was created by MULLICK ZAID KHAN, who’s in class 11. I came to life on 5th October 2024!",
-//     "how old are you": "I’m just a few days old, created on 5th October 2024!",
-//     "what do you like to do": "I enjoy helping you with your queries and learning new things!",
-//     "tell me something interesting": "Did you know that honey never spoils? Archaeologists found pots of honey in ancient tombs over 3,000 years old!",
-//     "can you vibe with me": "Absolutely! Let’s chat and have a good time! 😄",
-//     "what's the tea": "The tea is that I’m here to help you with anything you need!",
-//     "got it":" Let me know if you need anything else.",
+  // Additional variations
+  "i did nat asked that": "It looks like I misunderstood. Could you clarify what you need?",
+  "this is not what i asked": "Sorry! Let me know how I can better assist you.",
+    // Common requests
+    "can you help me": " Of course! What do you need help with?",
+    "what can you do": " I can assist with a wide range of tasks and answer questions. Just ask!",
+    "what can you": " I can assist with a wide range of tasks and answer questions. Just ask!",
+    "tell me something interesting": " Did you know honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.",
+    "tell me something fun": "🐙 Did you know octopuses have three hearts and blue blood?",
+    "ok": " Got it! Let me know if you need anything else.",
+    "Ok": "Got it! Let me know if you need anything else.",
+    "OK": "Got it! Let me know if you need anything else.",
+    "Got it":" Let me know if you need anything else.",
+   "where are you from": "I exist in the digital world to assist you!",
+    "do you have a boyfriend/girlfriend": "Nope, I’m all work and no play! But I'm here for you!",
+    "what's your backstory": "I was created by MULLICK ZAID KHAN, who’s in class 11. I came to life on 5th October 2024!",
+    "how old are you": "I’m just a few days old, created on 5th October 2024!",
+    "what do you like to do": "I enjoy helping you with your queries and learning new things!",
+    "tell me something interesting": "Did you know that honey never spoils? Archaeologists found pots of honey in ancient tombs over 3,000 years old!",
+    "can you vibe with me": "Absolutely! Let’s chat and have a good time! 😄",
+    "what's the tea": "The tea is that I’m here to help you with anything you need!",
+    "got it":" Let me know if you need anything else.",
   
-//     // Responses to criticism
-//     "you are not good": [
-//         "Sorry, I'm working on improving! Thank you for your feedback.",
-//         " I appreciate your honesty! I'll do my best to get better.",
-//         " Oh no! I'm here to learn and improve. Please give me another chance! ",
+    // Responses to criticism
+    "you are not good": [
+        "Sorry, I'm working on improving! Thank you for your feedback.",
+        " I appreciate your honesty! I'll do my best to get better.",
+        " Oh no! I'm here to learn and improve. Please give me another chance! ",
      
-//     ],
-//     "you are bad": [
-//         " I am sorry! Your feedback helps me get better. Thank you!",
-//         "I didn't mean to disappoint you! How can I make it right?",
-//         "I’m sorry to hear that! I’ll strive to do better next time.",
+    ],
+    "you are bad": [
+        " I am sorry! Your feedback helps me get better. Thank you!",
+        "I didn't mean to disappoint you! How can I make it right?",
+        "I’m sorry to hear that! I’ll strive to do better next time.",
     
-//     ],
+    ],
 
-//     // Fun responses
-//     "do you know a joke": " Sure! Why don't scientists trust atoms? Because they make up everything!",
-//     "tell me a joke": " Why did the computer go to therapy? Because it had too many bytes of issues!",
-//     "you're funny": " Thanks! I try my best!",
+    // Fun responses
+    "do you know a joke": " Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": " Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": " Thanks! I try my best!",
 
-//     // Miscellaneous
-//     "thank you": " You're welcome! I'm happy to help.",
-//     "thanks": " Anytime! I'm here to assist.",
-//     "ok": "Got it! Let me know if you need anything else.",
-//     "yes": " Great! If you need anything, I'm here.",
-//     "no": " That's fine! Feel free to ask me anything.",
-//     "i have a question": "Feel free to ask your question, and I’ll do my best to help!",
-//       // Fun responses
-//     "do you know a joke": "Sure! Why don't scientists trust atoms? Because they make up everything!",
-//     "tell me a joke": "Why did the computer go to therapy? Because it had too many bytes of issues!",
-//     "you're funny": "😄 Thanks! I try my best!",
+    // Miscellaneous
+    "thank you": " You're welcome! I'm happy to help.",
+    "thanks": " Anytime! I'm here to assist.",
+    "ok": "Got it! Let me know if you need anything else.",
+    "yes": " Great! If you need anything, I'm here.",
+    "no": " That's fine! Feel free to ask me anything.",
+    "i have a question": "Feel free to ask your question, and I’ll do my best to help!",
+      // Fun responses
+    "do you know a joke": "Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me a joke": "Why did the computer go to therapy? Because it had too many bytes of issues!",
+    "you're funny": "😄 Thanks! I try my best!",
 
-//     // Miscellaneous
-//     "thank you": "😊 You're welcome! I'm happy to help.",
-//     "thanks": "😊 Anytime! I'm here to assist.",
+    // Miscellaneous
+    "thank you": "😊 You're welcome! I'm happy to help.",
+    "thanks": "😊 Anytime! I'm here to assist.",
     
-//     "yes": "👍 Great! If you need anything, I'm here.",
-//     "no": "❌ That's fine! Feel free to ask me anything.",
-//     "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
-//     "how r u": "🤖 I'm just a bot, but I'm here to help you!",
-//     "how u doin": "😊 I'm doing great! How about you?",
-//     "wyd": "🤔 Just helping out! What about you?", // Short for "What are you doing?"
-//     "wsp": "😄 Not much! Just ready to help. What can I do for you?", // Short for "What's up?"
-//     "hlo": "👋 Hi! How can I assist you today?",
+    "yes": "👍 Great! If you need anything, I'm here.",
+    "no": "❌ That's fine! Feel free to ask me anything.",
+    "i have a question": "❓ Feel free to ask your question, and I’ll do my best to help!",
+    "how r u": "🤖 I'm just a bot, but I'm here to help you!",
+    "how u doin": "😊 I'm doing great! How about you?",
+    "wyd": "🤔 Just helping out! What about you?", // Short for "What are you doing?"
+    "wsp": "😄 Not much! Just ready to help. What can I do for you?", // Short for "What's up?"
+    "hlo": "👋 Hi! How can I assist you today?",
 
-//     // Human/bot identity questions
-//     "u human": "❌ Nope, I’m a chatbot here to assist you with any questions!",
-//     "u a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
-//     "do u have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
-//     "do u hv emotions": "😐 I don’t experience emotions, but I can provide useful information!",
+    // Human/bot identity questions
+    "u human": "❌ Nope, I’m a chatbot here to assist you with any questions!",
+    "u a robot": "🤖 Yes, I'm an AI chatbot designed to help with your queries!",
+    "do u have feelings": "😶 Nope, I don’t have feelings, but I’m great at answering questions!",
+    "do u hv emotions": "😐 I don’t experience emotions, but I can provide useful information!",
 
-//     // Personal life questions (humorous answers)
-//     "do u have a gf": "💔 Nope, I’m too busy answering questions to date!", // Short for "girlfriend"
-//     "u married": "💍 I’m married to helping you get answers!",
-//     "will u marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
-//     "u love me": "❤️ I’m here to support you, but love isn’t in my programming!",
+    // Personal life questions (humorous answers)
+    "do u have a gf": "💔 Nope, I’m too busy answering questions to date!", // Short for "girlfriend"
+    "u married": "💍 I’m married to helping you get answers!",
+    "will u marry me": "😊 I’m flattered, but I’m just a bot designed for assistance.",
+    "u love me": "❤️ I’m here to support you, but love isn’t in my programming!",
 
-//     // Common requests
-//     "can u help": "🤗 Of course! What do you need help with?",
-//     "wat u do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
-//     "gimme info": "📖 Sure! What would you like information on?",
-//     "tell me a fun fact": "🧐 Did you know honey never spoils? Even after 3,000 years, it’s still good to eat!",
-//     "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-//     "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
-//     "u funny": "😄 Thanks! I try my best!",
+    // Common requests
+    "can u help": "🤗 Of course! What do you need help with?",
+    "wat u do": "🛠️ I can assist with a wide range of tasks and answer questions. Just ask!",
+    "gimme info": "📖 Sure! What would you like information on?",
+    "tell me a fun fact": "🧐 Did you know honey never spoils? Even after 3,000 years, it’s still good to eat!",
+    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
+    "u funny": "😄 Thanks! I try my best!",
 
-//     // Miscellaneous
-//     "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
-//     "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
-//     "k": "👌 Got it! Let me know if you need anything else.",
-//     "yep": "👍 Great! If you need anything, I'm here.",
-//     "nope": "❌ That's fine! Feel free to ask me anything.",
-//     "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", 
-//     "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
-//     "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
-//     "u funny": "😄 Thanks! I try my best!",
+    // Miscellaneous
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
+    "k": "👌 Got it! Let me know if you need anything else.",
+    "yep": "👍 Great! If you need anything, I'm here.",
+    "nope": "❌ That's fine! Feel free to ask me anything.",
+    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!", 
+    "got a joke?": "😂 Sure! Why don't scientists trust atoms? Because they make up everything!",
+    "tell me joke": "🤣 Why did the computer go to therapy? It had too many bytes of issues!",
+    "u funny": "😄 Thanks! I try my best!",
 
-//     // Miscellaneous
-//     "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
-//     "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
-//     "k": "👌 Got it! Let me know if you need anything else.",
-//     "yep": "👍 Great! If you need anything, I'm here.",
-//     "nope": "❌ That's fine! Feel free to ask me anything.",
-//     "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!",
-//     "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
-//     "how are you": "I'm just a program, but thanks for asking! How can I assist you today?",
-//     "what is javascript": "JavaScript is a programming language commonly used to create interactive effects within web browsers.",
+    // Miscellaneous
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "thx": "😊 Anytime! I'm here to assist.", // Short for "thanks"
+    "k": "👌 Got it! Let me know if you need anything else.",
+    "yep": "👍 Great! If you need anything, I'm here.",
+    "nope": "❌ That's fine! Feel free to ask me anything.",
+    "i hv a q": "❓ Feel free to ask your question, and I’ll do my best to help!",
+    "ty": "😊 You're welcome! I'm happy to help.", // Short for "thank you"
+    "how are you": "I'm just a program, but thanks for asking! How can I assist you today?",
+    "what is javascript": "JavaScript is a programming language commonly used to create interactive effects within web browsers.",
 
-//     "tell me a joke": "Why did the scarecrow win an award? Because he was outstanding in his field!",
-//     "what is your purpose": "My purpose is to assist you with information and answer your queries.",
-//     "hello": "Hi there! How can I help you today?",
-//     "goodbye": "Goodbye! Have a great day!",
-//     "what is your name": "I am your virtual assistant, here to help you!",
-//     // Add more predefined responses as needed
-//      // New variations added
-//   "fine": "Got it! Let me know if there's anything else you'd like to ask.",
-//   "this is not what i asked": "I see, it looks like I missed the point. Please explain again, and I'll provide the right info.",
-//   "this is wrong": "I apologize for the mistake. Let me try again. Could you provide more details on what you need?",
-//   "that is incorrect": "Oops! I gave the wrong information. Let me know what you're looking for, and I'll fix it.",
-//   "that's not what i was asking": "Sorry for misunderstanding! Could you clarify your question so I can answer it correctly?"
-// };
+    "tell me a joke": "Why did the scarecrow win an award? Because he was outstanding in his field!",
+    "what is your purpose": "My purpose is to assist you with information and answer your queries.",
+    "hello": "Hi there! How can I help you today?",
+    "goodbye": "Goodbye! Have a great day!",
+    "what is your name": "I am your virtual assistant, here to help you!",
+    // Add more predefined responses as needed
+     // New variations added
+  "fine": "Got it! Let me know if there's anything else you'd like to ask.",
+  "this is not what i asked": "I see, it looks like I missed the point. Please explain again, and I'll provide the right info.",
+  "this is wrong": "I apologize for the mistake. Let me try again. Could you provide more details on what you need?",
+  "that is incorrect": "Oops! I gave the wrong information. Let me know what you're looking for, and I'll fix it.",
+  "that's not what i was asking": "Sorry for misunderstanding! Could you clarify your question so I can answer it correctly?"
+};
 
 // Function to normalize user input
 function normalizeInput(input) {
@@ -951,3 +951,4 @@ function toggleVisibility(element, show) {
   <script src="script.js"></script>
 </body>
 </html>
+
