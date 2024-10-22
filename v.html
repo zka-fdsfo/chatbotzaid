@@ -109,7 +109,20 @@ button:hover {
     font-size: 12px;
     text-align: center;
     color: white;
+     animation: slideI 80ms ease forwards;
+   
 }
+
+@keyframes slideI {
+    from {
+      transform: translatey(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translatey(0);
+      opacity: 1;
+    }} 
+
 .drt{
     display: flex;
     flex-direction: column;
@@ -195,7 +208,7 @@ button:hover {
         
              </div>
         <div id="outputText"></div>
-        <img id="topicImage" src="" alt="" style="display: none; max-width: 150px;margin-top: 20px; margin-bottom:250px;">
+        <img id="topicImage" src="" alt="" style="display: none;  animation: slideI 2ms ease forwards; max-width: 150px;margin-top: 20px; margin-bottom:250px;">
   </div>
   </div>
   <!-- <script>
