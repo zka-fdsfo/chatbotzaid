@@ -469,7 +469,7 @@ h3 {
     margin-right: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #005dff;
-    animation: slideI 1s ease forwards;
+    animation: slideI 50ms ease forwards;
     background: linear-gradient(rgb(255 255 255 / 13%), rgb(0 100 255)), linear-gradient(144deg, rgb(0 0 0) 0%, rgb(221 201 201 / 20%) 100%);
 }
 
